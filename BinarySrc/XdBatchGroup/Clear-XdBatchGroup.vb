@@ -89,7 +89,7 @@ Public Class ClearBatch
                         Exit While
                     End If
                 End While
-                Task.Delay(250).Wait()
+                Threading.Thread.Sleep(1000)
             End While
             If Not tokenSource.IsCancellationRequested Then tokenSource.Cancel()
         Finally
