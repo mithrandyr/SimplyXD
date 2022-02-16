@@ -45,43 +45,46 @@ Public Class ClearBatch
 
         Dim stats As New ClearBatchStats With {.TotalItems = TotalItems, .DeleteLimit = DeleteLimit}
 
-        Dim backgroundTask = Task.Factory.StartNew(
-            Sub(xStats As ClearBatchStats)
+        Dim backgroundTask = Task.Run(
+            Sub()
                 Dim foundList As New List(Of Guid)
-                Dim remainingItems = xStats.TotalItems
+                Dim remainingItems = stats.TotalItems
                 While remainingItems > 0
                     If token.IsCancellationRequested() Then Exit Sub
                     For Each batchId In query.ExecuteAsync.Result.Select(Function(x) x.BatchId)
+                        If token.IsCancellationRequested() Then Exit Sub
                         If Not foundList.Contains(batchId) Then
                             foundList.Add(batchId)
-                            Threading.Interlocked.Increment(xStats.Found)
-
-                            Task.Factory.StartNew(
-                                Sub(yStats As ClearBatchStats)
+                            Threading.Interlocked.Increment(stats.Found)
+                            Threading.Interlocked.Increment(stats.RunningThreads)
+                            Task.Run(
+                                Sub()
                                     Dim xdp2 = XDPortal()
                                     Dim nbatch = New Batch With {.BatchId = batchId}
                                     xdp2.AttachTo("Batches", nbatch)
                                     xdp2.DeleteObject(nbatch)
+                                    If token.IsCancellationRequested Then Exit Sub
                                     xdp2.SaveChangesAsync.Wait()
-                                    Threading.Interlocked.Increment(yStats.Deleted)
-                                End Sub, xStats, token, TaskCreationOptions.AttachedToParent, TaskScheduler.Current)
+                                    Threading.Interlocked.Increment(stats.Deleted)
+                                End Sub, token).ContinueWith(Sub() Threading.Interlocked.Decrement(stats.RunningThreads))
 
-                            If xStats.Found >= xStats.DeleteLimit Then Exit While
+                            If stats.Found >= stats.DeleteLimit Then Exit While
                         End If
                     Next
                     remainingItems = ExecuteWithTimeout(query.CountAsync())
                 End While
-            End Sub, stats, token)
+            End Sub, token)
 
         Try
             Console.TreatControlCAsInput = True
-            While backgroundTask.Status = TaskStatus.Running
+            While backgroundTask.Status = TaskStatus.Running Or stats.RunningThreads > 0
                 Dim pRecord = New ProgressRecord(1, "Cleaning Batches from " & bg.Name, String.Format("{0} out of {1}", stats.Deleted, DeleteLimit))
                 Dim percent As Double = stats.Deleted / DeleteLimit
                 pRecord.PercentComplete = percent * 100
                 If percent > 0 Then pRecord.SecondsRemaining = (timer.Elapsed.TotalSeconds / percent) - timer.Elapsed.TotalSeconds
 
                 WriteProgress(pRecord)
+
                 While Console.KeyAvailable
                     Dim k = Console.ReadKey(False)
                     If k.Key = ConsoleSpecialKey.ControlC Or (k.Key = ConsoleKey.C And k.Modifiers = ConsoleModifiers.Control) Then
@@ -120,5 +123,6 @@ Public Class ClearBatch
         Public TotalItems As Integer
         Public DeleteLimit As Integer
         Public Found As Integer
+        Public RunningThreads As Integer
     End Class
 End Class
