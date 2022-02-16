@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "SimplyXD": {
+      "commandName": "Executable",
+      "executablePath": "pwsh",
+      "commandLineArgs": "-noprofile -nologo -noexit -command \"function prompt {'Testing SimplyXD> '}; Import-Module .\\publish\\SimplyXD.dll\"",
+      "remoteDebugEnabled": false,
+      "nativeDebugging": true
+    }
+  }
+}
