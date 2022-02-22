@@ -1,5 +1,5 @@
 param([string]$ConfigName = "Debug", [switch]$SkipBuild)
-$outputPath = "$PSScriptRoot\Output"
+$outputPath = "$PSScriptRoot\SimplyXD\bin"
 if(Test-Path $outputPath) { Remove-Item $outputPath -Recurse -Force }
 New-Item -Path $outputPath -ItemType Directory | Out-Null
 
