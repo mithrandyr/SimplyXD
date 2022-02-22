@@ -3,7 +3,8 @@
 
     Sub ConnectXDPortal(uri As String)
         Dim temp = New Uri(uri)
-        _CurrentXDPortal = temp.AbsoluteUri.TrimEnd(temp.LocalPath) + "/odata4/v16"
+        Dim tempBase = temp.AbsoluteUri.Substring(0, temp.AbsoluteUri.IndexOf(temp.AbsolutePath))
+        _CurrentXDPortal = String.Format("{0}/{1}", tempBase, "odata4/v16")
     End Sub
 
     ReadOnly Property PortalURI As String

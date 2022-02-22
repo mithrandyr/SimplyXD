@@ -1,12 +1,15 @@
 param([string]$ConfigName = "Debug", [switch]$SkipBuild)
+$ErrorActionPreference = "stop"
 $outputPath = "$PSScriptRoot\SimplyXD\bin"
 if(Test-Path $outputPath) { Remove-Item $outputPath -Recurse -Force }
 New-Item -Path $outputPath -ItemType Directory | Out-Null
 
 if(-not $SkipBuild) {
+    $version = (Import-PowerShellDataFile -Path "$PsScriptRoot\SimplyXD\SimplyXD.psd1")["ModuleVersion"]
+    Write-Host "Building Version: $version"
     Push-Location "$PSScriptRoot\BinarySrc"
     dotnet clean
-    dotnet build
+    Invoke-Expression "dotnet build /p:Version=$version /p:AssemblyVersion=$version"
     dotnet publish
     Pop-Location
 }
