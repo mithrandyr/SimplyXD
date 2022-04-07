@@ -24,8 +24,8 @@ Public Class ClearBatch
     Public Property MinimumAgeInMinutes As Integer = 15
 
     <Parameter()>
-    <ValidateRange(1, 32)>
-    Public Property Concurrency As Integer = Environment.ProcessorCount
+    <ValidateRange(1, 50)>
+    Public Property Concurrency As Integer = 10
 
     Protected Overrides Sub EndProcessing()
         Dim bg = ExecuteWithTimeout(xdp.BatchGroups.Where(Function(x) x.Name.ToUpper().Equals(BatchGroup.ToUpper())).FirstOrDefaultAsync())
@@ -42,42 +42,68 @@ Public Class ClearBatch
         If TotalItems = 0 Then Exit Sub
         If DeleteLimit = 0 Then DeleteLimit = TotalItems
         Dim timer = Stopwatch.StartNew
-
         Dim stats As New ClearBatchStats With {.TotalItems = TotalItems, .DeleteLimit = DeleteLimit}
+        Dim taskList As New List(Of Task)
+        Dim deleteQueue As New Concurrent.ConcurrentQueue(Of Guid)
 
-        Dim backgroundTask = Task.Run(
+        'Task to query for items to delete
+        taskList.Add(Task.Run(
             Sub()
                 Dim foundList As New List(Of Guid)
                 Dim remainingItems = stats.TotalItems
+                Dim queryCount = Math.Max(Concurrency * 2, 10)
+                Dim shouldPause As Boolean = True
                 While remainingItems > 0
                     If token.IsCancellationRequested() Then Exit Sub
-                    For Each batchId In query.ExecuteAsync.Result.Select(Function(x) x.BatchId)
+                    For Each batchId In GenerateResults(query, Nothing, queryCount).Select(Function(x) x.BatchId).Where(Function(x) Not foundList.Contains(x))
                         If token.IsCancellationRequested() Then Exit Sub
-                        If Not foundList.Contains(batchId) Then
-                            foundList.Add(batchId)
-                            Threading.Interlocked.Increment(stats.Found)
-                            Threading.Interlocked.Increment(stats.RunningThreads)
-                            Task.Run(
-                                Sub()
-                                    Dim xdp2 = XDPortal()
-                                    Dim nbatch = New Batch With {.BatchId = batchId}
-                                    xdp2.AttachTo("Batches", nbatch)
-                                    xdp2.DeleteObject(nbatch)
-                                    If token.IsCancellationRequested Then Exit Sub
-                                    xdp2.SaveChangesAsync.Wait()
-                                    Threading.Interlocked.Increment(stats.Deleted)
-                                End Sub, token).ContinueWith(Sub() Threading.Interlocked.Decrement(stats.RunningThreads))
-
-                            If stats.Found >= stats.DeleteLimit Then Exit While
-                        End If
+                        foundList.Add(batchId)
+                        deleteQueue.Enqueue(batchId)
+                        Threading.Interlocked.Increment(stats.Found)
+                        If stats.Found >= stats.DeleteLimit Then Exit While
+                        shouldPause = False
                     Next
+                    If foundList.Count > Math.Max(Concurrency * 10, 20) Then
+                        foundList.RemoveRange(0, Concurrency * 4)
+                    End If
+                    If shouldPause Then
+                        Task.Delay(250, token).Wait()
+                    Else
+                        shouldPause = True
+                    End If
                     remainingItems = ExecuteWithTimeout(query.CountAsync())
                 End While
-            End Sub, token)
+            End Sub, token))
+
+        'Tasks to delete items
+        'setup threads to run deletes
+        For i = 1 To Concurrency
+            taskList.Add(Task.Run(Sub()
+                                      Dim batchid As Guid
+                                      Dim xdp2 = XDPortal()
+                                      While (stats.Deleted + stats.Skipped) < stats.DeleteLimit
+                                          If deleteQueue.TryDequeue(batchid) Then
+                                              Dim nbatch = New Batch With {.BatchId = batchid}
+                                              xdp2.AttachTo("Batches", nbatch)
+                                              xdp2.DeleteObject(nbatch)
+                                              If token.IsCancellationRequested Then Exit Sub
+                                              Try
+                                                  xdp2.SaveChangesAsync.Wait()
+                                                  Threading.Interlocked.Increment(stats.Deleted)
+                                              Catch
+                                                  Threading.Interlocked.Increment(stats.Skipped)
+                                              End Try
+                                          Else
+                                              Task.Delay(250, token).Wait()
+                                          End If
+                                          If token.IsCancellationRequested Then Exit Sub
+                                      End While
+                                  End Sub, token))
+        Next
 
         Try
             Console.TreatControlCAsInput = True
-            While backgroundTask.Status = TaskStatus.Running Or stats.RunningThreads > 0
+            While taskList.Any(Function(x) x.Status = TaskStatus.Running)
                 Dim pRecord = New ProgressRecord(1, "Cleaning Batches from " & bg.Name, String.Format("{0} out of {1}", stats.Deleted, DeleteLimit))
                 Dim percent As Double = stats.Deleted / DeleteLimit
                 pRecord.PercentComplete = percent * 100
@@ -92,7 +118,7 @@ Public Class ClearBatch
                         Exit While
                     End If
                 End While
-                Threading.Thread.Sleep(1000)
+                Threading.Thread.Sleep(500)
             End While
             If Not tokenSource.IsCancellationRequested Then tokenSource.Cancel()
         Finally
@@ -107,7 +133,9 @@ Public Class ClearBatch
     Private Function GenerateQuery(batchgroupId As Guid) As IQueryable(Of Batch)
         Dim query = xdp.Batches
         Dim minimumAge = Date.Now.AddMinutes(-1 * MinimumAgeInMinutes)
-        query = query.Where(Function(x) x.BatchGroupId = batchgroupId And x.CreatedDate <= minimumAge)
+        query = query.Where(Function(x) x.BatchGroupId = batchgroupId)
+        If MinimumAgeInMinutes > 0 Then query = query.Where(Function(x) x.CreatedDate <= minimumAge)
+
         If Not String.IsNullOrWhiteSpace(Status) Then
             Dim enumBatchStatus As BatchStatus = [Enum].Parse(GetType(BatchStatus), Status)
             query = query.Where(Function(x) x.Status = enumBatchStatus)
@@ -123,6 +151,6 @@ Public Class ClearBatch
         Public TotalItems As Integer
         Public DeleteLimit As Integer
         Public Found As Integer
-        Public RunningThreads As Integer
+        Public Skipped As Integer
     End Class
 End Class

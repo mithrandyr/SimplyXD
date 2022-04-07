@@ -52,11 +52,35 @@
         End If
 
         While iteration < limit
-            WriteProgress(New ProgressRecord(0, MyInvocation.MyCommand.Name, activityMessage) With {.CurrentOperation = iteration, .PercentComplete = (iteration * 100) / limit})
+            If objectName IsNot Nothing Then WriteProgress(New ProgressRecord(0, MyInvocation.MyCommand.Name, activityMessage) With {.CurrentOperation = iteration, .PercentComplete = (iteration * 100) / limit})
             Dim rList = ExecuteWithTimeout(cmd.Skip(iteration).ToListAsync())
             If rList Is Nothing Then Exit While
 
             For Each r In rList
+                Yield r
+            Next
+            iteration += 10
+        End While
+        If objectName IsNot Nothing Then FinishWriteProgress()
+    End Function
+
+    Public Iterator Function LookupResultsByGuid(Of src, lkp)(cmdSource As IQueryable(Of src), propertySource As Func(Of src, Guid), cmdLookup As IQueryable(Of lkp), propertyLookup As Expressions.Expression(Of Func(Of lkp, Guid)), objectName As String, Optional limit As Integer = 0) As IEnumerable(Of lkp)
+        Dim rCount = ExecuteWithTimeout(cmdSource.CountAsync())
+        Dim activityMessage As String, iteration As Integer = 0
+
+        If limit > 0 AndAlso rCount > limit Then
+            activityMessage = String.Format("Getting {0} {1} (out of {2})", limit, objectName, rCount)
+        Else
+            limit = rCount
+            activityMessage = String.Format("Getting {0} {1}", limit, objectName)
+        End If
+
+        While iteration < limit
+            WriteProgress(New ProgressRecord(0, MyInvocation.MyCommand.Name, activityMessage) With {.CurrentOperation = iteration, .PercentComplete = (iteration * 100) / limit})
+            Dim rList = ExecuteWithTimeout(cmdSource.Skip(iteration).ToListAsync()).Select(propertySource)
+            If rList Is Nothing Then Exit While
+
+            For Each r In GenerateResults(cmdLookup.WherePropertyIsIn(rList, propertyLookup), "")
                 Yield r
             Next
             iteration += 10
