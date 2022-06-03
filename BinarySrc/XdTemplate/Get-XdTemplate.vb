@@ -35,8 +35,8 @@ Public Class Get_XdTemplate
             If Not String.IsNullOrWhiteSpace(Search) Then
                 query = query.Where(Function(x) x.Name.Contains(Search))
             End If
-            For Each gr In GenerateResults(query, "Template")
-                WriteObject(gr)
+            For Each t In GenerateResults(query, "Template")
+                WriteObject(t.AsPSObject)
             Next
         Else
             Dim t As Template
@@ -50,7 +50,7 @@ Public Class Get_XdTemplate
                 End Try
             End If
 
-            If t IsNot Nothing Then WriteObject(t)
+            If t IsNot Nothing Then WriteObject(t.AsPSObject)
         End If
     End Sub
 End Class

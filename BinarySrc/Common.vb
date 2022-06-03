@@ -1,6 +1,6 @@
 ﻿Imports System.Linq.Expressions
 
-Module SimplyXD
+Module Common
     Private _CurrentXDPortal As String
 
     Sub ConnectXDPortal(uri As String)
