@@ -27,8 +27,11 @@ Public Class Get_XdUserProfile
             If ParameterSetName = "username" Then
                 up = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(UserName.ToUpper)).FirstOrDefaultAsync)
             Else
-                up = ExecuteWithTimeout(query.Where(Function(x) x.UserProfileId = UserProfileId).FirstOrDefaultAsync)
-                'need to provide error checking -- if the result is a 404... then report that the entity doesn't exist
+                Try
+                    up = ExecuteWithTimeout(query.Where(Function(x) x.UserProfileId = UserProfileId).FirstOrDefaultAsync)
+                Catch
+                    'TODO: add error handling.  When selecting using a GUID, if the guid doesn't exist, a NotFound error gets thrown.  Currently we are swallowing this error and returning nothing.
+                End Try
             End If
 
             If up IsNot Nothing Then WriteObject(up)
