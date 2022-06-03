@@ -6,7 +6,7 @@ New-Item -Path $outputPath -ItemType Directory | Out-Null
 
 if(-not $SkipBuild) {
     $version = [Version](Import-PowerShellDataFile -Path "$PsScriptRoot\SimplyXD\SimplyXD.psd1")["ModuleVersion"]
-    $version = [version]::new($version.Major, $version.Minor, $version.Build, $version.Revision + 1).tostring()
+    $version = [version]::new($version.Major, $version.Minor, (Get-Date).ToString("yyyy"), $version.Revision + 1).tostring()
     Update-ModuleManifest -Path "$PsScriptRoot\SimplyXD\SimplyXD.psd1" -ModuleVersion $version
     Write-Host "Building Version: $version"
     Push-Location "$PSScriptRoot\BinarySrc"
