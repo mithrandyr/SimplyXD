@@ -1,4 +1,4 @@
-param([string]$ConfigName = "Debug", [switch]$SkipBuild)
+param([string]$ConfigName = "Debug", [switch]$SkipBuild, [switch]$SkipUpdateCmdlets)
 $ErrorActionPreference = "stop"
 $outputPath = "$PSScriptRoot\SimplyXD\bin"
 if(Test-Path $outputPath) { Remove-Item $outputPath -Recurse -Force }
@@ -23,3 +23,20 @@ Get-ChildItem -Path (Join-Path $PSScriptRoot "BinarySrc\bin\$ConfigName\netstand
         Write-Host "  $($_.Name)"
         $_ | Copy-Item -Destination $outputPath
     }
+
+if(-not $SkipUpdateCmdlets) {
+    Write-Host "Updating Cmdlets in manifest file..."
+    $files = Get-ChildItem "$PSScriptRoot\BinarySrc\" -Directory |
+        Get-ChildItem  -Filter "*-*.vb" |
+        Select-Object -ExpandProperty basename
+    
+    $cmdletsList = "{0}" -f ($files -join ", ")
+    Write-Host "  NEW LIST: $cmdletsList"
+    
+    Update-ModuleManifest -Path "$PsScriptRoot\SimplyXD\SimplyXD.psd1" -CmdletsToExport $files
+    Write-Host
+}
+
+Write-Host "Updating Help..."
+Import-Module -Name "$PSScriptRoot\SimplyXD"
+Update-MarkdownHelpModule -Path .\Docs -RefreshModulePage
