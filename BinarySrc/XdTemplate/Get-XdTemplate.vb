@@ -3,7 +3,7 @@
 Public Class Get_XdTemplate
     Inherits baseCmdlet
 
-    <Parameter(ParameterSetName:="search", ValueFromPipelineByPropertyName:=True)>
+    <Parameter(ParameterSetName:="search", ValueFromPipelineByPropertyName:=True, Position:=0)>
     Public Property Search As String
 
     <Parameter(ParameterSetName:="search")>
