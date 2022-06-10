@@ -37,7 +37,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Force
-Removes TemplateLibrary even if it contains TemplateGroups (bypasses the prompt)
+Removes TemplateLibrary even if it contains TemplateGroups
 
 ```yaml
 Type: SwitchParameter

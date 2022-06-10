@@ -38,7 +38,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Force
-Removes templateGroup even if it contains templates (bypasses the prompt)
+Removes templateGroup even if it contains templates
 
 ```yaml
 Type: SwitchParameter

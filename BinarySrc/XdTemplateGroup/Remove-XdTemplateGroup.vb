@@ -1,6 +1,6 @@
 ﻿
 <Cmdlet(VerbsCommon.Remove, "XdTemplateGroup")>
-<CmdletBinding(DefaultParameterSetName:="name", SupportsShouldProcess:=True)>
+<CmdletBinding(DefaultParameterSetName:="name")>
 Public Class Remove_XdTemplateGroup
     Inherits baseCmdlet
 
@@ -30,14 +30,16 @@ Public Class Remove_XdTemplateGroup
 
         WriteVerbose("Getting count of Templates in the TemplateGroup")
         Dim templateCount As Integer = ExecuteWithTimeout(xdp.Templates.Where(Function(x) x.TemplateGroupId = TemplateGroupId).CountAsync)
-        Dim shouldQuery = String.Format("TemplateGroup '{0}' has {1} templates", If(Name, TemplateGroupId), templateCount)
+        Dim errMessage = String.Format("TemplateGroup '{0}' has {1} templates", If(Name, TemplateGroupId), templateCount)
 
-        If templateCount = 0 OrElse Force.IsPresent OrElse ShouldContinue(shouldQuery, "Remove TemplateGroup?") Then
+        If templateCount = 0 OrElse Force.IsPresent Then
             Dim dTemplateGroup = New TemplateGroup With {.TemplateGroupId = TemplateGroupId}
             xdp.AttachTo("TemplateGroups", dTemplateGroup)
             xdp.DeleteObject(dTemplateGroup)
             WriteVerbose("Deleting the TemplateGroup")
             SaveChanges()
+        Else
+            WriteError(New ErrorRecord(New InvalidOperationException(errMessage), "TemplateGroupIsNotEmpty", ErrorCategory.ResourceExists, TemplateGroupId))
         End If
     End Sub
 End Class
