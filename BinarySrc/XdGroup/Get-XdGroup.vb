@@ -7,31 +7,32 @@ Public Class Get_XdProfile
     Public Property Search As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True)>
-    Public Property GroupName As String
+    Public Property Name As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Public Property GroupId As Guid
 
     Protected Overrides Sub EndProcessing()
         Dim query = xdp.Groups.AsQueryable
+        Select Case ParameterSetName
+            Case "search"
+                If Not String.IsNullOrWhiteSpace(Search) Then
+                    query = query.Where(Function(x) x.Name.Contains(Search) Or x.Description.Contains(Search))
+                End If
+                For Each gr In GenerateResults(query, "Group")
+                    WriteObject(gr)
+                Next
 
-        If ParameterSetName = "search" Then
-            If Not String.IsNullOrWhiteSpace(Search) Then
-                query = query.Where(Function(x) x.Name.Contains(Search) Or x.Description.Contains(Search))
-            End If
-            For Each gr In GenerateResults(query, "Group")
-                WriteObject(gr)
-            Next
-        Else
-            Dim g As Group
-            If ParameterSetName = "name" Then
-                g = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(GroupName.ToUpper)).FirstOrDefaultAsync)
-            Else
-                g = ExecuteWithTimeout(query.Where(Function(x) x.GroupId = GroupId).FirstOrDefaultAsync)
-                'need to provide error checking -- if the result is a 404... then report that the entity doesn't exist
-            End If
+            Case "name"
+                Dim g As Group = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)
+                If g IsNot Nothing Then WriteObject(g)
 
-            If g IsNot Nothing Then WriteObject(g)
-        End If
+            Case "id"
+                Try
+                    Dim g As Group = ExecuteWithTimeout(query.Where(Function(x) x.GroupId = GroupId).FirstOrDefaultAsync)
+                Catch ex As Exception
+                    WriteError(StandardErrors.XDPMissing("Group", GroupId.ToString, ex))
+                End Try
+        End Select
     End Sub
 End Class

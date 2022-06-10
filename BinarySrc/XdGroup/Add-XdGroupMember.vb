@@ -24,7 +24,8 @@ Public Class Add_XdGroupMember
         If ParameterSetName.StartsWith("name") Then
             Dim g As Group = ExecuteWithTimeout(xdp.Groups.Where(Function(x) x.Name.Equals(GroupName)).FirstOrDefaultAsync)
             If g Is Nothing Then
-                WriteWarning(String.Format("Cannot find group '{0}' to add a member to.", GroupName))
+                Dim ex As New ArgumentException(String.Format("Cannot find group '{0}' to add a member to.", GroupName), "GroupName")
+                WriteError(ex, "XDPortal.GroupNotFound", ErrorCategory.InvalidArgument, GroupName)
                 Exit Sub
             End If
             GroupId = g.GroupId
@@ -33,7 +34,8 @@ Public Class Add_XdGroupMember
         If ParameterSetName.EndsWith("name") Then
             Dim u As UserProfile = ExecuteWithTimeout(xdp.UserProfiles.Where(Function(x) x.Name.Equals(UserName)).FirstOrDefaultAsync)
             If u Is Nothing Then
-                WriteWarning(String.Format("Cannot find user '{0}' to add to the group.", UserName))
+                Dim ex As New ArgumentException(String.Format("Cannot find user profile '{0}' to add to the group.", UserName), "UserName")
+                WriteError(ex, "XDPortal.UserProfileNotFound", ErrorCategory.InvalidArgument, UserName)
                 Exit Sub
             End If
             UserProfileId = u.UserProfileId

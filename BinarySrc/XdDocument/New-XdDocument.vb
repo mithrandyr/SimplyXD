@@ -13,8 +13,7 @@ Public Class NewXdDocument
         Dim doc As New Document With {.BatchId = Guid.Parse(BatchId), .Status = DocumentStatus.Created, .SequenceNumber = SequenceNumber}
         xdp.AddToDocuments(doc)
 
-        SaveChanges(doc)
-        WriteObject(doc)
+        If SaveChanges(doc) Then WriteObject(doc)
     End Sub
 
 End Class

@@ -10,10 +10,10 @@ Public Class NewXdDocumentProvider
     Public Property XmlData As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="long")>
-    Public Property LibraryName As String
+    Public Property TemplateLibraryName As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="long")>
-    Public Property GroupName As String
+    Public Property TemplateGroupName As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="long")>
     Public Property TemplateName As String
@@ -34,12 +34,11 @@ Public Class NewXdDocumentProvider
         If ParameterSetName = "short" Then
             docProv.InputMetadata = InputMetaData
         Else
-            docProv.InputMetadata = String.Format(inputPattern, LibraryName, GroupName, TemplateName, Security.SecurityElement.Escape(XmlData), DopaName)
+            docProv.InputMetadata = String.Format(inputPattern, TemplateLibraryName, TemplateGroupName, TemplateName, Security.SecurityElement.Escape(XmlData), DopaName)
         End If
 
         xdp.AddToDocumentProviders(docProv)
-        SaveChanges(docProv)
-        WriteObject(docProv)
+        If SaveChanges(docProv) Then WriteObject(docProv)
     End Sub
 
 End Class

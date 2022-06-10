@@ -4,8 +4,9 @@ Public Class New_XdUserProfile
     Inherits baseCmdlet
 
 #Region "PowerShell Properties"
+    <[Alias]("UserName")>
     <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
-    Property UserName As String
+    Property Name As String
 
     <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Property Email As String
@@ -18,13 +19,12 @@ Public Class New_XdUserProfile
 #End Region
 
     Protected Overrides Sub ProcessRecord()
-        Dim nUserProfile As New UserProfile With {.Name = UserName, .Email = Email}
+        Dim nUserProfile As New UserProfile With {.Name = Name, .Email = Email}
 
         If Not String.IsNullOrWhiteSpace(FirstName) Then nUserProfile.FirstName = FirstName
         If Not String.IsNullOrWhiteSpace(LastName) Then nUserProfile.FirstName = LastName
 
         xdp.AddToUserProfiles(nUserProfile)
-        SaveChanges(nUserProfile)
-        WriteObject(nUserProfile)
+        If SaveChanges(nUserProfile) Then WriteObject(nUserProfile)
     End Sub
 End Class

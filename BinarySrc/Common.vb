@@ -1,15 +1,15 @@
 ﻿Imports System.Linq.Expressions
 
-Module SimplyXD
+Module Common
     Private _CurrentXDPortal As String
 
     Sub ConnectXDPortal(uri As String)
         Dim temp = New Uri(uri)
         If temp.AbsolutePath.Length > 1 Then
             Dim tempBase = temp.AbsoluteUri.Substring(0, temp.AbsoluteUri.LastIndexOf(temp.AbsolutePath))
-            _CurrentXDPortal = String.Format("{0}/{1}", tempBase, "odata4/v16")
+            _CurrentXDPortal = String.Format("{0}/{1}", tempBase, "odata4/v18")
         Else
-            _CurrentXDPortal = String.Format("{0}{1}", temp.AbsoluteUri, "odata4/v16")
+            _CurrentXDPortal = String.Format("{0}{1}", temp.AbsoluteUri, "odata4/v18")
         End If
     End Sub
 

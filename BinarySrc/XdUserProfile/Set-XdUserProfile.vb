@@ -23,6 +23,9 @@ Public Class Set_XdUserProfile
 #End Region
 
     Protected Overrides Sub ProcessRecord()
+        WriteError(StandardErrors.NotImplemented("Set-XdUserProfile is not implented."))
+        Exit Sub
+
         Dim nUserProfile As UserProfile = ExecuteWithTimeout(xdp.UserProfiles.Where(Function(x) x.UserProfileId = UserProfileId).FirstOrDefaultAsync)
         If nUserProfile Is Nothing Then
             WriteError(New ErrorRecord(New ItemNotFoundException(String.Format("No UserProfile was found for '{0}'.", UserProfileId.ToString)), Nothing, ErrorCategory.ObjectNotFound, UserProfileId))
