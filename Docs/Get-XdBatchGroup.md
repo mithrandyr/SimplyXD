@@ -41,36 +41,6 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Search
-returns batchgroups containing this value
-
-```yaml
-Type: String
-Parameter Sets: search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TimeOut
-Actions against the Xpertdoc Portal will timeout in this many seconds.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -BatchGroupId
 GUID of the batchgroup to return
 
@@ -98,6 +68,36 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Search
+returns batchgroups containing this value
+
+```yaml
+Type: String
+Parameter Sets: search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TimeOut
+Actions against the Xpertdoc Portal will timeout in this many seconds.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

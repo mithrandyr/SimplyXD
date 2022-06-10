@@ -99,6 +99,36 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -TemplateGroupName
+Name of the TemplateGroup to find the template to execute
+
+```yaml
+Type: String
+Parameter Sets: long
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateLibraryName
+Name of the TemplateLibrary to find the TemplateGroup
+
+```yaml
+Type: String
+Parameter Sets: long
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -TemplateName
 Name of the template to execute
 
@@ -131,36 +161,6 @@ Accept wildcard characters: False
 
 ### -XmlData
 XML data to be used in the execution of the template
-
-```yaml
-Type: String
-Parameter Sets: long
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TemplateGroupName
-Name of the TemplateGroup to find the template to execute
-
-```yaml
-Type: String
-Parameter Sets: long
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TemplateLibraryName
-Name of the TemplateLibrary to find the TemplateGroup
 
 ```yaml
 Type: String

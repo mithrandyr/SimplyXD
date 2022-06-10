@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-XdTemplateLibrary
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Removes the TemplateLibrary
 
 ## SYNTAX
 
@@ -23,7 +23,7 @@ Remove-XdTemplateLibrary -TemplateLibraryId <Guid> [-Force] [-TimeOut <Int32>] [
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Removes the TemplateLibrary
 
 ## EXAMPLES
 

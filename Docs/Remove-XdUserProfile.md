@@ -36,6 +36,21 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -Name
+Name of the UserProfile to remove
+
+```yaml
+Type: String
+Parameter Sets: username
+Aliases: UserName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -TimeOut
 Actions against the Xpertdoc Portal will timeout in this many seconds.
 
@@ -58,21 +73,6 @@ GUID of the UserProfile to remove
 Type: Guid
 Parameter Sets: id
 Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Name
-Name of the UserProfile to remove
-
-```yaml
-Type: String
-Parameter Sets: username
-Aliases: UserName
 
 Required: True
 Position: Named

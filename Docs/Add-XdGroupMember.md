@@ -92,7 +92,7 @@ Accept wildcard characters: False
 ```
 
 ### -UserName
-{{ Fill UserName Description }}
+Name of the UserProfile to add to the group
 
 ```yaml
 Type: String
@@ -107,7 +107,7 @@ Accept wildcard characters: False
 ```
 
 ### -UserProfileId
-{{ Fill UserProfileId Description }}
+GUID of the UserProfile to add to the Group
 
 ```yaml
 Type: Guid

@@ -84,7 +84,7 @@ Removes a batch
 Removes a TemplateGroup
 
 ### [Remove-XdTemplateLibrary](Remove-XdTemplateLibrary.md)
-{{ Fill in the Synopsis }}
+Removes the TemplateLibrary
 
 ### [Remove-XdUserProfile](Remove-XdUserProfile.md)
 Removes a UserProfile
