@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-XdUserProfile
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Updates a UserProfile
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Set-XdUserProfile -UserProfileId <Guid> [-UserName <String>] [-Email <String>] [
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Updates a UserProfile
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Email
-{{ Fill Email Description }}
+Email address
 
 ```yaml
 Type: String
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -FirstName
-{{ Fill FirstName Description }}
+FirstName
 
 ```yaml
 Type: String
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -LastName
-{{ Fill LastName Description }}
+LastName
 
 ```yaml
 Type: String
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -92,7 +92,7 @@ Accept wildcard characters: False
 ```
 
 ### -UserName
-{{ Fill UserName Description }}
+Name of the UserProfile to update
 
 ```yaml
 Type: String
@@ -107,7 +107,7 @@ Accept wildcard characters: False
 ```
 
 ### -UserProfileId
-{{ Fill UserProfileId Description }}
+GUID of the UserProfile to update
 
 ```yaml
 Type: Guid

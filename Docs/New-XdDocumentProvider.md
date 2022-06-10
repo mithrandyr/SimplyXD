@@ -8,14 +8,15 @@ schema: 2.0.0
 # New-XdDocumentProvider
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Creates a document provider
 
 ## SYNTAX
 
 ### long
 ```
-New-XdDocumentProvider -DocumentId <String> -XmlData <String> -LibraryName <String> -GroupName <String>
- -TemplateName <String> [-DopaName <String>] [-TimeOut <Int32>] [<CommonParameters>]
+New-XdDocumentProvider -DocumentId <String> -XmlData <String> -TemplateLibraryName <String>
+ -TemplateGroupName <String> -TemplateName <String> [-DopaName <String>] [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
 ### short
@@ -25,7 +26,7 @@ New-XdDocumentProvider -DocumentId <String> -ContractName <String> -InputMetaDat
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Creates a document provider
 
 ## EXAMPLES
 
@@ -39,7 +40,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -ContractName
-{{ Fill ContractName Description }}
+ContractName that determines which provider to execute - should not be specified
 
 ```yaml
 Type: String
@@ -54,7 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -DocumentId
-{{ Fill DocumentId Description }}
+GUID of the document to associate this document provider with
 
 ```yaml
 Type: String
@@ -69,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -DopaName
-{{ Fill DopaName Description }}
+Name of the DOPA that should be used
 
 ```yaml
 Type: String
@@ -83,23 +84,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -GroupName
-{{ Fill GroupName Description }}
-
-```yaml
-Type: String
-Parameter Sets: long
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -InputMetaData
-{{ Fill InputMetaData Description }}
+MetaData structure to be used with the Contract - should not be specified
 
 ```yaml
 Type: String
@@ -113,23 +99,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -LibraryName
-{{ Fill LibraryName Description }}
-
-```yaml
-Type: String
-Parameter Sets: long
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -TemplateName
-{{ Fill TemplateName Description }}
+Name of the template to execute
 
 ```yaml
 Type: String
@@ -144,7 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -159,7 +130,37 @@ Accept wildcard characters: False
 ```
 
 ### -XmlData
-{{ Fill XmlData Description }}
+XML data to be used in the execution of the template
+
+```yaml
+Type: String
+Parameter Sets: long
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateGroupName
+Name of the TemplateGroup to find the template to execute
+
+```yaml
+Type: String
+Parameter Sets: long
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateLibraryName
+Name of the TemplateLibrary to find the TemplateGroup
 
 ```yaml
 Type: String

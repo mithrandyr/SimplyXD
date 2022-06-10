@@ -11,29 +11,41 @@
     <Parameter(ValueFromPipelineByPropertyName:=True)>
     Public Property TimeOut As Integer = 15
 
-    Public Sub SaveChanges(x As Object)
-        SaveChanges(0, x)
-    End Sub
+    Public Function SaveChanges(x As Object) As Boolean
+        Return SaveChanges(0, x)
+    End Function
 
 
-    Public Sub SaveChanges(Optional timeoutMS As Integer = 0, Optional x As Object = Nothing)
+    Public Function SaveChanges(Optional timeoutMS As Integer = 0, Optional x As Object = Nothing) As Boolean
         If timeoutMS <= 0 Then timeoutMS = TimeOut * 1000
         Using dsr = xdp.SaveChangesAsync()
             Try
                 If Not dsr.Wait(timeoutMS) Then
                     If x IsNot Nothing Then xdp.Detach(x)
                     WriteError(New ErrorRecord(New TimeoutException(String.Format("SaveChanges timeout of {0}s exceeded.", (timeoutMS / 1000))), Nothing, ErrorCategory.OperationTimeout, x))
+                    Return False
+                Else
+                    Return True
                 End If
             Catch ex As Exception
                 If x IsNot Nothing Then xdp.Detach(x)
                 WriteError(New ErrorRecord(WrappedException.GenerateMessageFromInnermost(ex), Nothing, ErrorCategory.NotSpecified, x))
+                Return False
             End Try
         End Using
-    End Sub
+    End Function
 
     Public Function ExecuteWithTimeout(Of t)(cmd As Task(Of t), Optional timeoutMS As Integer = 0) As t
         If timeoutMS = 0 Then timeoutMS = TimeOut * 1000
-        If cmd.Wait(timeoutMS) Then
+        Dim result As Boolean
+
+        Try
+            result = cmd.Wait(timeoutMS)
+        Catch ex As Exception
+            Throw WrappedException.GenerateMessageFromInnermost(ex)
+        End Try
+
+        If result Then
             Return cmd.Result
         Else
             Throw New TimeoutException(String.Format("Retrieval timeout of {0}s exceeded.", (timeoutMS / 1000)))
@@ -64,6 +76,9 @@
         If objectName IsNot Nothing Then FinishWriteProgress()
     End Function
 
+    Public Overloads Sub WriteError(ex As Exception, errId As String, errCategory As ErrorCategory, Optional errObject As Object = Nothing)
+        WriteError(New ErrorRecord(ex, errId, errCategory, errObject))
+    End Sub
     ''EXCLUDED/DEPRECATED -- can use the .Expand operator on the underlying object to get this information.
     'Public Iterator Function LookupResultsByGuid(Of src, lkp)(cmdSource As IQueryable(Of src), propertySource As Func(Of src, Guid), cmdLookup As IQueryable(Of lkp), propertyLookup As Expressions.Expression(Of Func(Of lkp, Guid)), objectName As String, Optional limit As Integer = 0) As IEnumerable(Of lkp)
     '    Dim rCount = ExecuteWithTimeout(cmdSource.CountAsync())

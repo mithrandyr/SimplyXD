@@ -12,7 +12,6 @@ Public Class NewBatch
     Protected Overrides Sub EndProcessing()
         Dim nBatch As New Batch With {.BatchGroupId = BatchGroupId, .Status = BatchStatus.Created, .Name = BatchName}
         xdp.AddToBatches(nBatch)
-        SaveChanges()
-        WriteObject(nBatch)
+        If SaveChanges(nBatch) Then WriteObject(nBatch)
     End Sub
 End Class

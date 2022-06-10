@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-XdPortal
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Returns the connected portal
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ Get-XdPortal [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Returns the connected portal
 
 ## EXAMPLES
 

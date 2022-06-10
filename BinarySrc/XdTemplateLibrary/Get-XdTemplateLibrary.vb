@@ -7,8 +7,9 @@ Public Class Get_XdTemplateLibrary
     <ValidateNotNull()>
     Public Property Search As String
 
+    <[Alias]("TemplatLibrary")>
     <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True)>
-    Public Property TemplateLibrary As String
+    Public Property Name As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateLibraryId As Guid
@@ -17,20 +18,22 @@ Public Class Get_XdTemplateLibrary
         Dim query = xdp.TemplateLibraries.AsQueryable
 
         If ParameterSetName = "search" Then
-            query = query.Where(Function(x) x.Name.Contains(Search))
+            If Not String.IsNullOrWhiteSpace(Search) Then
+                query = query.Where(Function(x) x.Name.Contains(Search))
+            End If
 
             For Each tl In GenerateResults(query, "TemplateLibrary")
-                WriteObject(tl)
-            Next
-        Else
-            Dim tl As TemplateLibrary
+                    WriteObject(tl)
+                Next
+            Else
+                Dim tl As TemplateLibrary
             If ParameterSetName = "name" Then
-                tl = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)
+                tl = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)
             Else
                 Try
                     tl = ExecuteWithTimeout(query.Where(Function(x) x.TemplateLibraryId = TemplateLibraryId).FirstOrDefaultAsync)
-                Catch
-                    'TODO: add error handling.  When selecting using a GUID, if the guid doesn't exist, a NotFound error gets thrown.  Currently we are swallowing this error and returning nothing.
+                Catch ex As Exception
+                    WriteError(StandardErrors.XDPMissing("TemplateLibrary", TemplateLibraryId.ToString, ex))
                 End Try
             End If
 

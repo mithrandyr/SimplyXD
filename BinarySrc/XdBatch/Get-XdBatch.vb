@@ -25,8 +25,12 @@ Public Class GetBatch
     Protected Overrides Sub EndProcessing()
         Dim query = xdp.Batches
         If ParameterSetName = "batch" Then
-            Dim b = ExecuteWithTimeout(query.Where(Function(x) x.BatchId = BatchId).FirstOrDefaultAsync)
-            If b IsNot Nothing Then WriteObject(b)
+            Try
+                Dim b = ExecuteWithTimeout(query.Where(Function(x) x.BatchId = BatchId).FirstOrDefaultAsync)
+                WriteObject(b)
+            Catch ex As Exception
+                WriteError(StandardErrors.XDPMissing("Batch", BatchId.ToString, ex))
+            End Try
         Else
             query = query.Where(Function(x) x.BatchGroupId = BatchGroupId)
             If Not String.IsNullOrWhiteSpace(Status) Then

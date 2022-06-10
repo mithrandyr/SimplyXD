@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-XdBatch
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Creates a new Batch
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ New-XdBatch -BatchGroupId <Guid> [-BatchName <String>] [-TimeOut <Int32>] [<Comm
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Creates a new Batch
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -BatchGroupId
-{{ Fill BatchGroupId Description }}
+GUID of the batchgroup to create the batch in
 
 ```yaml
 Type: Guid
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -BatchName
-{{ Fill BatchName Description }}
+Name of the batchgroup to create the batch in
 
 ```yaml
 Type: String
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32

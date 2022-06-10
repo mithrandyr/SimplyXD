@@ -5,26 +5,20 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdBatch
+# New-XdTemplateLibrary
 
 ## SYNOPSIS
-Gets a Batch
+Creates a template library
 
 ## SYNTAX
 
-### bg
 ```
-Get-XdBatch -BatchGroupId <Guid> [-Limit <Int32>] [-SortByCreation <String>] [-Status <String>]
- [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### batch
-```
-Get-XdBatch -BatchId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+New-XdTemplateLibrary [-Name] <String> [-Description <String>] [-DisableTemplateVersioning] [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets a Batch
+Creates a template library
 
 ## EXAMPLES
 
@@ -37,59 +31,13 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -BatchGroupId
-GUID of the BatchGroup to return batches from
-
-```yaml
-Type: Guid
-Parameter Sets: bg
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -BatchId
-GUID of the batch to return
-
-```yaml
-Type: Guid
-Parameter Sets: batch
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Limit
-maximum number of batches to return
-
-```yaml
-Type: Int32
-Parameter Sets: bg
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SortByCreation
-Sorts the batches by creation data
+### -Description
+Description for the TemplateLibrary
 
 ```yaml
 Type: String
-Parameter Sets: bg
+Parameter Sets: (All)
 Aliases:
-Accepted values: Ascending, Descending
 
 Required: False
 Position: Named
@@ -98,17 +46,31 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Status
-Batches with this status will be returned, if not specified all will be returned.
+### -DisableTemplateVersioning
+Specify if you want to disable template versioning in this library - should not be used
 
 ```yaml
-Type: String
-Parameter Sets: bg
+Type: SwitchParameter
+Parameter Sets: (All)
 Aliases:
-Accepted values: Completed, Created, Error, Queued, Running, TimedOut
 
 Required: False
 Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the TemplateLibrary to create
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: TemplateLibrary
+
+Required: True
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

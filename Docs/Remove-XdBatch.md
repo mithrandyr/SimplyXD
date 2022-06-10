@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-XdBatch
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Removes a batch
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ Remove-XdBatch -BatchId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Removes a batch
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -BatchId
-{{ Fill BatchId Description }}
+GUID of the Batch to remove
 
 ```yaml
 Type: Guid
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32

@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-XdTemplate
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Returns templates
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Get-XdTemplate [-Search <String>] [-TemplateLibrary <String>] [-TemplateGroup <S
 
 ### name
 ```
-Get-XdTemplate -TemplateLibrary <String> -TemplateGroup <String> -TemplateName <String> [-IncludeContent]
+Get-XdTemplate -TemplateLibrary <String> -TemplateGroup <String> -Name <String> [-IncludeContent]
  [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
@@ -30,7 +30,7 @@ Get-XdTemplate -TemplateId <Guid> [-IncludeContent] [-TimeOut <Int32>] [<CommonP
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Returns templates
 
 ## EXAMPLES
 
@@ -44,7 +44,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -IncludeContent
-{{ Fill IncludeContent Description }}
+If specified, will return the WordDocument and DLL of the template
 
 ```yaml
 Type: SwitchParameter
@@ -59,7 +59,7 @@ Accept wildcard characters: False
 ```
 
 ### -Search
-{{ Fill Search Description }}
+Returns templates with the templatename containing this value
 
 ```yaml
 Type: String
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -TemplateGroup
-{{ Fill TemplateGroup Description }}
+Name of the templategroup to return templates from
 
 ```yaml
 Type: String
@@ -101,7 +101,7 @@ Accept wildcard characters: False
 ```
 
 ### -TemplateId
-{{ Fill TemplateId Description }}
+GUID of the template to return
 
 ```yaml
 Type: Guid
@@ -116,7 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -TemplateLibrary
-{{ Fill TemplateLibrary Description }}
+Name of the templatelibrary to return templates from
 
 ```yaml
 Type: String
@@ -142,23 +142,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateName
-{{ Fill TemplateName Description }}
-
-```yaml
-Type: String
-Parameter Sets: name
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -169,6 +154,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the template to return
+
+```yaml
+Type: String
+Parameter Sets: name
+Aliases: TemplateName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

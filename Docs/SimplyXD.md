@@ -8,69 +8,96 @@ Locale: en-US
 
 # SimplyXD Module
 ## Description
-{{ Fill in the Description }}
+PowerShell module that wraps the Xpertdoc Portal API.
 
 ## SimplyXD Cmdlets
 ### [Add-XdGroupMember](Add-XdGroupMember.md)
-Synopsis test
+Adds UserProfile to Group
 
 ### [Clear-XdBatchGroup](Clear-XdBatchGroup.md)
-{{ Fill in the Synopsis }}
+Removes all batches from a batchgroup.
 
 ### [Connect-XdPortal](Connect-XdPortal.md)
-{{ Fill in the Synopsis }}
+Connects to an Xpertdoc Portal
+
+### [Export-XdTemplate](Export-XdTemplate.md)
+Exports a template into a zipfile
 
 ### [Get-XdBatch](Get-XdBatch.md)
-{{ Fill in the Synopsis }}
+Gets a Batch
 
 ### [Get-XdBatchGroup](Get-XdBatchGroup.md)
-{{ Fill in the Synopsis }}
+Gets a batchgroup
 
 ### [Get-XdDocument](Get-XdDocument.md)
-{{ Fill in the Synopsis }}
+Returns a document
 
 ### [Get-XdGroup](Get-XdGroup.md)
-{{ Fill in the Synopsis }}
+Returns a Group
 
 ### [Get-XdGroupMember](Get-XdGroupMember.md)
-{{ Fill in the Synopsis }}
+Get Members of a group
 
 ### [Get-XdPortal](Get-XdPortal.md)
-{{ Fill in the Synopsis }}
+Returns the connected portal
 
 ### [Get-XdTemplate](Get-XdTemplate.md)
-{{ Fill in the Synopsis }}
+Returns templates
 
 ### [Get-XdTemplateGroup](Get-XdTemplateGroup.md)
-{{ Fill in the Synopsis }}
+Return TemplateGroups
 
 ### [Get-XdTemplateLibrary](Get-XdTemplateLibrary.md)
-{{ Fill in the Synopsis }}
+Returns templatelibraries
 
 ### [Get-XdUserProfile](Get-XdUserProfile.md)
-{{ Fill in the Synopsis }}
+Returns userprofiles
+
+### [Import-XdTemplate](Import-XdTemplate.md)
+Imports a template from a zipfile.
 
 ### [New-XdBatch](New-XdBatch.md)
-{{ Fill in the Synopsis }}
+Creates a new Batch
 
 ### [New-XdDocument](New-XdDocument.md)
-{{ Fill in the Synopsis }}
+Creates a Document
 
 ### [New-XdDocumentProvider](New-XdDocumentProvider.md)
-{{ Fill in the Synopsis }}
+Creates a document provider
+
+### [New-XdTemplate](New-XdTemplate.md)
+Creates a template
+
+### [New-XdTemplateGroup](New-XdTemplateGroup.md)
+Creates a template group
+
+### [New-XdTemplateLibrary](New-XdTemplateLibrary.md)
+Creates a template library
 
 ### [New-XdUserProfile](New-XdUserProfile.md)
-{{ Fill in the Synopsis }}
+Creates a UserProfile
 
 ### [Remove-XdBatch](Remove-XdBatch.md)
+Removes a batch
+
+### [Remove-XdTemplateGroup](Remove-XdTemplateGroup.md)
+Removes a TemplateGroup
+
+### [Remove-XdTemplateLibrary](Remove-XdTemplateLibrary.md)
 {{ Fill in the Synopsis }}
 
 ### [Remove-XdUserProfile](Remove-XdUserProfile.md)
-{{ Fill in the Synopsis }}
+Removes a UserProfile
+
+### [Set-XdTemplate](Set-XdTemplate.md)
+Updates a Template
+
+### [Set-XdTemplateContent](Set-XdTemplateContent.md)
+Updates the content (DLL & DOCX) of a Template
 
 ### [Set-XdUserProfile](Set-XdUserProfile.md)
-{{ Fill in the Synopsis }}
+Updates a UserProfile
 
 ### [Start-XdBatch](Start-XdBatch.md)
-{{ Fill in the Synopsis }}
+Executes a batch
 

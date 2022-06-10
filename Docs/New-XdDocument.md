@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-XdDocument
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Creates a Document
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ New-XdDocument -BatchId <String> [-SequenceNumber <Int32>] [-TimeOut <Int32>] [<
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Creates a Document
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -BatchId
-{{ Fill BatchId Description }}
+GUID of the batch to attach the document to
 
 ```yaml
 Type: String
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -SequenceNumber
-{{ Fill SequenceNumber Description }}
+The document key in the batch when creating documents, multiple documents can be associated to a batch.
 
 ```yaml
 Type: Int32
@@ -55,13 +55,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32

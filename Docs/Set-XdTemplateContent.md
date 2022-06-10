@@ -5,27 +5,27 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdDocument
+# Set-XdTemplateContent
 
 ## SYNOPSIS
-Returns a document
+Updates the content (DLL & DOCX) of a Template
 
 ## SYNTAX
 
-### id
+### name
 ```
-Get-XdDocument -DocumentId <Guid> [-IncludeOutput] [-IncludeProviders] [-IncludeOperations] [-TimeOut <Int32>]
- [<CommonParameters>]
+Set-XdTemplateContent -TemplateLibrary <String> -TemplateGroup <String> -Name <String> -Source <Byte[]>
+ -Assembly <Byte[]> [-Comment <String>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
-### batch
+### id
 ```
-Get-XdDocument -BatchId <Guid> [-SequenceNumber <Int32>] [-IncludeOutput] [-IncludeProviders]
- [-IncludeOperations] [-TimeOut <Int32>] [<CommonParameters>]
+Set-XdTemplateContent -TemplateId <Guid> -Source <Byte[]> -Assembly <Byte[]> [-Comment <String>]
+ [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns a document
+Updates the content (DLL & DOCX) of a Template
 
 ## EXAMPLES
 
@@ -38,23 +38,83 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -BatchId
-GUID of the batch, documents in this batch will be returned
+### -Assembly
+Binary content representing the template's DLL
 
 ```yaml
-Type: Guid
-Parameter Sets: batch
+Type: Byte[]
+Parameter Sets: (All)
+Aliases: Dll
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Comment
+Comment to be added to the TemplateVersionHistory
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the Template whose content is being updated
+
+```yaml
+Type: String
+Parameter Sets: name
+Aliases: TemplateName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Source
+Binary content representing the template's word document
+
+```yaml
+Type: Byte[]
+Parameter Sets: (All)
+Aliases: WordDocument
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateGroup
+Name of the templateGroup in which to find the Template
+
+```yaml
+Type: String
+Parameter Sets: name
 Aliases:
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DocumentId
-GUID of the document to return
+### -TemplateId
+GUID of the Template whose content is being updated
 
 ```yaml
 Type: Guid
@@ -64,67 +124,22 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IncludeOperations
-Include the documentOperations in the result
+### -TemplateLibrary
+TemplateLibrary in which to find the TemplateGroup
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
+Type: String
+Parameter Sets: name
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -IncludeOutput
-Include the output in the result
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -IncludeProviders
-include the providers in the result
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -SequenceNumber
-Which document number you want from the batch
-
-```yaml
-Type: Int32
-Parameter Sets: batch
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -148,11 +163,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.Guid
-
 ### System.Int32
-
-### System.Management.Automation.SwitchParameter
 
 ## OUTPUTS
 

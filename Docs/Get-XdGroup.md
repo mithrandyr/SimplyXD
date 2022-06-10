@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-XdGroup
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Returns a Group
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ Get-XdGroup [-Search <String>] [-TimeOut <Int32>] [<CommonParameters>]
 
 ### name
 ```
-Get-XdGroup -GroupName <String> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdGroup -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
@@ -28,7 +28,7 @@ Get-XdGroup -GroupId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Returns a Group
 
 ## EXAMPLES
 
@@ -42,7 +42,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -GroupId
-{{ Fill GroupId Description }}
+GUID of the group to return
 
 ```yaml
 Type: Guid
@@ -56,23 +56,8 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -GroupName
-{{ Fill GroupName Description }}
-
-```yaml
-Type: String
-Parameter Sets: name
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -Search
-{{ Fill Search Description }}
+Groups containing this will be returned
 
 ```yaml
 Type: String
@@ -87,7 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -95,6 +80,21 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Name
+Group with this name will be returned
+
+```yaml
+Type: String
+Parameter Sets: name
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

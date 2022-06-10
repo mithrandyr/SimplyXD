@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-XdUserProfile
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Returns userprofiles
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ Get-XdUserProfile [-Search <String>] [-TimeOut <Int32>] [<CommonParameters>]
 
 ### username
 ```
-Get-XdUserProfile -UserName <String> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdUserProfile -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
@@ -28,7 +28,7 @@ Get-XdUserProfile -UserProfileId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Returns userprofiles
 
 ## EXAMPLES
 
@@ -42,7 +42,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Search
-{{ Fill Search Description }}
+Returns userprofiles where name, firstname, lastname, or email contain this value
 
 ```yaml
 Type: String
@@ -57,7 +57,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -71,12 +71,12 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -UserName
-{{ Fill UserName Description }}
+### -UserProfileId
+GUID of the userprofile to return
 
 ```yaml
-Type: String
-Parameter Sets: username
+Type: Guid
+Parameter Sets: id
 Aliases:
 
 Required: True
@@ -86,13 +86,13 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -UserProfileId
-{{ Fill UserProfileId Description }}
+### -Name
+Name of the userprofile to return
 
 ```yaml
-Type: Guid
-Parameter Sets: id
-Aliases:
+Type: String
+Parameter Sets: username
+Aliases: UserName
 
 Required: True
 Position: Named

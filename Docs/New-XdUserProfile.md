@@ -8,17 +8,17 @@ schema: 2.0.0
 # New-XdUserProfile
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Creates a UserProfile
 
 ## SYNTAX
 
 ```
-New-XdUserProfile -UserName <String> -Email <String> [-FirstName <String>] [-LastName <String>]
- [-TimeOut <Int32>] [<CommonParameters>]
+New-XdUserProfile -Name <String> -Email <String> [-FirstName <String>] [-LastName <String>] [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Creates a UserProfile
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Email
-{{ Fill Email Description }}
+Email addreess for the UserProfile
 
 ```yaml
 Type: String
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -FirstName
-{{ Fill FirstName Description }}
+Firstname for the UserProfile
 
 ```yaml
 Type: String
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -LastName
-{{ Fill LastName Description }}
+Lastname for the UserProfile
 
 ```yaml
 Type: String
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -91,13 +91,13 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -UserName
-{{ Fill UserName Description }}
+### -Name
+Username for the UserProfile, if tying to AD, use the 'domain\username' format
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: UserName
 
 Required: True
 Position: Named

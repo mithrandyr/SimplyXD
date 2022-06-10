@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-XdGroupMember
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Get Members of a group
 
 ## SYNTAX
 
@@ -23,7 +23,7 @@ Get-XdGroupMember -GroupId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Get Members of a group
 
 ## EXAMPLES
 
@@ -37,7 +37,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -GroupId
-{{ Fill GroupId Description }}
+GUID of the group to return members from
 
 ```yaml
 Type: Guid
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -GroupName
-{{ Fill GroupName Description }}
+Name of the group to return
 
 ```yaml
 Type: String
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32

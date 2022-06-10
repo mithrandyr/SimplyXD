@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-XdTemplateLibrary
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Returns templatelibraries
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ Get-XdTemplateLibrary [[-Search] <String>] [-TimeOut <Int32>] [<CommonParameters
 
 ### name
 ```
-Get-XdTemplateLibrary -TemplateLibrary <String> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateLibrary -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
@@ -28,7 +28,7 @@ Get-XdTemplateLibrary -TemplateLibraryId <Guid> [-TimeOut <Int32>] [<CommonParam
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Returns templatelibraries
 
 ## EXAMPLES
 
@@ -42,7 +42,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Search
-{{ Fill Search Description }}
+Templatelibraries whose name contain this value will be returned
 
 ```yaml
 Type: String
@@ -56,23 +56,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateLibrary
-{{ Fill TemplateLibrary Description }}
-
-```yaml
-Type: String
-Parameter Sets: name
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -TemplateLibraryId
-{{ Fill TemplateLibraryId Description }}
+GUID of the templatelibrary to return
 
 ```yaml
 Type: Guid
@@ -87,7 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -95,6 +80,21 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the templatelibrary to return
+
+```yaml
+Type: String
+Parameter Sets: name
+Aliases: TemplatLibrary
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

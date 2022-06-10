@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-XdUserProfile
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Removes a UserProfile
 
 ## SYNTAX
 
@@ -19,11 +19,11 @@ Remove-XdUserProfile -UserProfileId <Guid> [-TimeOut <Int32>] [<CommonParameters
 
 ### username
 ```
-Remove-XdUserProfile -UserName <String> [-TimeOut <Int32>] [<CommonParameters>]
+Remove-XdUserProfile -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Removes a UserProfile
 
 ## EXAMPLES
 
@@ -37,7 +37,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -51,12 +51,12 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -UserName
-{{ Fill UserName Description }}
+### -UserProfileId
+GUID of the UserProfile to remove
 
 ```yaml
-Type: String
-Parameter Sets: username
+Type: Guid
+Parameter Sets: id
 Aliases:
 
 Required: True
@@ -66,13 +66,13 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -UserProfileId
-{{ Fill UserProfileId Description }}
+### -Name
+Name of the UserProfile to remove
 
 ```yaml
-Type: Guid
-Parameter Sets: id
-Aliases:
+Type: String
+Parameter Sets: username
+Aliases: UserName
 
 Required: True
 Position: Named

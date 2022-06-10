@@ -5,26 +5,26 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdBatch
+# New-XdTemplateGroup
 
 ## SYNOPSIS
-Gets a Batch
+Creates a template group
 
 ## SYNTAX
 
-### bg
+### name
 ```
-Get-XdBatch -BatchGroupId <Guid> [-Limit <Int32>] [-SortByCreation <String>] [-Status <String>]
- [-TimeOut <Int32>] [<CommonParameters>]
+New-XdTemplateGroup -TemplateLibrary <String> -Name <String> [-Description <String>] [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
-### batch
+### id
 ```
-Get-XdBatch -BatchId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+New-XdTemplateGroup -TemplateLibraryId <Guid> [-Description <String>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets a Batch
+Creates a template group
 
 ## EXAMPLES
 
@@ -37,12 +37,27 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -BatchGroupId
-GUID of the BatchGroup to return batches from
+### -Name
+Name of the template group, must be unique within a library
 
 ```yaml
-Type: Guid
-Parameter Sets: bg
+Type: String
+Parameter Sets: name
+Aliases: TemplateGroup
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateLibrary
+Name of the TemplateLibrary in which to create the templateGroup
+
+```yaml
+Type: String
+Parameter Sets: name
 Aliases:
 
 Required: True
@@ -52,62 +67,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -BatchId
-GUID of the batch to return
+### -TemplateLibraryId
+GUID of the TemplateLibrary in which to create the TemplateGroup
 
 ```yaml
 Type: Guid
-Parameter Sets: batch
+Parameter Sets: id
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Limit
-maximum number of batches to return
-
-```yaml
-Type: Int32
-Parameter Sets: bg
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SortByCreation
-Sorts the batches by creation data
-
-```yaml
-Type: String
-Parameter Sets: bg
-Aliases:
-Accepted values: Ascending, Descending
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Status
-Batches with this status will be returned, if not specified all will be returned.
-
-```yaml
-Type: String
-Parameter Sets: bg
-Aliases:
-Accepted values: Completed, Created, Error, Queued, Running, TimedOut
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -126,6 +94,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Description
+Description for the TemplateGroup
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

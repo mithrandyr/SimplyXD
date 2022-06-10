@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-XdTemplateGroup
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Return TemplateGroups
 
 ## SYNTAX
 
@@ -19,7 +19,12 @@ Get-XdTemplateGroup [[-Search] <String>] [-TemplateLibrary <String>] [-TimeOut <
 
 ### name
 ```
-Get-XdTemplateGroup -TemplateLibrary <String> -TemplateGroup <String> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateGroup -TemplateLibrary <String> -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### id2
+```
+Get-XdTemplateGroup -TemplateLibraryId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
@@ -28,7 +33,7 @@ Get-XdTemplateGroup -TemplateGroupId <Guid> [-TimeOut <Int32>] [<CommonParameter
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Return TemplateGroups
 
 ## EXAMPLES
 
@@ -42,7 +47,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Search
-{{ Fill Search Description }}
+Return templategroups with name containing this value
 
 ```yaml
 Type: String
@@ -56,23 +61,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateGroup
-{{ Fill TemplateGroup Description }}
-
-```yaml
-Type: String
-Parameter Sets: name
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -TemplateGroupId
-{{ Fill TemplateGroupId Description }}
+GUID of the templategroup to return
 
 ```yaml
 Type: Guid
@@ -82,12 +72,12 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -TemplateLibrary
-{{ Fill TemplateLibrary Description }}
+Name of the templatelibrary, whose templategroups will be returned
 
 ```yaml
 Type: String
@@ -114,7 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -125,6 +115,36 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the templategroup to return
+
+```yaml
+Type: String
+Parameter Sets: name
+Aliases: TemplateGroup
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateLibraryId
+GUID of the templatelibrary whose groups will be returned
+
+```yaml
+Type: Guid
+Parameter Sets: id2
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

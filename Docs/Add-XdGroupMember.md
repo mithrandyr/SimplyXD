@@ -8,7 +8,7 @@ schema: 2.0.0
 # Add-XdGroupMember
 
 ## SYNOPSIS
-Synopsis test
+Adds UserProfile to Group
 
 ## SYNTAX
 
@@ -33,21 +33,21 @@ Add-XdGroupMember -GroupId <Guid> -UserProfileId <Guid> [-TimeOut <Int32>] [<Com
 ```
 
 ## DESCRIPTION
-{{ Description Test }}
+Adds UserProfile to Group
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Add-XdGroupMember -GroupName Test -UserName SomeUser
 ```
 
-{{ Add example description here }}
+Adding 'SomeUser' to the group 'Test'
 
 ## PARAMETERS
 
 ### -GroupId
-{{ Fill GroupId Description }}
+GUID for the Group
 
 ```yaml
 Type: Guid
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -GroupName
-{{ Fill GroupName Description }}
+Name of the Group
 
 ```yaml
 Type: String
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -86,7 +86,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 15
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

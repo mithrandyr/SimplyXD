@@ -3,11 +3,12 @@
 Public Class Get_XdUserProfile
     Inherits baseCmdlet
 
-    <Parameter(ParameterSetName:="search")>
+    <Parameter(ParameterSetName:="search", Position:=0)>
     Public Property Search As String
 
+    <[Alias]("UserName")>
     <Parameter(Mandatory:=True, ParameterSetName:="username", ValueFromPipelineByPropertyName:=True)>
-    Public Property UserName As String
+    Public Property Name As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Public Property UserProfileId As Guid
@@ -25,12 +26,12 @@ Public Class Get_XdUserProfile
         Else
             Dim up As UserProfile
             If ParameterSetName = "username" Then
-                up = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(UserName.ToUpper)).FirstOrDefaultAsync)
+                up = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)
             Else
                 Try
                     up = ExecuteWithTimeout(query.Where(Function(x) x.UserProfileId = UserProfileId).FirstOrDefaultAsync)
-                Catch
-                    'TODO: add error handling.  When selecting using a GUID, if the guid doesn't exist, a NotFound error gets thrown.  Currently we are swallowing this error and returning nothing.
+                Catch ex As Exception
+                    WriteError(StandardErrors.XDPMissing("UserProfile", UserProfileId.ToString, ex))
                 End Try
             End If
 

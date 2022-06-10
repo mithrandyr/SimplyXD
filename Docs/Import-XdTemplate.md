@@ -5,27 +5,20 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdDocument
+# Import-XdTemplate
 
 ## SYNOPSIS
-Returns a document
+Imports a template from a zipfile.
 
 ## SYNTAX
 
-### id
 ```
-Get-XdDocument -DocumentId <Guid> [-IncludeOutput] [-IncludeProviders] [-IncludeOperations] [-TimeOut <Int32>]
- [<CommonParameters>]
-```
-
-### batch
-```
-Get-XdDocument -BatchId <Guid> [-SequenceNumber <Int32>] [-IncludeOutput] [-IncludeProviders]
- [-IncludeOperations] [-TimeOut <Int32>] [<CommonParameters>]
+Import-XdTemplate -TemplateLibrary <String> -TemplateGroup <String> -Name <String> [-Comment <String>]
+ [-ImportPath <String>] [-PassThru] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns a document
+Imports a template from a zipfile.  If template already exists, will updated the WordDocument and DLL.  If tempalte does not exists, will create it.  Use Export-XdTemplate to create the zipfile.
 
 ## EXAMPLES
 
@@ -38,12 +31,72 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -BatchId
-GUID of the batch, documents in this batch will be returned
+### -Comment
+Comment to be added to the template version history
 
 ```yaml
-Type: Guid
-Parameter Sets: batch
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ImportPath
+path to the zipfile to import
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the Template to update
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: TemplateName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -PassThru
+If specified, will return the template data
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -TemplateGroup
+Name of the TemplateGroup to find the Template
+
+```yaml
+Type: String
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -53,75 +106,15 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -DocumentId
-GUID of the document to return
+### -TemplateLibrary
+Name of the TemplateLibrary to find the TemplateGroup
 
 ```yaml
-Type: Guid
-Parameter Sets: id
+Type: String
+Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -IncludeOperations
-Include the documentOperations in the result
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -IncludeOutput
-Include the output in the result
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -IncludeProviders
-include the providers in the result
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -SequenceNumber
-Which document number you want from the batch
-
-```yaml
-Type: Int32
-Parameter Sets: batch
-Aliases:
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -148,11 +141,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.Guid
-
-### System.Int32
+### System.String
 
 ### System.Management.Automation.SwitchParameter
+
+### System.Int32
 
 ## OUTPUTS
 

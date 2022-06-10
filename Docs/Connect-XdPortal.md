@@ -8,7 +8,7 @@ schema: 2.0.0
 # Connect-XdPortal
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Connects to an Xpertdoc Portal
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ Connect-XdPortal [-PortalUri] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Connects to an Xpertdoc Portal
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -PortalUri
-{{ Fill PortalUri Description }}
+Url to the Xpertdoc Portal
 
 ```yaml
 Type: String

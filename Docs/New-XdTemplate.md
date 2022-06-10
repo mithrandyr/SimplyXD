@@ -5,20 +5,27 @@ online version:
 schema: 2.0.0
 ---
 
-# Clear-XdBatchGroup
+# New-XdTemplate
 
 ## SYNOPSIS
-Removes all batches from a batchgroup.
+Creates a template
 
 ## SYNTAX
 
+### name
 ```
-Clear-XdBatchGroup -BatchGroup <String> [-DeleteLimit <Int32>] [-SortByCreation <String>] [-Status <String>]
- [-MinimumAgeInMinutes <Int32>] [-Concurrency <Int32>] [-TimeOut <Int32>] [<CommonParameters>]
+New-XdTemplate -TemplateLibrary <String> -TemplateGroup <String> -Name <String> [-Description <String>]
+ -Source <Byte[]> -Assembly <Byte[]> [-Comment <String>] [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### id
+```
+New-XdTemplate -TemplateGroupId <Guid> -Name <String> [-Description <String>] -Source <Byte[]>
+ -Assembly <Byte[]> [-Comment <String>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Removes all batches from a batchgroup.
+Creates a template
 
 ## EXAMPLES
 
@@ -31,12 +38,87 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -BatchGroup
-Name of the batchgroup
+### -Assembly
+binary content representing the template's DLL
+
+```yaml
+Type: Byte[]
+Parameter Sets: (All)
+Aliases: Dll
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Comment
+Comment to be added to the TemplateVersionHistory
 
 ```yaml
 Type: String
 Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+Description for the Template
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the template (must be unique within a TemplateLibrary\TemplateGroup)
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: TemplateName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Source
+binary content representing the template's word document
+
+```yaml
+Type: Byte[]
+Parameter Sets: (All)
+Aliases: WordDocument
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateGroup
+Name of the templateGroup in which to create the template
+
+```yaml
+Type: String
+Parameter Sets: name
 Aliases:
 
 Required: True
@@ -46,77 +128,30 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Concurrency
-How many batches will be deleted concurrently
+### -TemplateGroupId
+GUID of the templategroup in which to create the template
 
 ```yaml
-Type: Int32
-Parameter Sets: (All)
+Type: Guid
+Parameter Sets: id
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DeleteLimit
-The total number of batches to delete. If 0, delete all batches.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -MinimumAgeInMinutes
-Batches have to be this many minutes old to be deleted
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: 15
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SortByCreation
-Orders the batches by their creation time (Ascending or Descending); intended to be used with -DeleteLimit
+### -TemplateLibrary
+Name of the TemplateLibrary in which to find the TemplateGroup
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: name
 Aliases:
-Accepted values: Ascending, Descending
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Status
-Which status is to be deleted, if not specified, then all are deleted
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-Accepted values: Completed, Created, Error, Queued, Running, TimedOut
-
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
