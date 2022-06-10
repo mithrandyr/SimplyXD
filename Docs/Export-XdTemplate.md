@@ -12,9 +12,16 @@ Exports a template into a zipfile
 
 ## SYNTAX
 
+### name
 ```
 Export-XdTemplate -TemplateLibrary <String> -TemplateGroup <String> -Name <String> [-ExportPath <String>]
- [-Version <String>] [-TimeOut <Int32>] [<CommonParameters>]
+ [-Version <String>] [-Force] [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### id
+```
+Export-XdTemplate -Id <Guid> [-ExportPath <String>] [-Version <String>] [-Force] [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -51,7 +58,7 @@ Template name to be exported
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: name
 Aliases: TemplateName
 
 Required: True
@@ -66,13 +73,13 @@ TemplateGroup to find the template
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: name
 Aliases:
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -81,13 +88,13 @@ TemplateLibray to find the TemplateGroup
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: name
 Aliases:
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -118,6 +125,36 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Force
+If specified, will overwrite an existing archive.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Id
+{{ Fill Id Description }}
+
+```yaml
+Type: Guid
+Parameter Sets: id
+Aliases: TemplateId
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 

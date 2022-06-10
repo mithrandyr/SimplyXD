@@ -2,7 +2,7 @@ param([string]$ConfigName = "Debug", [switch]$SkipBuild, [switch]$SkipUpdateCmdl
 $ErrorActionPreference = "stop"
 
 if(-not $SkipBuild) {
-    $outputPath = "$PSScriptRoot\SimplyXD\bin"
+    $outputPath = "$PSScriptRoot\SimplyXD\dll"
     if(Test-Path $outputPath) { Remove-Item $outputPath -Recurse -Force }
     New-Item -Path $outputPath -ItemType Directory | Out-Null
     
