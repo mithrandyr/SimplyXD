@@ -4,7 +4,6 @@ Public Class Get_XdTemplateLibrary
     Inherits baseCmdlet
 
     <Parameter(ParameterSetName:="search", Position:=0)>
-    <ValidateNotNull()>
     Public Property Search As String
 
     <[Alias]("TemplateLibrary")>

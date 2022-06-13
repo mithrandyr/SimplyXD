@@ -3,6 +3,8 @@
 <CmdletBinding(DefaultParameterSetName:="name")>
 Public Class Get_XdGroupMember
     Inherits baseCmdlet
+
+    <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True, Position:=0)>
     Public Property GroupName As String
 

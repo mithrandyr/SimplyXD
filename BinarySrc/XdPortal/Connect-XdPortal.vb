@@ -3,6 +3,7 @@
 Public Class Connect_XdPortal
     Inherits PSCmdlet
 
+    <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, Position:=0)>
     Public Property PortalUri As String
 

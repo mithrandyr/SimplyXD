@@ -14,6 +14,7 @@ Public Class Get_XdTemplate
     <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateGroup As String
 
+    <ValidateNotNullOrEmpty>
     <[Alias]("TemplateName")>
     <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True)>
     Public Property Name As String

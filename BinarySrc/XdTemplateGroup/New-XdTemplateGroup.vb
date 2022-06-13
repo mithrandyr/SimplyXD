@@ -3,6 +3,7 @@
 Public Class New_XdTemplateGroup
     Inherits baseCmdlet
 
+    <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property TemplateLibrary As String
 
@@ -10,6 +11,7 @@ Public Class New_XdTemplateGroup
     Public Property TemplateLibraryId As Guid
 
 
+    <ValidateNotNullOrEmpty>
     <[Alias]("TemplateGroup")>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property Name As String

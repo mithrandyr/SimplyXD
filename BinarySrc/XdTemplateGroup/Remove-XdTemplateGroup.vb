@@ -4,9 +4,11 @@
 Public Class Remove_XdTemplateGroup
     Inherits baseCmdlet
 
+    <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property TemplateLibrary As String
 
+    <ValidateNotNullOrEmpty>
     <[Alias]("TemplateGroup")>
     <Parameter(Mandatory:=True, ParameterSetName:="name", Position:=0)>
     Public Property Name As String

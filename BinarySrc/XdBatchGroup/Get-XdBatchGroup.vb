@@ -3,6 +3,7 @@
 Public Class GetBatchGroup
     Inherits baseCmdlet
 
+    <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="one")>
     Public Property Name As String
 

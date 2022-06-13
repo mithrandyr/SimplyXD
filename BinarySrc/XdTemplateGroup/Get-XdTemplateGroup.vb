@@ -4,7 +4,6 @@ Public Class Get_XdTemplateGroup
     Inherits baseCmdlet
 
     <Parameter(ParameterSetName:="search", Position:=0)>
-    <ValidateNotNull()>
     Public Property Search As String
 
     <Parameter(ParameterSetName:="search")>
@@ -14,6 +13,7 @@ Public Class Get_XdTemplateGroup
     <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipeline:=True)>
     Public Property InputObject As TemplateLibrary
 
+    <ValidateNotNullOrEmpty>
     <[Alias]("TemplateGroup")>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property Name As String

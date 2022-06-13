@@ -6,14 +6,17 @@ Public Class Export_XdTemplate
     Inherits baseCmdlet
 
     <[Alias]("TemplateLibraryName")>
+    <ValidateNotNullOrEmpty>
     <Parameter(ParameterSetName:="name", Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateLibrary As String
 
     <[Alias]("TemplateGroupName")>
+    <ValidateNotNullOrEmpty>
     <Parameter(ParameterSetName:="name", Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateGroup As String
 
     <[Alias]("TemplateName")>
+    <ValidateNotNullOrEmpty>
     <Parameter(ParameterSetName:="name", Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property Name As String
 
