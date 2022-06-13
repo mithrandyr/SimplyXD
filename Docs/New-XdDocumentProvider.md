@@ -14,14 +14,14 @@ Creates a document provider
 
 ### long
 ```
-New-XdDocumentProvider -DocumentId <String> -XmlData <String> -TemplateLibraryName <String>
+New-XdDocumentProvider -DocumentId <Guid> -XmlData <String> -TemplateLibraryName <String>
  -TemplateGroupName <String> -TemplateName <String> [-DopaName <String>] [-TimeOut <Int32>]
  [<CommonParameters>]
 ```
 
 ### short
 ```
-New-XdDocumentProvider -DocumentId <String> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
+New-XdDocumentProvider -DocumentId <Guid> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
  [<CommonParameters>]
 ```
 
@@ -58,7 +58,7 @@ Accept wildcard characters: False
 GUID of the document to associate this document provider with
 
 ```yaml
-Type: String
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 
