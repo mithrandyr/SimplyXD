@@ -3,6 +3,7 @@
 Public Class New_XdTemplateLibrary
     Inherits baseCmdlet
 
+    <ValidateNotNullOrEmpty>
     <[Alias]("TemplateLibrary")>
     <Parameter(Mandatory:=True, Position:=0)>
     Public Property Name As String

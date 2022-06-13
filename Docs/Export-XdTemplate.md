@@ -24,6 +24,12 @@ Export-XdTemplate -Id <Guid> [-ExportPath <String>] [-Version <String>] [-Force]
  [<CommonParameters>]
 ```
 
+### obj
+```
+Export-XdTemplate -InputObject <Template> [-ExportPath <String>] [-Version <String>] [-Force]
+ [-TimeOut <Int32>] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 Exports a template into a zipfile
 
@@ -53,6 +59,51 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Force
+If specified, will overwrite an existing archive.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Id
+GUID of the Template
+
+```yaml
+Type: Guid
+Parameter Sets: id
+Aliases: TemplateId
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -InputObject
+A TemplateGroup, all templates for this group will be returned.
+
+```yaml
+Type: Template
+Parameter Sets: obj
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ### -Name
 Template name to be exported
 
@@ -74,12 +125,12 @@ TemplateGroup to find the template
 ```yaml
 Type: String
 Parameter Sets: name
-Aliases:
+Aliases: TemplateGroupName
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -89,12 +140,12 @@ TemplateLibray to find the TemplateGroup
 ```yaml
 Type: String
 Parameter Sets: name
-Aliases:
+Aliases: TemplateLibraryName
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -125,36 +176,6 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Force
-If specified, will overwrite an existing archive.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Id
-{{ Fill Id Description }}
-
-```yaml
-Type: Guid
-Parameter Sets: id
-Aliases: TemplateId
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 

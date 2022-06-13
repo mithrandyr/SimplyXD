@@ -4,14 +4,13 @@ Public Class Get_XdTemplateLibrary
     Inherits baseCmdlet
 
     <Parameter(ParameterSetName:="search", Position:=0)>
-    <ValidateNotNull()>
     Public Property Search As String
 
-    <[Alias]("TemplatLibrary")>
+    <[Alias]("TemplateLibrary")>
     <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True)>
     Public Property Name As String
 
-    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipeline:=True)>
     Public Property TemplateLibraryId As Guid
 
     Protected Overrides Sub EndProcessing()

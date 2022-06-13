@@ -41,6 +41,21 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -Name
+Name of the templatelibrary to return
+
+```yaml
+Type: String
+Parameter Sets: name
+Aliases: TemplateLibrary
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Search
 Templatelibraries whose name contain this value will be returned
 
@@ -67,7 +82,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -80,21 +95,6 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Name
-Name of the templatelibrary to return
-
-```yaml
-Type: String
-Parameter Sets: name
-Aliases: TemplatLibrary
-
-Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

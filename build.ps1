@@ -44,5 +44,5 @@ if(-not $SkipUpdateCmdlets) {
 
 Write-Host "Updating Help..."
 Import-Module -Name "$PSScriptRoot\SimplyXD"
-Update-MarkdownHelpModule -Path "$PSScriptRoot\Docs" -RefreshModulePage | Out-Null
+Update-MarkdownHelpModule -Path "$PSScriptRoot\Docs" -RefreshModulePage -AlphabeticParamsOrder | Out-Null
 New-ExternalHelp -Path "$PSScriptRoot\Docs" -OutputPath "$PSScriptRoot\SimplyXD\en-us\" -Force | Out-Null

@@ -4,21 +4,21 @@ Public Class Get_XdTemplateGroup
     Inherits baseCmdlet
 
     <Parameter(ParameterSetName:="search", Position:=0)>
-    <ValidateNotNull()>
     Public Property Search As String
 
     <Parameter(ParameterSetName:="search")>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property TemplateLibrary As String
 
-    <Parameter(Mandatory:=True, ParameterSetName:="id2")>
-    Public Property TemplateLibraryId As Guid
+    <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipeline:=True)>
+    Public Property InputObject As TemplateLibrary
 
+    <ValidateNotNullOrEmpty>
     <[Alias]("TemplateGroup")>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property Name As String
 
-    <Parameter(Mandatory:=True, ParameterSetName:="id")>
+    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipeline:=True)>
     Public Property TemplateGroupId As Guid
 
 
@@ -38,15 +38,15 @@ Public Class Get_XdTemplateGroup
             Case "name"
                 query = query.Where(Function(x) x.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper) And x.Name.ToUpper.Equals(Name.ToUpper))
 
-            Case "id2"
-                query = query.Where(Function(x) x.TemplateGroupId = TemplateGroupId)
+            Case "obj"
+                query = query.Where(Function(x) x.TemplateLibraryId = InputObject.TemplateLibraryId)
 
             Case "id"
-                query = query.Where(Function(x) x.TemplateLibraryId = TemplateLibraryId)
+                query = query.Where(Function(x) x.TemplateGroupId = TemplateGroupId)
         End Select
 
 
-        If ParameterSetName = "search" Or ParameterSetName = "id2" Then
+        If ParameterSetName = "search" Or ParameterSetName = "obj" Then
             For Each gr In GenerateResults(query, "TemplateGroup")
                 WriteObject(gr.AsPSObject)
             Next

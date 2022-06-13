@@ -41,6 +41,21 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -Name
+Name of the userprofile to return
+
+```yaml
+Type: String
+Parameter Sets: username
+Aliases: UserName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Search
 Returns userprofiles where name, firstname, lastname, or email contain this value
 
@@ -78,21 +93,6 @@ GUID of the userprofile to return
 Type: Guid
 Parameter Sets: id
 Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Name
-Name of the userprofile to return
-
-```yaml
-Type: String
-Parameter Sets: username
-Aliases: UserName
 
 Required: True
 Position: Named

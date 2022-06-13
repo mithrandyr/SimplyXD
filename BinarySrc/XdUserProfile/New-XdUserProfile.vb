@@ -4,10 +4,12 @@ Public Class New_XdUserProfile
     Inherits baseCmdlet
 
 #Region "PowerShell Properties"
+    <ValidateNotNullOrEmpty>
     <[Alias]("UserName")>
     <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Property Name As String
 
+    <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Property Email As String
 

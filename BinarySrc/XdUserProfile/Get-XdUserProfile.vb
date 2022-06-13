@@ -6,6 +6,7 @@ Public Class Get_XdUserProfile
     <Parameter(ParameterSetName:="search", Position:=0)>
     Public Property Search As String
 
+    <ValidateNotNullOrEmpty>
     <[Alias]("UserName")>
     <Parameter(Mandatory:=True, ParameterSetName:="username", ValueFromPipelineByPropertyName:=True)>
     Public Property Name As String

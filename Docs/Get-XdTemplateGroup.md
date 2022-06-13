@@ -22,9 +22,9 @@ Get-XdTemplateGroup [[-Search] <String>] [-TemplateLibrary <String>] [-TimeOut <
 Get-XdTemplateGroup -TemplateLibrary <String> -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
-### id2
+### obj
 ```
-Get-XdTemplateGroup -TemplateLibraryId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateGroup -InputObject <TemplateLibrary> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
@@ -45,6 +45,36 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
+
+### -InputObject
+TemplateLibray object, will return all TemplateGroups in this TemplateLibrary
+
+```yaml
+Type: TemplateLibrary
+Parameter Sets: obj
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the templategroup to return
+
+```yaml
+Type: String
+Parameter Sets: name
+Aliases: TemplateGroup
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Search
 Return templategroups with name containing this value
@@ -72,7 +102,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -115,36 +145,6 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Name
-Name of the templategroup to return
-
-```yaml
-Type: String
-Parameter Sets: name
-Aliases: TemplateGroup
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TemplateLibraryId
-GUID of the templatelibrary whose groups will be returned
-
-```yaml
-Type: Guid
-Parameter Sets: id2
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

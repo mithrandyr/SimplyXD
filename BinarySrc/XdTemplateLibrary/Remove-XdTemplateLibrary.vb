@@ -4,6 +4,7 @@
 Public Class Remove_XdTemplateLibrary
     Inherits baseCmdlet
 
+    <ValidateNotNullOrEmpty>
     <[Alias]("TemplateLibrary")>
     <Parameter(Mandatory:=True, ParameterSetName:="name", Position:=0)>
     Public Property Name As String

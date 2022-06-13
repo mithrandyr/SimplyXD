@@ -14,14 +14,14 @@ Creates a document provider
 
 ### long
 ```
-New-XdDocumentProvider -DocumentId <String> -XmlData <String> -TemplateLibraryName <String>
+New-XdDocumentProvider -DocumentId <Guid> -XmlData <String> -TemplateLibraryName <String>
  -TemplateGroupName <String> -TemplateName <String> [-DopaName <String>] [-TimeOut <Int32>]
  [<CommonParameters>]
 ```
 
 ### short
 ```
-New-XdDocumentProvider -DocumentId <String> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
+New-XdDocumentProvider -DocumentId <Guid> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
  [<CommonParameters>]
 ```
 
@@ -58,7 +58,7 @@ Accept wildcard characters: False
 GUID of the document to associate this document provider with
 
 ```yaml
-Type: String
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 
@@ -90,6 +90,36 @@ MetaData structure to be used with the Contract - should not be specified
 ```yaml
 Type: String
 Parameter Sets: short
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateGroupName
+Name of the TemplateGroup to find the template to execute
+
+```yaml
+Type: String
+Parameter Sets: long
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateLibraryName
+Name of the TemplateLibrary to find the TemplateGroup
+
+```yaml
+Type: String
+Parameter Sets: long
 Aliases:
 
 Required: True
@@ -131,36 +161,6 @@ Accept wildcard characters: False
 
 ### -XmlData
 XML data to be used in the execution of the template
-
-```yaml
-Type: String
-Parameter Sets: long
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TemplateGroupName
-Name of the TemplateGroup to find the template to execute
-
-```yaml
-Type: String
-Parameter Sets: long
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TemplateLibraryName
-Name of the TemplateLibrary to find the TemplateGroup
 
 ```yaml
 Type: String

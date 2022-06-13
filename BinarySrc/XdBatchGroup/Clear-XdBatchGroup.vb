@@ -4,6 +4,7 @@ Public Class ClearBatch
     Inherits baseCmdlet
 
 
+    <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True)>
     Public Property BatchGroup As String
 
@@ -30,7 +31,7 @@ Public Class ClearBatch
     Protected Overrides Sub EndProcessing()
         Dim bg = ExecuteWithTimeout(xdp.BatchGroups.Where(Function(x) x.Name.ToUpper().Equals(BatchGroup.ToUpper())).FirstOrDefaultAsync())
         If bg Is Nothing Then
-            WriteError(New ErrorRecord(New ArgumentException(String.Format("Could not find the batchgroup '{0}' to clear.", BatchGroup), "BatchGroup"), Nothing, ErrorCategory.ObjectNotFound, BatchGroup))
+            WriteError(StandardErrors.XDPMissing("BatchGroup", BatchGroup))
             Exit Sub
         End If
 

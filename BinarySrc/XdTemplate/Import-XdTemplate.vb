@@ -5,10 +5,12 @@
 Public Class Import_XdTemplate
     Inherits baseCmdlet
 
+    <[Alias]("TemplateLibraryName")>
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateLibrary As String
 
+    <[Alias]("TemplateGroupName")>
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateGroup As String

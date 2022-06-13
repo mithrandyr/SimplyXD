@@ -26,7 +26,12 @@ Get-XdTemplate -TemplateLibrary <String> -TemplateGroup <String> -Name <String> 
 
 ### id
 ```
-Get-XdTemplate -TemplateId <Guid> [-IncludeContent] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplate -Id <Guid> [-IncludeContent] [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### obj
+```
+Get-XdTemplate -InputObject <TemplateGroup> [-IncludeContent] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,6 +48,21 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -Id
+GUID of the Template to return
+
+```yaml
+Type: Guid
+Parameter Sets: id
+Aliases: TemplateId
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ### -IncludeContent
 If specified, will return the WordDocument and DLL of the template
 
@@ -58,6 +78,36 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -InputObject
+TemplateGroup object, all Templates in this Group will be returned
+
+```yaml
+Type: TemplateGroup
+Parameter Sets: obj
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the template to return
+
+```yaml
+Type: String
+Parameter Sets: name
+Aliases: TemplateName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Search
 Returns templates with the templatename containing this value
 
@@ -69,7 +119,7 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -97,21 +147,6 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TemplateId
-GUID of the template to return
-
-```yaml
-Type: Guid
-Parameter Sets: id
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -154,21 +189,6 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Name
-Name of the template to return
-
-```yaml
-Type: String
-Parameter Sets: name
-Aliases: TemplateName
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

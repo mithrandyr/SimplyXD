@@ -97,7 +97,7 @@ Name of the TemplateGroup to find the Template
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: TemplateGroupName
 
 Required: True
 Position: Named
@@ -112,7 +112,7 @@ Name of the TemplateLibrary to find the TemplateGroup
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: TemplateLibraryName
 
 Required: True
 Position: Named

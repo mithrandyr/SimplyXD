@@ -1,23 +1,31 @@
 ﻿Imports System.IO
 
 <Cmdlet(VerbsData.Export, "XdTemplate")>
-<CmdletBinding(DefaultParameterSetName:="id")>
+<CmdletBinding(DefaultParameterSetName:="name")>
 Public Class Export_XdTemplate
     Inherits baseCmdlet
 
-    <Parameter(ParameterSetName:="name", Mandatory:=True)>
+    <[Alias]("TemplateLibraryName")>
+    <ValidateNotNullOrEmpty>
+    <Parameter(ParameterSetName:="name", Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateLibrary As String
 
-    <Parameter(ParameterSetName:="name", Mandatory:=True)>
+    <[Alias]("TemplateGroupName")>
+    <ValidateNotNullOrEmpty>
+    <Parameter(ParameterSetName:="name", Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateGroup As String
 
     <[Alias]("TemplateName")>
+    <ValidateNotNullOrEmpty>
     <Parameter(ParameterSetName:="name", Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property Name As String
 
     <[Alias]("TemplateId")>
-    <Parameter(ParameterSetName:="id", Mandatory:=True, ValueFromPipelineByPropertyName:=True, ValueFromPipeline:=True)>
+    <Parameter(ParameterSetName:="id", Mandatory:=True, ValueFromPipeline:=True)>
     Public Property Id As Guid
+
+    <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipeline:=True)>
+    Public Property InputObject As Template
 
     <Parameter(ValueFromPipelineByPropertyName:=True)>
     Public Property ExportPath As String
@@ -47,10 +55,8 @@ Public Class Export_XdTemplate
             WriteObject(New FileInfo(ExportPath))
         Finally
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.NoTracking
-            If needsCleanup Then
-                If Path.HasExtension(ExportPath) AndAlso File.Exists(ExportPath) Then
-                    File.Delete(ExportPath)
-                End If
+            If needsCleanup AndAlso Path.HasExtension(ExportPath) AndAlso File.Exists(ExportPath) Then
+                File.Delete(ExportPath)
             End If
         End Try
     End Sub
@@ -99,7 +105,8 @@ Public Class Export_XdTemplate
                 Return t
             End If
         Else
-            WriteVerbose("Getting Template by Name")
+            WriteVerbose("Getting Template by Id")
+            If InputObject IsNot Nothing Then Id = InputObject.TemplateId
             Try
                 t = ExecuteWithTimeout(query.Where(Function(x) x.TemplateId = Id).FirstOrDefaultAsync)
                 TemplateLibrary = t.TemplateGroup.TemplateLibrary.Name
@@ -109,6 +116,7 @@ Public Class Export_XdTemplate
             Catch ex As Exception
                 WriteError(StandardErrors.XDPMissing("Template", Id.ToString, ex))
             End Try
+
         End If
     End Function
 
@@ -131,6 +139,7 @@ Public Class Export_XdTemplate
             'Create DLL file in zip
             WriteVerbose("Creating DLL file in zip")
             Using zStream = zArchive.CreateEntry(String.Format("{0}.dll", t.Name)).Open()
+                WriteVerbose("Querying for DLL Content")
                 Dim bytelist = ExecuteWithTimeout(t.GetAssembly.GetValueAsync)
                 zStream.Write(bytelist, 0, bytelist.Count)
             End Using
@@ -138,6 +147,7 @@ Public Class Export_XdTemplate
             'Create DOCX file in zip
             WriteVerbose("Creating DOCX file in zip")
             Using zStream = zArchive.CreateEntry(String.Format("{0}.docx", t.Name)).Open()
+                WriteVerbose("Querying for DOCX Content")
                 Dim bytelist = ExecuteWithTimeout(t.GetSource.GetValueAsync)
                 zStream.Write(bytelist, 0, bytelist.Count)
             End Using
