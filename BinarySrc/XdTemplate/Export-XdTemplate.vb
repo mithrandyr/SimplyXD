@@ -38,53 +38,62 @@ Public Class Export_XdTemplate
 
     Protected Overrides Sub ProcessRecord()
         Dim needsCleanup = False
+        Dim currentFilePath As String = ""
         Try
             'get template
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.OverwriteChanges
             Dim t As Template = GetTemplate() 'if no template, error already written in GetTemplate
             If t Is Nothing Then Exit Sub
 
-            If Not IsValid() Then Exit Sub 'errors already written
+            currentFilePath = CreateFilePath()
+            If Not IsValid(currentFilePath) Then Exit Sub 'errors already written
 
             'Create ZipFile
             needsCleanup = True
-            CreateZip(t)
+            CreateZip(t, currentFilePath)
             needsCleanup = False
 
             'output the generated zip
-            WriteObject(New FileInfo(ExportPath))
+            WriteObject(New FileInfo(currentFilePath))
         Finally
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.NoTracking
-            If needsCleanup AndAlso Path.HasExtension(ExportPath) AndAlso File.Exists(ExportPath) Then
-                File.Delete(ExportPath)
+            If needsCleanup AndAlso Path.HasExtension(currentFilePath) AndAlso File.Exists(currentFilePath) Then
+                File.Delete(currentFilePath)
             End If
         End Try
     End Sub
 
-    Private Function IsValid() As Boolean
-        WriteVerbose("Validating ExportPath")
+    Private Function CreateFilePath() As String
+        Dim filePath As String
         If String.IsNullOrWhiteSpace(ExportPath) Then
-            ExportPath = CurrentProviderLocation("FileSystem").ProviderPath
+            filePath = CurrentProviderLocation("FileSystem").ProviderPath
         Else
             If Path.GetFullPath(ExportPath) <> ExportPath Then
-                ExportPath = Path.Combine(CurrentProviderLocation("FileSystem").ProviderPath, ExportPath)
+                filePath = Path.Combine(CurrentProviderLocation("FileSystem").ProviderPath, ExportPath)
+            Else
+                filePath = ExportPath
             End If
         End If
 
-        If Not Path.HasExtension(ExportPath) Then
-            ExportPath = Path.Combine(ExportPath, String.Format("{0}.{1}.{2}.zip", TemplateLibrary, TemplateGroup, Name))
+        If Not Path.HasExtension(filePath) Then
+            filePath = Path.Combine(filePath, String.Format("{0}.{1}.{2}.zip", TemplateLibrary, TemplateGroup, Name))
         End If
-        If File.Exists(ExportPath) Then
+        Return filePath
+    End Function
+
+    Private Function IsValid(filePath) As Boolean
+        WriteVerbose("Validating ExportPath")
+        If File.Exists(filePath) Then
             If Force.IsPresent Then
-                File.Delete(ExportPath)
+                File.Delete(filePath)
             Else
-                WriteError(New ErrorRecord(New Exception("File already exists"), "FileExists", ErrorCategory.ResourceExists, ExportPath))
+                WriteError(New ErrorRecord(New Exception("File already exists"), "FileExists", ErrorCategory.ResourceExists, filePath))
                 Return False
             End If
         End If
-        If Not Directory.Exists(Path.GetDirectoryName(ExportPath)) Then
+        If Not Directory.Exists(Path.GetDirectoryName(filePath)) Then
             WriteVerbose("Creating Directory for ExportPath")
-            Directory.CreateDirectory(Path.GetDirectoryName(ExportPath))
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath))
         End If
         Return True
     End Function
@@ -120,9 +129,9 @@ Public Class Export_XdTemplate
         End If
     End Function
 
-    Private Sub CreateZip(t As Template)
+    Private Sub CreateZip(t As Template, filePath As String)
         WriteVerbose("Creating ZipFile")
-        Using zArchive As Compression.ZipArchive = Compression.ZipFile.Open(ExportPath, Compression.ZipArchiveMode.Create)
+        Using zArchive As Compression.ZipArchive = Compression.ZipFile.Open(filePath, Compression.ZipArchiveMode.Create)
             'Create Information file in zip
             WriteVerbose("Creating information file in zip")
             Using zStream = zArchive.CreateEntry("details.txt").Open()
