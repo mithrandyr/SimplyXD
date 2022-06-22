@@ -16,10 +16,13 @@ Public Class Remove_XdTemplateGroup
     <Parameter(Mandatory:=True, ParameterSetName:="id")>
     Public Property TemplateGroupId As Guid
 
+    <Parameter(Mandatory:=True, ParameterSetName:="obj")
+    Public Property InputObject As TemplateGroup
+
     <Parameter()>
     Public Property Force As SwitchParameter
 
-    Protected Overrides Sub EndProcessing()
+    Protected Overrides Sub ProcessRecord()
         If ParameterSetName = "name" Then
             WriteVerbose("Looking up the TemplateGroupId")
             Dim result = ExecuteWithTimeout(xdp.TemplateGroups.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper) And x.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)?.TemplateGroupId
@@ -28,6 +31,8 @@ Public Class Remove_XdTemplateGroup
                 Exit Sub
             End If
             TemplateGroupId = result
+        ElseIf ParameterSetName = "obj" Then
+            TemplateGroupId = InputObject.TemplateGroupId
         End If
 
         WriteVerbose("Getting count of Templates in the TemplateGroup")
