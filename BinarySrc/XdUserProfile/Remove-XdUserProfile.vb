@@ -7,7 +7,7 @@ Public Class Remove_XdUserProfile
     <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipeline:=True)>
     Property InputObject As UserProfile
 
-    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="id")>
     Property UserProfileId As Guid
 
     <ValidateNotNullOrEmpty>
