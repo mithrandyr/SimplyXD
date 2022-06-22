@@ -80,6 +80,9 @@ Creates a UserProfile
 ### [Remove-XdBatch](Remove-XdBatch.md)
 Removes a batch
 
+### [Remove-XdTemplate](Remove-XdTemplate.md)
+Removes the template.
+
 ### [Remove-XdTemplateGroup](Remove-XdTemplateGroup.md)
 Removes a TemplateGroup
 

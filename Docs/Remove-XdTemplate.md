@@ -5,31 +5,31 @@ online version:
 schema: 2.0.0
 ---
 
-# Remove-XdTemplateGroup
+# Remove-XdTemplate
 
 ## SYNOPSIS
-Removes a TemplateGroup
+Removes the template.
 
 ## SYNTAX
 
-### name
+### obj
 ```
-Remove-XdTemplateGroup -TemplateLibrary <String> -Name <String> [-Force] [-TimeOut <Int32>]
- [<CommonParameters>]
+Remove-XdTemplate -InputObject <Template> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
 ```
-Remove-XdTemplateGroup -TemplateGroupId <Guid> [-Force] [-TimeOut <Int32>] [<CommonParameters>]
+Remove-XdTemplate -Id <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
-### obj
+### name
 ```
-Remove-XdTemplateGroup -InputObject <TemplateGroup> [-Force] [-TimeOut <Int32>] [<CommonParameters>]
+Remove-XdTemplate -TemplateLibrary <String> -TemplateGroup <String> -Name <String> [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Removes a TemplateGroup.  Will remove all templates in the group as well.
+Removes the template from the Xpertdoc Portal.
 
 ## EXAMPLES
 
@@ -42,15 +42,15 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Force
-Removes templateGroup even if it contains templates
+### -Id
+GUID of the template
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
+Type: Guid
+Parameter Sets: id
+Aliases: TemplateId
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -58,27 +58,27 @@ Accept wildcard characters: False
 ```
 
 ### -InputObject
-{{ Fill InputObject Description }}
+Template to remove
 
 ```yaml
-Type: TemplateGroup
+Type: Template
 Parameter Sets: obj
 Aliases:
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
 ### -Name
-Name of the TemplateGroup to remove
+Name of the Template
 
 ```yaml
 Type: String
 Parameter Sets: name
-Aliases: TemplateGroup
+Aliases: TemplateName
 
 Required: True
 Position: Named
@@ -87,12 +87,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateGroupId
-GUID of the TemplateGroup to remove
+### -TemplateGroup
+TemplateGroup in which to find the Template
 
 ```yaml
-Type: Guid
-Parameter Sets: id
+Type: String
+Parameter Sets: name
 Aliases:
 
 Required: True
@@ -103,7 +103,7 @@ Accept wildcard characters: False
 ```
 
 ### -TemplateLibrary
-Name of the TemplateLibrary in which to find the TemplateGroup
+Library in which to find the TemplateGroup
 
 ```yaml
 Type: String
@@ -136,6 +136,8 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
+
+### Xpertdoc.Portal.SdkCore.Template
 
 ### System.Int32
 
