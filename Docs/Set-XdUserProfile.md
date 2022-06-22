@@ -12,9 +12,16 @@ Updates a UserProfile
 
 ## SYNTAX
 
+### obj
+```
+Set-XdUserProfile -InputObject <UserProfile> [-UserName <String>] [-Email <String>] [-FirstName <String>]
+ [-LastName <String>] [-PassThru] [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### id
 ```
 Set-XdUserProfile -UserProfileId <Guid> [-UserName <String>] [-Email <String>] [-FirstName <String>]
- [-LastName <String>] [-TimeOut <Int32>] [<CommonParameters>]
+ [-LastName <String>] [-PassThru] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,6 +68,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -InputObject
+UserProfile to Change
+
+```yaml
+Type: UserProfile
+Parameter Sets: obj
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ### -LastName
 LastName
 
@@ -73,6 +95,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -PassThru
+Outputs the UserProfile that was changed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -111,7 +148,7 @@ GUID of the UserProfile to update
 
 ```yaml
 Type: Guid
-Parameter Sets: (All)
+Parameter Sets: id
 Aliases:
 
 Required: True
