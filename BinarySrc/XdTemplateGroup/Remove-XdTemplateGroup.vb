@@ -16,7 +16,7 @@ Public Class Remove_XdTemplateGroup
     <Parameter(Mandatory:=True, ParameterSetName:="id")>
     Public Property TemplateGroupId As Guid
 
-    <Parameter(Mandatory:=True, ParameterSetName:="obj")
+    <Parameter(Mandatory:=True, ParameterSetName:="obj")>
     Public Property InputObject As TemplateGroup
 
     <Parameter()>
