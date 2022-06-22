@@ -28,7 +28,7 @@ Public Class Remove_XdTemplate
     Protected Overrides Sub ProcessRecord()
         If ParameterSetName = "name" Then
             WriteVerbose("Looking up TemplateName")
-            Dim result = ExecuteWithTimeout(xdp.UserProfiles.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)?.UserProfileId
+            Dim result = ExecuteWithTimeout(xdp.Templates.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)?.TemplateId
             If result Is Nothing Then
                 WriteError(StandardErrors.XDPMissing("Template", Name))
                 Exit Sub
