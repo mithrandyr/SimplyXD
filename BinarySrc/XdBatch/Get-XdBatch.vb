@@ -3,7 +3,7 @@
 Public Class GetBatch
     Inherits baseCmdlet
 
-    <Parameter(Mandatory:=True, ParameterSetName:="bg")>
+    <Parameter(Mandatory:=True, ParameterSetName:="bg", ValueFromPipelineByPropertyName:=True)>
     Public Property BatchGroupId As Guid
 
     <Parameter(ParameterSetName:="bg")>
@@ -22,7 +22,7 @@ Public Class GetBatch
     <Parameter(Mandatory:=True, ParameterSetName:="batch")>
     Public Property BatchId As Guid
 
-    Protected Overrides Sub EndProcessing()
+    Protected Overrides Sub ProcessRecord()
         Dim query = xdp.Batches
         If ParameterSetName = "batch" Then
             Try
