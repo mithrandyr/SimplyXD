@@ -22,14 +22,14 @@ Public Class StartXdBatch
                     Dim nbatch As Batch = xdp.Batches.Context.Entities.FirstOrDefault(Function(x) CType(x.Entity, Batch).BatchId = BatchId)?.Entity
 
                     If nbatch Is Nothing Then
-                        nbatch = New Batch With {.BatchId = BatchId}
+                        nbatch = New Batch With {.BatchId = b}
                         xdp.AttachTo("Batches", nbatch)
                     End If
 
                     nbatch.Execute.ExecuteAsync()
-                    WriteObject(BatchId)
+                    WriteObject(b)
                 Catch ex As Exception
-                    Throw New InvalidOperationException(String.Format("Failed to Start Batch: ''", BatchId), ex)
+                    Throw New InvalidOperationException(String.Format("Failed to Start Batch: ''", b), ex)
                 End Try
                 s += 1
             Next
