@@ -18,6 +18,12 @@ Get-XdBatch -BatchGroupId <Guid> [-Limit <Int32>] [-SortByCreation <String>] [-S
  [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
+### search
+```
+Get-XdBatch [-BatchGroupId <Guid>] [-Limit <Int32>] [-SortByCreation <String>] [-Status <String>]
+ -Search <String> [-TimeOut <Int32>] [<CommonParameters>]
+```
+
 ### batch
 ```
 Get-XdBatch -BatchId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
@@ -52,6 +58,18 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+```yaml
+Type: Guid
+Parameter Sets: search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -BatchId
 GUID of the batch to return
 
@@ -72,10 +90,25 @@ maximum number of batches to return
 
 ```yaml
 Type: Int32
-Parameter Sets: bg
+Parameter Sets: bg, search
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Search
+Batches containing this will be returned
+
+```yaml
+Type: String
+Parameter Sets: search
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -87,7 +120,7 @@ Sorts the batches by creation data
 
 ```yaml
 Type: String
-Parameter Sets: bg
+Parameter Sets: bg, search
 Aliases:
 Accepted values: Ascending, Descending
 
@@ -103,7 +136,7 @@ Batches with this status will be returned, if not specified all will be returned
 
 ```yaml
 Type: String
-Parameter Sets: bg
+Parameter Sets: bg, search
 Aliases:
 Accepted values: Completed, Created, Error, Queued, Running, TimedOut
 
