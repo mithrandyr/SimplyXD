@@ -1,9 +1,11 @@
-﻿<Cmdlet(VerbsLifecycle.Start, "XdBatch")>
+﻿Imports Microsoft.OData.Client
+
+<Cmdlet(VerbsLifecycle.Start, "XdBatch")>
 <CmdletBinding()>
 Public Class StartXdBatch
     Inherits baseCmdlet
 
-    <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
+    <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True, Position:=0)>
     Public Property BatchId As Guid
 
     Public Property BatchSize As Integer = 1
@@ -18,23 +20,32 @@ Public Class StartXdBatch
         Dim batchlistCount = batchList.Count
         While s < batchlistCount
             For Each b In batchList.Skip(s).Take(BatchSize)
+                Dim nbatch As Batch
                 Try
-                    Dim nbatch As Batch = xdp.Batches.Context.Entities.FirstOrDefault(Function(x) CType(x.Entity, Batch).BatchId = BatchId)?.Entity
-
-                    If nbatch Is Nothing Then
-                        nbatch = New Batch With {.BatchId = b}
-                        xdp.AttachTo("Batches", nbatch)
-                    End If
-
-                    nbatch.Execute.ExecuteAsync()
-                    WriteObject(b)
+                    nbatch = ExecuteWithTimeout(xdp.Batches.Where(Function(x) x.BatchId = BatchId).FirstOrDefaultAsync)
+                    xdp.AttachTo("Batches", nbatch)
                 Catch ex As Exception
-                    Throw New InvalidOperationException(String.Format("Failed to Start Batch: ''", b), ex)
+                    WriteError(StandardErrors.XDPMissing("Batch", BatchId.ToString, ex))
                 End Try
+
+                If nbatch IsNot Nothing Then
+                    If nbatch.Status = BatchStatus.Created Then
+                        Try
+                            nbatch.Execute.ExecuteAsync()
+                            nbatch.Status = BatchStatus.Queued
+                            WriteObject(nbatch)
+                        Catch ex As Exception
+                            WriteError(New ErrorRecord(ex, "BatchExecutionFailed", ErrorCategory.InvalidOperation, nbatch))
+                        End Try
+                    Else
+                        Dim ioex As New InvalidOperationException($"Batch '{b}' has already been executed, status = {nbatch.Status}")
+                        WriteError(New ErrorRecord(ioex, "BatchExecutionFailed", ErrorCategory.InvalidOperation, nbatch))
+                    End If
+                End If
                 s += 1
             Next
             WriteProgress(New ProgressRecord(0, MyInvocation.MyCommand.Name, String.Format("{0} out of {1}", s, batchlistCount)) With {.PercentComplete = s * 100 / batchlistCount})
-            SaveChanges("Batch(es) may not be started")
+            'SaveChanges("Batch(es) may not be started")
         End While
 
         FinishWriteProgress()
