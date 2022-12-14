@@ -24,11 +24,11 @@ Public Class Get_XdDocument
 #End Region
 
     Protected Overrides Sub ProcessRecord()
-        Dim query = xdp.Documents.AsQueryable
+        Dim query = xdp.Documents.Expand(Function(x) x.Batch.BatchGroup).AsQueryable
 
         If ParameterSetName = "id" Then
             Try
-                Dim d = ExecuteWithTimeout(query.Where(Function(x) x.DocumentId = DocumentId).ExecuteAsync)
+                Dim d = ExecuteWithTimeout(query.Where(Function(x) x.DocumentId = DocumentId).FirstOrDefaultAsync)
                 If d IsNot Nothing Then Output(d)
             Catch ex As Exception
                 WriteError(StandardErrors.XDPMissing("Document", DocumentId.ToString, ex))
@@ -45,6 +45,7 @@ Public Class Get_XdDocument
 
     Private Sub Output(doc As Document)
         If IncludeOutput.IsPresent Or IncludeProviders.IsPresent Or IncludeOperations.IsPresent Then
+            xdp.AttachTo("Documents", doc)
             Dim pso As New PSObject(doc)
             If IncludeOutput.IsPresent AndAlso doc.Status = DocumentStatus.Completed Then
                 pso.Members.Add(New PSNoteProperty("Content", ExecuteWithTimeout(doc.GetOutput.GetValueAsync)))
