@@ -3,6 +3,8 @@
 Module Common
     Private _CurrentXDPortal As String
 
+    Public Property DefaultTimeout As Integer = Common.DefaultTimeout
+
     Sub ConnectXDPortal(uri As String)
         Dim temp = New Uri(uri)
         If temp.AbsolutePath.Length > 1 Then

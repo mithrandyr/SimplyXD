@@ -12,7 +12,7 @@
 RootModule = 'dll\SimplyXD.dll'
 
 # Version number of this module.
-ModuleVersion = '1.1.2022.41'
+ModuleVersion = '1.2.2023.41'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -27,7 +27,7 @@ Author = 'Mithrandyr'
 CompanyName = 'SolarNet'
 
 # Copyright statement for this module
-Copyright = '(c) 2022 Mithrandyr. All rights reserved.'
+Copyright = '(c) 2023 Mithrandyr. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Alpha project for Xpertdoc Api'

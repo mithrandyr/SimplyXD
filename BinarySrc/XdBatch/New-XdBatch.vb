@@ -7,6 +7,7 @@ Public Class NewBatch
     Public Property BatchGroupId As Guid
 
     <Parameter()>
+    <[Alias]("Name")>
     Public Property BatchName As String = String.Format("{0}-{1:yyyyMMdd-HHmmss-fff}", Environment.UserName, Date.Now)
 
     Protected Overrides Sub EndProcessing()
