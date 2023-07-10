@@ -9,14 +9,15 @@ if(-not $version) {
 task Clean { remove "$ModuleName\dll" }
 task Build {
     Invoke-Build -File "BinarySrc\source.build.ps1" -Version $Version
-    Get-ChildItem -Path "BinarySrc\output" |
+    Get-ChildItem -Path "BinarySrc\output" -Filter *.dll |
         Copy-Item -Destination "$moduleName\dll"
+    remove "BinarySrc\output"
 }, updateManifest, GenerateDocs
 
 task GenerateDocs {
     Start-Job -ScriptBlock {
             Set-Location $using:BuildRoot
-            Import-Module "BinarySrc\output\$using:moduleName.dll" -Verbose:$false
+            Import-Module ".\$using:moduleName\dll\$using:moduleName.dll" -Verbose:$false
             
             if(-not (Test-Path "Docs")) {
                 New-MarkdownHelp -Module $using:moduleName -OutputFolder Docs -AlphabeticParamsOrder -WithModulePage
@@ -33,15 +34,15 @@ task updateManifest {
     Import-Module PowerShellGet -Verbose:$false
     $cmdlets = Start-Job -ScriptBlock {
             Set-Location $using:BuildRoot  
-            Import-Module "BinarySrc\output\$using:moduleName.dll"    
-            Get-Command -Module SimplySql.Cmdlets
+            Import-Module ".\$using:moduleName\dll\$using:moduleName.dll"    
+            Get-Command -Module $using:moduleName
         } |
         Receive-Job -AutoRemoveJob -wait |
         Sort-Object name |
         ForEach-Object name
-        $files += Get-ChildItem "$using:moduleName\Public" -Filter "*-*.ps1" | Select-Object -ExpandProperty basename
-
-    Update-ModuleManifest -Path "$moduleName\$moduleName.psd1" -ModuleVersion $version -CmdletsToExport $cmdlets    
+    
+    $cmdlets += Get-ChildItem "$moduleName\Public" -Filter "*-*.ps1" | Select-Object -ExpandProperty basename
+    Update-ModuleManifest -Path "$moduleName\$moduleName.psd1" -ModuleVersion $version -CmdletsToExport $cmdlets
 }
 
 task revisionCommit {
