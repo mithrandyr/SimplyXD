@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-XdBatchGroup
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Removes the BatchGroup
 
 ## SYNTAX
 
@@ -28,7 +28,7 @@ Remove-XdBatchGroup -InputObject <BatchGroup> [-Force] [-TimeOut <Int32>] [<Comm
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Removes the BatchGroup
 
 ## EXAMPLES
 
@@ -42,7 +42,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -BatchGroupId
-{{ Fill BatchGroupId Description }}
+The GUID of the BatchGroup to remove
 
 ```yaml
 Type: Guid
@@ -57,7 +57,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-{{ Fill Force Description }}
+Will remove the BatchGroup even if it has batches.
 
 ```yaml
 Type: SwitchParameter
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -InputObject
-{{ Fill InputObject Description }}
+The BatchGroup to remove
 
 ```yaml
 Type: BatchGroup
@@ -87,7 +87,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-{{ Fill Name Description }}
+The name of the BatchGroup to remove
 
 ```yaml
 Type: String

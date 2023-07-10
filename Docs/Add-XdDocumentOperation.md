@@ -5,26 +5,26 @@ online version:
 schema: 2.0.0
 ---
 
-# New-XdDocumentOperation
+# Add-XdDocumentOperation
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Adds Operation to the specified Document
 
 ## SYNTAX
 
 ### short
 ```
-New-XdDocumentOperation -DocumentId <Guid> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
+Add-XdDocumentOperation -DocumentId <Guid> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
  [<CommonParameters>]
 ```
 
 ### asposepdf
 ```
-New-XdDocumentOperation -DocumentId <Guid> [-AsposePDF] [-TimeOut <Int32>] [<CommonParameters>]
+Add-XdDocumentOperation -DocumentId <Guid> [-AsposePDF] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Adds Operation to the specified Document
 
 ## EXAMPLES
 
@@ -38,7 +38,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -AsposePDF
-{{ Fill AsposePDF Description }}
+Uses default configuration for Aspose PDF Conversion
 
 ```yaml
 Type: SwitchParameter
@@ -53,7 +53,7 @@ Accept wildcard characters: False
 ```
 
 ### -ContractName
-{{ Fill ContractName Description }}
+The ContractName for the Document Operation
 
 ```yaml
 Type: String
@@ -68,7 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -DocumentId
-{{ Fill DocumentId Description }}
+The GUID of the Document to add the Operation to
 
 ```yaml
 Type: Guid
@@ -83,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -InputMetaData
-{{ Fill InputMetaData Description }}
+The required Input MetaData for the Operation
 
 ```yaml
 Type: String

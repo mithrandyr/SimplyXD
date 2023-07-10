@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-XdBatchGroup
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Creates a new BatchGroup
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ New-XdBatchGroup [-Name] <String> [[-Description] <String>] [-TimeOut <Int32>] [
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Creates a new BatchGroup
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Description
-{{ Fill Description Description }}
+Description of the BatchGroup
 
 ```yaml
 Type: String
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-{{ Fill Name Description }}
+Name of the BatchGroup, must be unique for the portal
 
 ```yaml
 Type: String

@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-XdDocumentProvider
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Gets the Document Provider for this Document
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ Get-XdDocumentProvider -DocumentId <Guid> [-TimeOut <Int32>] [<CommonParameters>
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets the Document Provider for this Document
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -DocumentId
-{{ Fill DocumentId Description }}
+GUID of the document to get the provider from
 
 ```yaml
 Type: Guid

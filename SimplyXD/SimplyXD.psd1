@@ -12,7 +12,7 @@
 RootModule = 'dll\SimplyXD.dll'
 
 # Version number of this module.
-ModuleVersion = '1.2.2023.43'
+ModuleVersion = '1.2.2023.50'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -72,19 +72,19 @@ Description = 'Alpha project for Xpertdoc Api'
 FunctionsToExport = @()
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = 'Get-XdAddInPackage', 'Get-XdConfigTest', 'Get-XdBatch', 'New-XdBatch', 
-               'Remove-XdBatch', 'Start-XdBatch', 'Clear-XdBatchGroup', 
-               'Get-XdBatchGroup', 'New-XdBatchGroup', 'Remove-XdBatchGroup', 
-               'Get-XdDocument', 'Get-XdDocumentOperation', 'Get-XdDocumentProvider', 
-               'New-XdDocument', 'New-XdDocumentOperation', 'New-XdDocumentProvider', 
-               'Add-XdGroupUser', 'Get-XdGroup', 'Get-XdGroupUser', 'Connect-XdPortal', 
-               'Get-XdPortal', 'Test-XdPortal', 'Export-XdTemplate', 'Get-XdTemplate', 
-               'Import-XdTemplate', 'New-XdTemplate', 'Remove-XdTemplate', 
-               'Set-XdTemplate', 'Set-XdTemplateContent', 'Get-XdTemplateGroup', 
-               'New-XdTemplateGroup', 'Remove-XdTemplateGroup', 
-               'Get-XdTemplateLibrary', 'New-XdTemplateLibrary', 
-               'Remove-XdTemplateLibrary', 'Get-XdUserProfile', 'New-XdUserProfile', 
-               'Remove-XdUserProfile', 'Set-XdUserProfile'
+CmdletsToExport = 'Add-XdDocumentOperation', 'Add-XdDocumentProvider', 
+               'Add-XdGroupUser', 'Clear-XdBatchGroup', 'Connect-XdPortal', 
+               'Export-XdTemplate', 'Get-XdAddInPackage', 'Get-XdBatch', 
+               'Get-XdBatchGroup', 'Get-XdConfig', 'Get-XdDocument', 
+               'Get-XdDocumentOperation', 'Get-XdDocumentProvider', 'Get-XdGroup', 
+               'Get-XdGroupUser', 'Get-XdPortal', 'Get-XdTemplate', 
+               'Get-XdTemplateGroup', 'Get-XdTemplateLibrary', 'Get-XdUserProfile', 
+               'Import-XdTemplate', 'New-XdBatch', 'New-XdBatchGroup', 
+               'New-XdDocument', 'New-XdTemplate', 'New-XdTemplateGroup', 
+               'New-XdTemplateLibrary', 'New-XdUserProfile', 'Remove-XdBatch', 
+               'Remove-XdBatchGroup', 'Remove-XdTemplate', 'Remove-XdTemplateGroup', 
+               'Remove-XdTemplateLibrary', 'Remove-XdUserProfile', 'Set-XdTemplate', 
+               'Set-XdTemplateContent', 'Set-XdUserProfile', 'Start-XdBatch'
 
 # Variables to export from this module
 # VariablesToExport = @()

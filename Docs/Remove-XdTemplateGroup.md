@@ -14,7 +14,7 @@ Removes a TemplateGroup
 
 ### name
 ```
-Remove-XdTemplateGroup -TemplateLibrary <String> -Name <String> [-Force] [-TimeOut <Int32>]
+Remove-XdTemplateGroup -TemplateLibrary <String> [-Name] <String> [-Force] [-TimeOut <Int32>]
  [<CommonParameters>]
 ```
 
@@ -58,7 +58,7 @@ Accept wildcard characters: False
 ```
 
 ### -InputObject
-{{ Fill InputObject Description }}
+The TemplateGroup to remove
 
 ```yaml
 Type: TemplateGroup
@@ -81,7 +81,7 @@ Parameter Sets: name
 Aliases: TemplateGroup
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

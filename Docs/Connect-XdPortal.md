@@ -31,7 +31,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -DefaultTimeout
-{{ Fill DefaultTimeout Description }}
+By default, actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -PortalUriAsIs
-{{ Fill PortalUriAsIs Description }}
+Use the -PortalUri value as submitted, otherwise it will be appended with the latest API endpoint
 
 ```yaml
 Type: SwitchParameter

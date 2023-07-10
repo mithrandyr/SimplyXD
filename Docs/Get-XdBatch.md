@@ -21,12 +21,12 @@ Get-XdBatch -BatchGroupId <Guid> [-Limit <Int32>] [-SortByCreation <String>] [-S
 ### search
 ```
 Get-XdBatch [-BatchGroupId <Guid>] [-Limit <Int32>] [-SortByCreation <String>] [-Status <String>]
- -Search <String> [-TimeOut <Int32>] [<CommonParameters>]
+ [-Search] <String> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### batch
 ```
-Get-XdBatch -BatchId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdBatch [-BatchId] <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -79,7 +79,7 @@ Parameter Sets: batch
 Aliases:
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -109,7 +109,7 @@ Parameter Sets: search
 Aliases:
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

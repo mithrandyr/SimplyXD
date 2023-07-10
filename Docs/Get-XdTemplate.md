@@ -14,7 +14,7 @@ Returns templates
 
 ### search
 ```
-Get-XdTemplate [-Search <String>] [-TemplateLibrary <String>] [-TemplateGroup <String>] [-IncludeContent]
+Get-XdTemplate [[-Search] <String>] [-TemplateLibrary <String>] [-TemplateGroup <String>] [-IncludeContent]
  [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
@@ -117,7 +117,7 @@ Parameter Sets: search
 Aliases:
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
