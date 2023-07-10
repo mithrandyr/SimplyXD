@@ -14,9 +14,8 @@ Creates a document provider
 
 ### long
 ```
-New-XdDocumentProvider -DocumentId <Guid> -XmlData <String> -TemplateLibraryName <String>
- -TemplateGroupName <String> -TemplateName <String> [-DopaName <String>] [-TimeOut <Int32>]
- [<CommonParameters>]
+New-XdDocumentProvider -DocumentId <Guid> -XmlData <String> -TemplateLibrary <String> -TemplateGroup <String>
+ -TemplateName <String> [-DopaName <String>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### short
@@ -65,7 +64,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -99,13 +98,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateGroupName
-Name of the TemplateGroup to find the template to execute
+### -TemplateGroup
+{{ Fill TemplateGroup Description }}
 
 ```yaml
 Type: String
 Parameter Sets: long
-Aliases:
+Aliases: TemplateGroupName
 
 Required: True
 Position: Named
@@ -114,13 +113,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateLibraryName
-Name of the TemplateLibrary to find the TemplateGroup
+### -TemplateLibrary
+{{ Fill TemplateLibrary Description }}
 
 ```yaml
 Type: String
 Parameter Sets: long
-Aliases:
+Aliases: TemplateLibraryName
 
 Required: True
 Position: Named

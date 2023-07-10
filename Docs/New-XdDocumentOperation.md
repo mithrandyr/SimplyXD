@@ -5,35 +5,26 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdTemplateGroup
+# New-XdDocumentOperation
 
 ## SYNOPSIS
-Return TemplateGroups
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
-### search
+### short
 ```
-Get-XdTemplateGroup [[-Search] <String>] [-TemplateLibrary <String>] [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### name
-```
-Get-XdTemplateGroup -TemplateLibrary <String> -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
+New-XdDocumentOperation -DocumentId <Guid> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
-### obj
+### asposepdf
 ```
-Get-XdTemplateGroup -InputObject <TemplateLibrary> [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### id
-```
-Get-XdTemplateGroup -TemplateGroupId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+New-XdDocumentOperation -DocumentId <Guid> [-AsposePDF] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Return TemplateGroups
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
@@ -46,28 +37,13 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -InputObject
-TemplateLibray object, will return all TemplateGroups in this TemplateLibrary
+### -AsposePDF
+{{ Fill AsposePDF Description }}
 
 ```yaml
-Type: TemplateLibrary
-Parameter Sets: obj
+Type: SwitchParameter
+Parameter Sets: asposepdf
 Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Name
-Name of the templategroup to return
-
-```yaml
-Type: String
-Parameter Sets: name
-Aliases: TemplateGroup
 
 Required: True
 Position: Named
@@ -76,27 +52,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Search
-Return templategroups with name containing this value
+### -ContractName
+{{ Fill ContractName Description }}
 
 ```yaml
 Type: String
-Parameter Sets: search
+Parameter Sets: short
 Aliases:
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateGroupId
-GUID of the templategroup to return
+### -DocumentId
+{{ Fill DocumentId Description }}
 
 ```yaml
 Type: Guid
-Parameter Sets: id
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -106,24 +82,12 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -TemplateLibrary
-Name of the templatelibrary, whose templategroups will be returned
+### -InputMetaData
+{{ Fill InputMetaData Description }}
 
 ```yaml
 Type: String
-Parameter Sets: search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-```yaml
-Type: String
-Parameter Sets: name
+Parameter Sets: short
 Aliases:
 
 Required: True
@@ -152,8 +116,6 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
-
-### System.String
 
 ### System.Guid
 

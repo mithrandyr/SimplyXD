@@ -119,7 +119,7 @@ Name of the templateGroup in which to create the template
 ```yaml
 Type: String
 Parameter Sets: name
-Aliases:
+Aliases: TemplateGroupName
 
 Required: True
 Position: Named
@@ -149,7 +149,7 @@ Name of the TemplateLibrary in which to find the TemplateGroup
 ```yaml
 Type: String
 Parameter Sets: name
-Aliases:
+Aliases: TemplateLibraryName
 
 Required: True
 Position: Named

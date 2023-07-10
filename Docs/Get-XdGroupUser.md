@@ -5,53 +5,43 @@ online version:
 schema: 2.0.0
 ---
 
-# Add-XdGroupMember
+# Get-XdGroupUser
 
 ## SYNOPSIS
-Adds UserProfile to Group
+Get Users in a group
 
 ## SYNTAX
 
-### name-name
+### name
 ```
-Add-XdGroupMember -GroupName <String> -UserName <String> [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### name-id
-```
-Add-XdGroupMember -GroupName <String> -UserProfileId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdGroupUser [-GroupName] <String> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
-### id-name
+### id
 ```
-Add-XdGroupMember -GroupId <Guid> -UserName <String> [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### id-id
-```
-Add-XdGroupMember -GroupId <Guid> -UserProfileId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdGroupUser -GroupId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Adds UserProfile to Group
+Get Users in a group
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> Add-XdGroupMember -GroupName Test -UserName SomeUser
+PS C:\> {{ Add example code here }}
 ```
 
-Adding 'SomeUser' to the group 'Test'
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -GroupId
-GUID for the Group
+GUID of the group to return users from
 
 ```yaml
 Type: Guid
-Parameter Sets: id-name, id-id
+Parameter Sets: id
 Aliases:
 
 Required: True
@@ -62,15 +52,15 @@ Accept wildcard characters: False
 ```
 
 ### -GroupName
-Name of the Group
+Name of the group to return users from
 
 ```yaml
 Type: String
-Parameter Sets: name-name, name-id
+Parameter Sets: name
 Aliases:
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -85,36 +75,6 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: 15
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -UserName
-Name of the UserProfile to add to the group
-
-```yaml
-Type: String
-Parameter Sets: name-name, id-name
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -UserProfileId
-GUID of the UserProfile to add to the Group
-
-```yaml
-Type: Guid
-Parameter Sets: name-id, id-id
-Aliases:
-
-Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

@@ -5,19 +5,19 @@ online version:
 schema: 2.0.0
 ---
 
-# New-XdBatch
+# Get-XdDocumentProvider
 
 ## SYNOPSIS
-Creates a new Batch
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
 ```
-New-XdBatch -BatchGroupId <Guid> [-BatchName <String>] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdDocumentProvider -DocumentId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates a new Batch
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
@@ -30,8 +30,8 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -BatchGroupId
-GUID of the batchgroup to create the batch in
+### -DocumentId
+{{ Fill DocumentId Description }}
 
 ```yaml
 Type: Guid
@@ -41,22 +41,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -BatchName
-Name of the batchgroup to create the batch in
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: Name
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
@@ -79,6 +64,8 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
+
+### System.Guid
 
 ### System.Int32
 

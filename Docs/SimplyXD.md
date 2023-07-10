@@ -11,7 +11,7 @@ Locale: en-US
 PowerShell module that wraps the Xpertdoc Portal API.
 
 ## SimplyXD Cmdlets
-### [Add-XdGroupMember](Add-XdGroupMember.md)
+### [Add-XdGroupUser](Add-XdGroupUser.md)
 Adds UserProfile to Group
 
 ### [Clear-XdBatchGroup](Clear-XdBatchGroup.md)
@@ -23,6 +23,9 @@ Connects to an Xpertdoc Portal
 ### [Export-XdTemplate](Export-XdTemplate.md)
 Exports a template into a zipfile
 
+### [Get-XdAddInPackage](Get-XdAddInPackage.md)
+{{ Fill in the Synopsis }}
+
 ### [Get-XdBatch](Get-XdBatch.md)
 Gets a Batch
 
@@ -32,11 +35,17 @@ Gets a batchgroup
 ### [Get-XdDocument](Get-XdDocument.md)
 Returns a document
 
+### [Get-XdDocumentOperation](Get-XdDocumentOperation.md)
+{{ Fill in the Synopsis }}
+
+### [Get-XdDocumentProvider](Get-XdDocumentProvider.md)
+{{ Fill in the Synopsis }}
+
 ### [Get-XdGroup](Get-XdGroup.md)
 Returns a Group
 
-### [Get-XdGroupMember](Get-XdGroupMember.md)
-Get Members of a group
+### [Get-XdGroupUser](Get-XdGroupUser.md)
+Get Users in a group
 
 ### [Get-XdPortal](Get-XdPortal.md)
 Returns the connected portal
@@ -59,8 +68,14 @@ Imports a template from a zipfile.
 ### [New-XdBatch](New-XdBatch.md)
 Creates a new Batch
 
+### [New-XdBatchGroup](New-XdBatchGroup.md)
+{{ Fill in the Synopsis }}
+
 ### [New-XdDocument](New-XdDocument.md)
 Creates a Document
+
+### [New-XdDocumentOperation](New-XdDocumentOperation.md)
+{{ Fill in the Synopsis }}
 
 ### [New-XdDocumentProvider](New-XdDocumentProvider.md)
 Creates a document provider
@@ -79,6 +94,9 @@ Creates a UserProfile
 
 ### [Remove-XdBatch](Remove-XdBatch.md)
 Removes a batch
+
+### [Remove-XdBatchGroup](Remove-XdBatchGroup.md)
+{{ Fill in the Synopsis }}
 
 ### [Remove-XdTemplate](Remove-XdTemplate.md)
 Removes the template.

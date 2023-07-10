@@ -5,25 +5,30 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdGroupMember
+# Remove-XdBatchGroup
 
 ## SYNOPSIS
-Get Members of a group
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
-### name
-```
-Get-XdGroupMember [-GroupName] <String> [-TimeOut <Int32>] [<CommonParameters>]
-```
-
 ### id
 ```
-Get-XdGroupMember -GroupId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Remove-XdBatchGroup -BatchGroupId <Guid> [-Force] [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### name
+```
+Remove-XdBatchGroup [-Name] <String> [-Force] [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### obj
+```
+Remove-XdBatchGroup -InputObject <BatchGroup> [-Force] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get Members of a group
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
@@ -36,8 +41,8 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -GroupId
-GUID of the group to return members from
+### -BatchGroupId
+{{ Fill BatchGroupId Description }}
 
 ```yaml
 Type: Guid
@@ -51,8 +56,38 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -GroupName
-Name of the group to return
+### -Force
+{{ Fill Force Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InputObject
+{{ Fill InputObject Description }}
+
+```yaml
+Type: BatchGroup
+Parameter Sets: obj
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+{{ Fill Name Description }}
 
 ```yaml
 Type: String
@@ -62,7 +97,7 @@ Aliases:
 Required: True
 Position: 0
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -85,8 +120,6 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
-
-### System.String
 
 ### System.Guid
 

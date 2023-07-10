@@ -5,44 +5,53 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdDocument
+# Add-XdGroupUser
 
 ## SYNOPSIS
-Returns a document
+Adds UserProfile to Group
 
 ## SYNTAX
 
-### id
+### name-name
 ```
-Get-XdDocument -DocumentId <Guid> [-IncludeOutput] [-TimeOut <Int32>] [<CommonParameters>]
+Add-XdGroupUser -GroupName <String> -UserName <String> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
-### batch
+### name-id
 ```
-Get-XdDocument -BatchId <Guid> [-SequenceNumber <Int32>] [-IncludeOutput] [-TimeOut <Int32>]
- [<CommonParameters>]
+Add-XdGroupUser -GroupName <String> -UserProfileId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### id-name
+```
+Add-XdGroupUser -GroupId <Guid> -UserName <String> [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### id-id
+```
+Add-XdGroupUser -GroupId <Guid> -UserProfileId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns a document
+Adds UserProfile to Group
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Add-XdGroupUser -GroupName Test -UserName SomeUser
 ```
 
-{{ Add example description here }}
+Adding 'SomeUser' to the group 'Test'
 
 ## PARAMETERS
 
-### -BatchId
-GUID of the batch, documents in this batch will be returned
+### -GroupId
+GUID for the Group
 
 ```yaml
 Type: Guid
-Parameter Sets: batch
+Parameter Sets: id-name, id-id
 Aliases:
 
 Required: True
@@ -52,45 +61,15 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -DocumentId
-GUID of the document to return
+### -GroupName
+Name of the Group
 
 ```yaml
-Type: Guid
-Parameter Sets: id
+Type: String
+Parameter Sets: name-name, name-id
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -IncludeOutput
-Include the output in the result
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -SequenceNumber
-Which document number you want from the batch
-
-```yaml
-Type: Int32
-Parameter Sets: batch
-Aliases:
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -112,16 +91,46 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -UserName
+Name of the UserProfile to add to the group
+
+```yaml
+Type: String
+Parameter Sets: name-name, id-name
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -UserProfileId
+GUID of the UserProfile to add to the Group
+
+```yaml
+Type: Guid
+Parameter Sets: name-id, id-id
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
+### System.String
+
 ### System.Guid
 
 ### System.Int32
-
-### System.Management.Automation.SwitchParameter
 
 ## OUTPUTS
 

@@ -5,19 +5,19 @@ online version:
 schema: 2.0.0
 ---
 
-# New-XdBatch
+# New-XdBatchGroup
 
 ## SYNOPSIS
-Creates a new Batch
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
 ```
-New-XdBatch -BatchGroupId <Guid> [-BatchName <String>] [-TimeOut <Int32>] [<CommonParameters>]
+New-XdBatchGroup [-Name] <String> [[-Description] <String>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates a new Batch
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
@@ -30,31 +30,31 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -BatchGroupId
-GUID of the batchgroup to create the batch in
-
-```yaml
-Type: Guid
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -BatchName
-Name of the batchgroup to create the batch in
+### -Description
+{{ Fill Description Description }}
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: Name
+Aliases:
 
 Required: False
-Position: Named
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+{{ Fill Name Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

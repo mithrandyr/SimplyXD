@@ -5,19 +5,25 @@ online version:
 schema: 2.0.0
 ---
 
-# New-XdBatch
+# Get-XdAddInPackage
 
 ## SYNOPSIS
-Creates a new Batch
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
+### search
 ```
-New-XdBatch -BatchGroupId <Guid> [-BatchName <String>] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdAddInPackage [[-Search] <String>] [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### name
+```
+Get-XdAddInPackage -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates a new Batch
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
@@ -30,12 +36,12 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -BatchGroupId
-GUID of the batchgroup to create the batch in
+### -Name
+{{ Fill Name Description }}
 
 ```yaml
-Type: Guid
-Parameter Sets: (All)
+Type: String
+Parameter Sets: name
 Aliases:
 
 Required: True
@@ -45,16 +51,16 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -BatchName
-Name of the batchgroup to create the batch in
+### -Search
+{{ Fill Search Description }}
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: Name
+Parameter Sets: search
+Aliases:
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -79,6 +85,8 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
+
+### System.String
 
 ### System.Int32
 
