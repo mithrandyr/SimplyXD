@@ -16,11 +16,6 @@ Public Class Get_XdDocument
     <Parameter(ValueFromPipelineByPropertyName:=True)>
     Public Property IncludeOutput As SwitchParameter
 
-    <Parameter(ValueFromPipelineByPropertyName:=True)>
-    Public Property IncludeProviders As SwitchParameter
-
-    <Parameter(ValueFromPipelineByPropertyName:=True)>
-    Public Property IncludeOperations As SwitchParameter
 #End Region
 
     Protected Overrides Sub ProcessRecord()
@@ -44,21 +39,11 @@ Public Class Get_XdDocument
     End Sub
 
     Private Sub Output(doc As Document)
-        If IncludeOutput.IsPresent Or IncludeProviders.IsPresent Or IncludeOperations.IsPresent Then
+        If IncludeOutput.IsPresent And doc.Status = DocumentStatus.Completed Then
             xdp.AttachTo("Documents", doc)
             Dim pso As New PSObject(doc)
-            If IncludeOutput.IsPresent AndAlso doc.Status = DocumentStatus.Completed Then
-                pso.Members.Add(New PSNoteProperty("Content", ExecuteWithTimeout(doc.GetOutput.GetValueAsync)))
-            End If
-
-            If IncludeProviders.IsPresent Then
-                pso.Members.Add(New PSNoteProperty("Providers", ExecuteWithTimeout(xdp.DocumentProviders.Where(Function(x) x.DocumentId = doc.DocumentId).ToListAsync)))
-            End If
-
-            If IncludeOperations.IsPresent Then
-                pso.Members.Add(New PSNoteProperty("Operations", ExecuteWithTimeout(xdp.DocumentOperations.Where(Function(x) x.DocumentId = doc.DocumentId).ToListAsync)))
-            End If
-
+            pso.Members.Add(New PSNoteProperty("Content", ExecuteWithTimeout(doc.GetOutput.GetValueAsync)))
+            xdp.Detach(doc)
             WriteObject(pso)
         Else
             WriteObject(doc)
