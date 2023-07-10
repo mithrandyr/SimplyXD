@@ -1,6 +1,6 @@
 ﻿<Cmdlet(VerbsCommon.Get, "XdGroup")>
 <CmdletBinding(DefaultParameterSetName:="search")>
-Public Class Get_XdProfile
+Public Class Get_XdGroup
     Inherits baseCmdlet
 
     <Parameter(ParameterSetName:="search")>

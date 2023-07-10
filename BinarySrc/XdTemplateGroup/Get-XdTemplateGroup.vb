@@ -18,7 +18,7 @@ Public Class Get_XdTemplateGroup
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property Name As String
 
-    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipeline:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateGroupId As Guid
 
 

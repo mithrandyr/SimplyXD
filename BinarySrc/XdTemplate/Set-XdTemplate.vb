@@ -4,10 +4,12 @@ Public Class Set_XdTemplate
     Inherits baseCmdlet
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
+    <[Alias]("TemplateLibraryName")>
     Public Property TemplateLibrary As String
 
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
+    <[Alias]("TemplateGroupName")>
     Public Property TemplateGroup As String
 
     <[Alias]("TemplateName")>

@@ -6,8 +6,6 @@ Public Class StartXdBatch
     <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True, Position:=0)>
     Public Property BatchId As Guid
 
-    Dim batchList As New List(Of Guid)
-
     Protected Overrides Sub ProcessRecord()
         Dim nbatch As Batch
         Try

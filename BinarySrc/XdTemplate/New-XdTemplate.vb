@@ -5,10 +5,12 @@ Public Class New_XdTemplate
 
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
+    <[Alias]("TemplateLibraryName")>
     Public Property TemplateLibrary As String
 
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
+    <[Alias]("TemplateGroupName")>
     Public Property TemplateGroup As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="id")>

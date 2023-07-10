@@ -3,7 +3,7 @@
 Public Class NewBatch
     Inherits baseCmdlet
 
-    <Parameter(Mandatory:=True)>
+    <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property BatchGroupId As Guid
 
     <Parameter()>

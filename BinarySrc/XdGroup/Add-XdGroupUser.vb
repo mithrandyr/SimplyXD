@@ -1,7 +1,7 @@
 ﻿
-<Cmdlet(VerbsCommon.Add, "XdGroupMember")>
+<Cmdlet(VerbsCommon.Add, "XdGroupUser")>
 <CmdletBinding(DefaultParameterSetName:="name-name")>
-Public Class Add_XdGroupMember
+Public Class Add_XdGroupUser
     Inherits baseCmdlet
 
     <ValidateNotNullOrEmpty>
