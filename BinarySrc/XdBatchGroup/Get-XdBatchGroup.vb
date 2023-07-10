@@ -7,7 +7,7 @@ Public Class GetBatchGroup
     <Parameter(Mandatory:=True, ParameterSetName:="one")>
     Public Property Name As String
 
-    <Parameter(Mandatory:=False, ParameterSetName:="search")>
+    <Parameter(Mandatory:=False, ParameterSetName:="search", Position:=0)>
     Public Property Search As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="id")>
