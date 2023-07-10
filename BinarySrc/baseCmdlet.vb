@@ -22,14 +22,14 @@
             Try
                 If Not dsr.Wait(timeoutMS) Then
                     If x IsNot Nothing Then xdp.Detach(x)
-                    WriteError(New ErrorRecord(New TimeoutException(String.Format("SaveChanges timeout of {0}s exceeded.", (timeoutMS / 1000))), Nothing, ErrorCategory.OperationTimeout, x))
+                    WriteError(New TimeoutException($"SaveChanges timeout of {timeoutMS / 1000}s exceeded."), Nothing, ErrorCategory.OperationTimeout, x)
                     Return False
                 Else
                     Return True
                 End If
             Catch ex As Exception
                 If x IsNot Nothing Then xdp.Detach(x)
-                WriteError(WrappedException.CreateErrorRecord(ex, $"{MyInvocation.MyCommand.Name}[SaveChangesFailed]", x))
+                WriteErrorWrapped(ex, $"{MyInvocation.MyCommand.Name}[SaveChangesFailed]", x)
                 Return False
             End Try
         End Using
@@ -48,7 +48,7 @@
         If result Then
             Return cmd.Result
         Else
-            Throw New TimeoutException(String.Format("Retrieval timeout of {0}s exceeded.", (timeoutMS / 1000)))
+            Throw New TimeoutException($"Retrieval timeout of {timeoutMS / 1000}s exceeded.")
         End If
     End Function
 
@@ -57,7 +57,7 @@
 
         Try
             If Not Task.WaitAll(group, timeoutMS) Then
-                Throw New TimeoutException(String.Format("Retrieval timeout of {0}s exceeded.", (timeoutMS / 1000)))
+                Throw New TimeoutException($"Retrieval timeout of {timeoutMS / 1000}s exceeded.")
             End If
         Catch ex As Exception
             Throw WrappedException.GenerateMessageFromInnermost(ex)
@@ -69,10 +69,10 @@
         Dim activityMessage As String, iteration As Integer = 0
 
         If limit > 0 AndAlso rCount > limit Then
-            activityMessage = String.Format("Getting {0} {1} (out of {2})", limit, objectName, rCount)
+            activityMessage = $"Getting {limit} {objectName} (out of {rCount})"
         Else
             limit = rCount
-            activityMessage = String.Format("Getting {0} {1}", limit, objectName)
+            activityMessage = $"Getting {limit} {objectName}"
         End If
 
         While iteration < limit

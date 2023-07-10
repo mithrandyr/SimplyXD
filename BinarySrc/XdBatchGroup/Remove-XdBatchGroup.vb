@@ -38,7 +38,7 @@ Public Class RemoveBatchGroup
             WriteVerbose("Deleting the BatchGroup")
             SaveChanges(dBatchGroup)
         Else
-            WriteError(XDPItemIsNotEmpty.CreateErrorRecord("BatchGroup", If(Name, BatchGroupId.ToString), batchCount))
+            WriteErrorNotEmpty("BatchGroup", If(Name, BatchGroupId.ToString), batchCount)
 
         End If
     End Sub

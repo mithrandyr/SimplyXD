@@ -1,4 +1,5 @@
-﻿Imports Microsoft.OData.Client
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.OData.Client
 Imports Newtonsoft.Json.Linq
 Friend Class StandardErrors
     Shared Function TemplateBlobUpdate(ex As Exception, t As Template) As ErrorRecord
@@ -25,3 +26,31 @@ Friend Class StandardErrors
         End If
     End Function
 End Class
+
+Module Extensions
+    <Extension()>
+    Sub WriteErrorMissing(this As baseCmdlet, itemType As String, itemValue As String, Optional innerEx As Exception = Nothing)
+        Dim errorId = String.Format("XDPortal-{0}ItemNotFound", itemType)
+        Dim ex As New XDPItemMissingException(itemType, itemValue, StandardErrors.GetInnermostException(innerEx))
+        this.WriteError(New ErrorRecord(ex, errorId, ErrorCategory.ObjectNotFound, itemValue))
+    End Sub
+
+    <Extension()>
+    Sub WriteErrorNotEmpty(this As baseCmdlet, itemType As String, itemValue As String, itemCount As Long, Optional innerEx As Exception = Nothing)
+        Dim errorId = $"XDPortal-{itemType}IsNotEmpty"
+        Dim ex As New XDPItemIsNotEmpty(itemType, itemValue, itemCount, StandardErrors.GetInnermostException(innerEx))
+        this.WriteError(New ErrorRecord(ex, errorId, ErrorCategory.ResourceExists, itemValue))
+    End Sub
+
+    <Extension()>
+    Public Sub WriteErrorWrapped(this As baseCmdlet, ex As Exception, errId As String, Optional errObject As Object = Nothing)
+        Dim wex = WrappedException.GenerateMessageFromInnermost(ex)
+        this.WriteError(New ErrorRecord(wex, errId, ErrorCategory.NotSpecified, errObject))
+    End Sub
+
+    <Extension()>
+    Public Sub CreateErrorRecord(this As baseCmdlet, ex As Exception, errId As String, errCategory As ErrorCategory, Optional errObject As Object = Nothing)
+        Dim wex = WrappedException.GenerateMessageFromInnermost(ex)
+        this.WriteError(New ErrorRecord(wex, errId, errCategory, errObject))
+    End Sub
+End Module

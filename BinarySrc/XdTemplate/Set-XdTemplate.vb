@@ -41,7 +41,7 @@ Public Class Set_XdTemplate
                         uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.TemplateId = TemplateId).FirstOrDefaultAsync)
                 End Select
             Catch ex As Exception
-                WriteError(WrappedException.CreateErrorRecord(ex, "TemplateRetrievalFailed"))
+                WriteErrorWrapped(ex, "TemplateRetrievalFailed")
                 Exit Sub
             End Try
 

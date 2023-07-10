@@ -24,7 +24,7 @@ Public Class Get_XdConfig
                     indexTask
                 })
         Catch ex As Exception
-            WriteError(WrappedException.CreateErrorRecord(ex, Nothing))
+            WriteErrorWrapped(ex, Nothing)
             Exit Sub
         End Try
 

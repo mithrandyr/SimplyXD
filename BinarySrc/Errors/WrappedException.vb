@@ -20,13 +20,4 @@ Public Class WrappedException
         If message Is Nothing Then message = innerEx.Message
         Return New WrappedException(message, innerEx)
     End Function
-
-    Public Shared Function CreateErrorRecord(ex As Exception, errId As String, Optional errObject As Object = Nothing) As ErrorRecord
-        Return CreateErrorRecord(ex, errId, ErrorCategory.NotSpecified, errObject)
-    End Function
-    Public Shared Function CreateErrorRecord(ex As Exception, errId As String, errCategory As ErrorCategory, Optional errObject As Object = Nothing) As ErrorRecord
-        Dim nEx = GenerateMessageFromInnermost(ex)
-        Return New ErrorRecord(nEx, errId, errCategory, errObject)
-    End Function
-
 End Class

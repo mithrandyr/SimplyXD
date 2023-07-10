@@ -44,7 +44,7 @@ Public Class Remove_XdTemplateGroup
             WriteVerbose("Deleting the TemplateGroup")
             SaveChanges()
         Else
-            WriteError(XDPItemIsNotEmpty.CreateErrorRecord("TemplateGroup", If(Name, TemplateGroupId.ToString), templateCount))
+            WriteErrorNotEmpty("TemplateGroup", If(Name, TemplateGroupId.ToString), templateCount)
         End If
     End Sub
 End Class
