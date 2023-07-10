@@ -8,7 +8,7 @@ Public Class NewBatch
 
     <Parameter()>
     <[Alias]("Name")>
-    Public Property BatchName As String = String.Format("{0}-{1:yyyyMMdd-HHmmss-fff}", Environment.UserName, Date.Now)
+    Public Property BatchName As String = $"{Environment.UserName}-{Date.Now:yyyyMMdd-HHmmss-fff}"
 
     Protected Overrides Sub EndProcessing()
         Dim nBatch As New Batch With {.BatchGroupId = BatchGroupId, .Status = BatchStatus.Created, .Name = BatchName}

@@ -24,11 +24,11 @@ Public Class StartXdBatch
                     nbatch.Status = BatchStatus.Queued
                     WriteObject(nbatch)
                 Catch ex As Exception
-                    WriteError(New ErrorRecord(ex, "BatchExecutionFailed", ErrorCategory.InvalidOperation, nbatch))
+                    WriteErrorWrapped(ex, "BatchExecutionFailed", ErrorCategory.InvalidOperation, nbatch)
                 End Try
             Else
                 Dim ioex As New InvalidOperationException($"Batch '{nbatch.BatchId}' has already been executed, status = {nbatch.Status}")
-                WriteError(New ErrorRecord(ioex, "BatchExecutionFailed", ErrorCategory.InvalidOperation, nbatch))
+                WriteError(ioex, "BatchExecutionFailed", ErrorCategory.InvalidOperation, nbatch)
             End If
         End If
     End Sub

@@ -36,7 +36,7 @@ Public Class Import_XdTemplate
             If t Is Nothing Then
                 Dim tgId = GetTemplateGroupId()
                 If tgId Is Nothing Then
-                    WriteErrorMissing("TemplateGroup", String.Format("{0}\{1}", TemplateLibrary, TemplateGroup))
+                    WriteErrorMissing("TemplateGroup", $"{TemplateLibrary}\{TemplateGroup}")
                     Exit Sub
                 Else
                     t = CreateTemplate(tgId)
@@ -55,30 +55,30 @@ Public Class Import_XdTemplate
             ImportPath = Path.Combine(CurrentProviderLocation("FileSystem").ProviderPath, ImportPath)
         End If
         If Path.GetExtension(ImportPath) <> ".zip" Then
-            WriteError(New ErrorRecord(New ArgumentException("File is not a zip archive", "ImportPath"), "FileNotZipArchive", ErrorCategory.InvalidArgument, ImportPath))
+            WriteError(New ArgumentException("File is not a zip archive", "ImportPath"), "FileNotZipArchive", ErrorCategory.InvalidArgument, ImportPath)
             Return False
         End If
         If Not File.Exists(ImportPath) Then
-            WriteError(New ErrorRecord(New FileNotFoundException("ZipArchive not found", ImportPath), "FileNotFound", ErrorCategory.ObjectNotFound, ImportPath))
+            WriteError(New FileNotFoundException("ZipArchive not found", ImportPath), "FileNotFound", ErrorCategory.ObjectNotFound, ImportPath)
             Return False
         End If
 
         Using zArchive As Compression.ZipArchive = Compression.ZipFile.Open(ImportPath, Compression.ZipArchiveMode.Read)
             Dim DllCount = zArchive.Entries.Where(Function(x) Path.GetExtension(x.Name) = ".dll").Count
             If DllCount = 0 Then
-                WriteError(New ErrorRecord(New FileNotFoundException("Template DLL missing from the archive"), "FileNotFound", ErrorCategory.ObjectNotFound, Nothing))
+                WriteError(New FileNotFoundException("Template DLL missing from the archive"), "FileNotFound", ErrorCategory.ObjectNotFound, Nothing)
                 Return False
             ElseIf DllCount > 1 Then
-                WriteError(New ErrorRecord(New ArgumentOutOfRangeException("There should only be a single Template DLL in the archive"), "TooManyDlls", ErrorCategory.InvalidData, Nothing))
+                WriteError(New ArgumentOutOfRangeException("There should only be a single Template DLL in the archive"), "TooManyDlls", ErrorCategory.InvalidData, Nothing)
                 Return False
             End If
 
             Dim DocxCount = zArchive.Entries.Where(Function(x) Path.GetExtension(x.Name) = ".docx").Count
             If DocxCount = 0 Then
-                WriteError(New ErrorRecord(New FileNotFoundException("Template DOCX missing from the archive"), "FileNotFound", ErrorCategory.ObjectNotFound, Nothing))
+                WriteError(New FileNotFoundException("Template DOCX missing from the archive"), "FileNotFound", ErrorCategory.ObjectNotFound, Nothing)
                 Return False
             ElseIf DocxCount > 1 Then
-                WriteError(New ErrorRecord(New ArgumentOutOfRangeException("There should only be a single Template DOCX in the archive"), "TooManyDlls", ErrorCategory.InvalidData, Nothing))
+                WriteError(New ArgumentOutOfRangeException("There should only be a single Template DOCX in the archive"), "TooManyDlls", ErrorCategory.InvalidData, Nothing)
                 Return False
             End If
         End Using
@@ -137,7 +137,7 @@ Public Class Import_XdTemplate
         End Using
 
         Try
-            ExecuteWithTimeout(t.UpdateAssemblyAndSource(AssemblyContent, String.Format("{0}.dll", t.Name), SourceContent, String.Format("{0}.docx", t.Name), Comment).ExecuteAsync)
+            ExecuteWithTimeout(t.UpdateAssemblyAndSource(AssemblyContent, $"{t.Name}.dll", SourceContent, $"{t.Name}.docx", Comment).ExecuteAsync)
             Return True
         Catch ex As Exception
             WriteError(StandardErrors.TemplateBlobUpdate(ex, t))

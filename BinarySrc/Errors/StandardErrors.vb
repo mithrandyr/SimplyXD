@@ -32,25 +32,25 @@ Module ErrorExtensions
     Sub WriteErrorMissing(this As baseCmdlet, itemType As String, itemValue As String, Optional innerEx As Exception = Nothing)
         Dim errorId = $"XDPortal-{itemType}ItemNotFound"
         Dim ex As New XDPItemMissingException(itemType, itemValue, StandardErrors.GetInnermostException(innerEx))
-        this.WriteError(New ErrorRecord(ex, errorId, ErrorCategory.ObjectNotFound, itemValue))
+        this.WriteError(ex, errorId, ErrorCategory.ObjectNotFound, itemValue)
     End Sub
 
     <Extension()>
     Sub WriteErrorNotEmpty(this As baseCmdlet, itemType As String, itemValue As String, itemCount As Long, Optional innerEx As Exception = Nothing)
         Dim errorId = $"XDPortal-{itemType}IsNotEmpty"
         Dim ex As New XDPItemIsNotEmpty(itemType, itemValue, itemCount, StandardErrors.GetInnermostException(innerEx))
-        this.WriteError(New ErrorRecord(ex, errorId, ErrorCategory.ResourceExists, itemValue))
+        this.WriteError(ex, errorId, ErrorCategory.ResourceExists, itemValue)
     End Sub
 
     <Extension()>
     Public Sub WriteErrorWrapped(this As baseCmdlet, ex As Exception, errId As String, Optional errObject As Object = Nothing)
         Dim wex = WrappedException.GenerateMessageFromInnermost(ex)
-        this.WriteError(New ErrorRecord(wex, errId, ErrorCategory.NotSpecified, errObject))
+        this.WriteError(wex, errId, ErrorCategory.NotSpecified, errObject)
     End Sub
 
     <Extension()>
-    Public Sub CreateErrorRecord(this As baseCmdlet, ex As Exception, errId As String, errCategory As ErrorCategory, Optional errObject As Object = Nothing)
+    Public Sub WriteErrorWrapped(this As baseCmdlet, ex As Exception, errId As String, errCategory As ErrorCategory, Optional errObject As Object = Nothing)
         Dim wex = WrappedException.GenerateMessageFromInnermost(ex)
-        this.WriteError(New ErrorRecord(wex, errId, errCategory, errObject))
+        this.WriteError(wex, errId, errCategory, errObject)
     End Sub
 End Module

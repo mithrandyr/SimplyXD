@@ -55,7 +55,7 @@ Public Class New_XdTemplate
         xdp.AddToTemplates(nTemplate)
         If SaveChanges(nTemplate) Then
             Try
-                ExecuteWithTimeout(nTemplate.UpdateAssemblyAndSource(Assembly, String.Format("{0}.dll", Name), Source, String.Format("{0}.docx", Name), Comment).ExecuteAsync)
+                ExecuteWithTimeout(nTemplate.UpdateAssemblyAndSource(Assembly, $"{Name}.dll", Source, $"{Name}.docx", Comment).ExecuteAsync)
             Catch ex As Exception
                 WriteError(StandardErrors.TemplateBlobUpdate(ex, nTemplate))
             End Try
