@@ -27,7 +27,7 @@ Public Class Remove_XdTemplateGroup
             WriteVerbose("Looking up the TemplateGroupId")
             Dim result = ExecuteWithTimeout(xdp.TemplateGroups.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper) And x.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)?.TemplateGroupId
             If result Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("TemplateGroup", String.Format("{0}\{1}", TemplateLibrary, Name)))
+                WriteErrorMissing("TemplateGroup", String.Format("{0}\{1}", TemplateLibrary, Name))
                 Exit Sub
             End If
             TemplateGroupId = result
@@ -44,7 +44,7 @@ Public Class Remove_XdTemplateGroup
             WriteVerbose("Deleting the TemplateGroup")
             SaveChanges()
         Else
-            WriteError(StandardErrors.XDPNotEmpty("TemplateGroup", If(Name, TemplateGroupId.ToString), templateCount))
+            WriteError(XDPItemIsNotEmpty.CreateErrorRecord("TemplateGroup", If(Name, TemplateGroupId.ToString), templateCount))
         End If
     End Sub
 End Class

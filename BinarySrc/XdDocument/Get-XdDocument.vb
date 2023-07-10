@@ -26,7 +26,7 @@ Public Class Get_XdDocument
                 Dim d = ExecuteWithTimeout(query.Where(Function(x) x.DocumentId = DocumentId).FirstOrDefaultAsync)
                 If d IsNot Nothing Then Output(d)
             Catch ex As Exception
-                WriteError(StandardErrors.XDPMissing("Document", DocumentId.ToString, ex))
+                WriteErrorMissing("Document", DocumentId.ToString, ex)
             End Try
         Else
             query = query.Where(Function(x) x.BatchId = BatchId)

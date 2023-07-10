@@ -1,6 +1,4 @@
-﻿Imports System.Management.Automation.Language
-
-<Cmdlet(VerbsCommon.Get, "XdConfig")>
+﻿<Cmdlet(VerbsCommon.Get, "XdConfig")>
 <CmdletBinding()>
 Public Class Get_XdConfig
     Inherits baseCmdlet
@@ -26,7 +24,7 @@ Public Class Get_XdConfig
                     indexTask
                 })
         Catch ex As Exception
-            WriteError(StandardErrors.GenericWrappedError(ex, Nothing))
+            WriteError(WrappedException.CreateErrorRecord(ex, Nothing))
             Exit Sub
         End Try
 

@@ -37,8 +37,7 @@ Public Class New_XdTemplate
         If ParameterSetName = "name" Then
             Dim tg = ExecuteWithTimeout(xdp.TemplateGroups.Expand(Function(x) x.TemplateLibrary).Where(Function(x) x.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper) And x.Name.ToUpper.Equals(TemplateGroup.ToUpper)).FirstOrDefaultAsync)
             If tg Is Nothing Then
-                Dim errMessage = String.Format("Cannot find the TemplateGroup '{0}' in the TemplateLibrary '{1}'.", TemplateGroup, TemplateLibrary)
-                WriteError(StandardErrors.XDPMissing("TemplateGroup", String.Format("{0}\{1}", TemplateLibrary, TemplateGroup)))
+                WriteErrorMissing("TemplateGroup", $"{TemplateLibrary}\{TemplateGroup}")
                 Exit Sub
             End If
 

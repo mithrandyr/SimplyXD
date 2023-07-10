@@ -32,7 +32,7 @@ Public Class Get_XdUserProfile
                 Try
                     up = ExecuteWithTimeout(query.Where(Function(x) x.UserProfileId = UserProfileId).FirstOrDefaultAsync)
                 Catch ex As Exception
-                    WriteError(StandardErrors.XDPMissing("UserProfile", UserProfileId.ToString, ex))
+                    WriteErrorMissing("UserProfile", UserProfileId.ToString, ex)
                 End Try
             End If
 

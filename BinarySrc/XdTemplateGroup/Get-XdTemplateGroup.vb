@@ -56,7 +56,7 @@ Public Class Get_XdTemplateGroup
                 tg = ExecuteWithTimeout(query.FirstOrDefaultAsync)
                 If tg IsNot Nothing Then WriteObject(tg.AsPSObject)
             Catch ex As Exception
-                WriteError(StandardErrors.XDPMissing("TemplateGroup", If(Name, TemplateGroupId), ex))
+                WriteErrorMissing("TemplateGroup", If(Name, TemplateGroupId), ex)
             End Try
 
         End If

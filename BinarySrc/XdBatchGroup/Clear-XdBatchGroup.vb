@@ -31,7 +31,7 @@ Public Class ClearBatch
     Protected Overrides Sub EndProcessing()
         Dim bg = ExecuteWithTimeout(xdp.BatchGroups.Where(Function(x) x.Name.ToUpper().Equals(BatchGroup.ToUpper())).FirstOrDefaultAsync())
         If bg Is Nothing Then
-            WriteError(StandardErrors.XDPMissing("BatchGroup", BatchGroup))
+            WriteErrorMissing("BatchGroup", BatchGroup)
             Exit Sub
         End If
 

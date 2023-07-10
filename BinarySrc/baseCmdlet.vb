@@ -29,7 +29,7 @@
                 End If
             Catch ex As Exception
                 If x IsNot Nothing Then xdp.Detach(x)
-                WriteError(StandardErrors.GenericWrappedError(ex, $"{MyInvocation.MyCommand.Name}[SaveChangesFailed]", x))
+                WriteError(WrappedException.CreateErrorRecord(ex, $"{MyInvocation.MyCommand.Name}[SaveChangesFailed]", x))
                 Return False
             End Try
         End Using

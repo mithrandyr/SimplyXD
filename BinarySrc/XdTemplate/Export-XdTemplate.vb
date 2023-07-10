@@ -109,7 +109,7 @@ Public Class Export_XdTemplate
             t = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)
 
             If t Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("Template", String.Format("{0}\{1}\{2}", TemplateLibrary, TemplateGroup, Name)))
+                WriteErrorMissing("Template", String.Format("{0}\{1}\{2}", TemplateLibrary, TemplateGroup, Name))
             Else
                 Return t
             End If
@@ -123,7 +123,7 @@ Public Class Export_XdTemplate
                 Name = t.Name
                 Return t
             Catch ex As Exception
-                WriteError(StandardErrors.XDPMissing("Template", Id.ToString, ex))
+                WriteErrorMissing("Template", Id.ToString, ex)
             End Try
 
         End If

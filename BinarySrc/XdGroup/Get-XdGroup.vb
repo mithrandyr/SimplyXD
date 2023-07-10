@@ -32,7 +32,7 @@ Public Class Get_XdProfile
                 Try
                     Dim g As Group = ExecuteWithTimeout(query.Where(Function(x) x.GroupId = GroupId).FirstOrDefaultAsync)
                 Catch ex As Exception
-                    WriteError(StandardErrors.XDPMissing("Group", GroupId.ToString, ex))
+                    WriteErrorMissing("Group", GroupId.ToString, ex)
                 End Try
         End Select
     End Sub

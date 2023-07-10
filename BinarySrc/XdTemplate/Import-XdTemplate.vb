@@ -36,7 +36,7 @@ Public Class Import_XdTemplate
             If t Is Nothing Then
                 Dim tgId = GetTemplateGroupId()
                 If tgId Is Nothing Then
-                    WriteError(StandardErrors.XDPMissing("TemplateGroup", String.Format("{0}\{1}", TemplateLibrary, TemplateGroup)))
+                    WriteErrorMissing("TemplateGroup", String.Format("{0}\{1}", TemplateLibrary, TemplateGroup))
                     Exit Sub
                 Else
                     t = CreateTemplate(tgId)

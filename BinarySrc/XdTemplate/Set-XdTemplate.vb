@@ -34,14 +34,14 @@ Public Class Set_XdTemplate
                     Case "name"
                         uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper) And x.TemplateGroup.Name.ToUpper.Equals(TemplateGroup.ToUpper) And x.TemplateGroup.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)
                         If uTemplate Is Nothing Then
-                            WriteError(StandardErrors.XDPMissing("Template", String.Format("{0}\{1}\{2}", TemplateLibrary, TemplateGroup, Name)))
+                            WriteErrorMissing("Template", $"{TemplateLibrary}\{TemplateGroup}\{Name}")
                             Exit Sub
                         End If
                     Case "id"
                         uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.TemplateId = TemplateId).FirstOrDefaultAsync)
                 End Select
             Catch ex As Exception
-                WriteError(StandardErrors.GenericWrappedError(ex, "TemplateRetrievalFailed"))
+                WriteError(WrappedException.CreateErrorRecord(ex, "TemplateRetrievalFailed"))
                 Exit Sub
             End Try
 

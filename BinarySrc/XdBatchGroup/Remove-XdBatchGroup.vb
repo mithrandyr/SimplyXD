@@ -21,7 +21,7 @@ Public Class RemoveBatchGroup
             WriteVerbose("Looking up the BatchGroupId")
             Dim result = ExecuteWithTimeout(xdp.BatchGroups.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)?.BatchGroupId
             If result Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("BatchGroup", Name))
+                WriteErrorMissing("BatchGroup", Name)
                 Exit Sub
             End If
             BatchGroupId = result
@@ -38,7 +38,8 @@ Public Class RemoveBatchGroup
             WriteVerbose("Deleting the BatchGroup")
             SaveChanges(dBatchGroup)
         Else
-            WriteError(StandardErrors.XDPNotEmpty("BatchGroup", If(Name, BatchGroupId.ToString), batchCount))
+            WriteError(XDPItemIsNotEmpty.CreateErrorRecord("BatchGroup", If(Name, BatchGroupId.ToString), batchCount))
+
         End If
     End Sub
 

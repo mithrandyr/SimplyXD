@@ -31,7 +31,7 @@ Public Class GetBatchGroup
                     Dim bg = ExecuteWithTimeout(xdp.BatchGroups.Where(Function(x) x.BatchGroupId = BatchGroupId).FirstOrDefaultAsync)
                     WriteObject(bg)
                 Catch ex As Exception
-                    WriteError(StandardErrors.XDPMissing("BatchGroup", BatchGroupId.ToString, ex))
+                    WriteErrorMissing("BatchGroup", BatchGroupId.ToString, ex)
                 End Try
         End Select
     End Sub

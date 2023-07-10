@@ -36,7 +36,7 @@ Public Class Set_XdUserProfile
 
             Dim nUserProfile As UserProfile = ExecuteWithTimeout(xdp.UserProfiles.Where(Function(x) x.UserProfileId = UserProfileId).FirstOrDefaultAsync)
             If nUserProfile Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("UserProfile", UserProfileId.ToString))
+                WriteErrorMissing("UserProfile", UserProfileId.ToString)
             Else
                 With MyInvocation.BoundParameters
                     If .ContainsKey("UserName") Then nUserProfile.Name = UserName

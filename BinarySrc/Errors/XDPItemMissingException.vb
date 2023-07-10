@@ -24,5 +24,4 @@
         Me.ItemType = itemType
         Me.ItemValue = itemValue
     End Sub
-
 End Class

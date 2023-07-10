@@ -20,7 +20,7 @@ Public Class Remove_XdTemplateLibrary
             WriteVerbose("Looking up the TemplateLibraryId")
             Dim result = ExecuteWithTimeout(xdp.TemplateLibraries.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)?.TemplateLibraryId
             If result Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("TemplateLibrary", Name))
+                WriteErrorMissing("TemplateLibrary", Name)
                 Exit Sub
             End If
             TemplateLibraryId = result
