@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.OData.Edm.Vocabularies
 
 Module Extensions
 

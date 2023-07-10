@@ -105,7 +105,7 @@ Public Class ClearBatch
         Try
             Console.TreatControlCAsInput = True
             While taskList.Any(Function(x) x.Status = TaskStatus.Running)
-                Dim pRecord = New ProgressRecord(1, "Cleaning Batches from " & bg.Name, String.Format("{0} out of {1}", stats.Deleted, DeleteLimit))
+                Dim pRecord = New ProgressRecord(1, $"Cleaning Batches from {bg.Name}", $"{stats.Deleted} out of {DeleteLimit}")
                 Dim percent As Double = stats.Deleted / DeleteLimit
                 pRecord.PercentComplete = percent * 100
                 If percent > 0 Then pRecord.SecondsRemaining = (timer.Elapsed.TotalSeconds / percent) - timer.Elapsed.TotalSeconds

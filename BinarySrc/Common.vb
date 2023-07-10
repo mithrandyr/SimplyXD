@@ -5,13 +5,17 @@ Module Common
 
     Public Property DefaultTimeout As Integer = Common.DefaultTimeout
 
-    Sub ConnectXDPortal(uri As String)
-        Dim temp = New Uri(uri)
-        If temp.AbsolutePath.Length > 1 Then
-            Dim tempBase = temp.AbsoluteUri.Substring(0, temp.AbsoluteUri.LastIndexOf(temp.AbsolutePath))
-            _CurrentXDPortal = String.Format("{0}/{1}", tempBase, "odata4/v18")
+    Sub ConnectXDPortal(uri As String, Optional asIs As Boolean = False)
+        If asIs Then
+            _CurrentXDPortal = uri
         Else
-            _CurrentXDPortal = String.Format("{0}{1}", temp.AbsoluteUri, "odata4/v18")
+            Dim temp = New Uri(uri)
+            If temp.AbsolutePath.Length > 1 Then
+                Dim tempBase = temp.AbsoluteUri.Substring(0, temp.AbsoluteUri.LastIndexOf(temp.AbsolutePath))
+                _CurrentXDPortal = $"{tempBase.TrimEnd("/")}/odata4/v18"
+            Else
+                _CurrentXDPortal = $"{temp.AbsoluteUri.TrimEnd("/")}/odata4/v18"
+            End If
         End If
     End Sub
 

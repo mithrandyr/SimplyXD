@@ -27,10 +27,10 @@ Friend Class StandardErrors
     End Function
 End Class
 
-Module Extensions
+Module ErrorExtensions
     <Extension()>
     Sub WriteErrorMissing(this As baseCmdlet, itemType As String, itemValue As String, Optional innerEx As Exception = Nothing)
-        Dim errorId = String.Format("XDPortal-{0}ItemNotFound", itemType)
+        Dim errorId = $"XDPortal-{itemType}ItemNotFound"
         Dim ex As New XDPItemMissingException(itemType, itemValue, StandardErrors.GetInnermostException(innerEx))
         this.WriteError(New ErrorRecord(ex, errorId, ErrorCategory.ObjectNotFound, itemValue))
     End Sub
