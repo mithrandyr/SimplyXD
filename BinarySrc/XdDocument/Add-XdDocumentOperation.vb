@@ -1,6 +1,6 @@
-﻿<Cmdlet(VerbsCommon.[New], "XdDocumentOperation")>
+﻿<Cmdlet(VerbsCommon.Add, "XdDocumentOperation")>
 <CmdletBinding(DefaultParameterSetName:="short")>
-Public Class New_XdDocumentOperation
+Public Class Add_XdDocumentOperation
     Inherits baseCmdlet
 
     <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>

@@ -1,6 +1,6 @@
-﻿<Cmdlet(VerbsCommon.[New], "XdDocumentProvider")>
+﻿<Cmdlet(VerbsCommon.Add, "XdDocumentProvider")>
 <CmdletBinding(DefaultParameterSetName:="long")>
-Public Class NewXdDocumentProvider
+Public Class AddXdDocumentProvider
     Inherits baseCmdlet
 
     <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
