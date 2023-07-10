@@ -30,7 +30,7 @@ if(-not $SkipBuild) {
 if(-not $SkipUpdateCmdlets) {
     Write-Host "Updating Cmdlets in manifest file..."
     $files = Get-ChildItem "$PSScriptRoot\BinarySrc\" -Directory |
-        Get-ChildItem  -Filter "*-*.vb" |
+        Get-ChildItem -Filter "*-*.vb" |
         Select-Object -ExpandProperty basename
 
     $files += Get-ChildItem "$PSScriptRoot\SimplyXD\Public" -Filter "*-*.ps1" | Select-Object -ExpandProperty basename
