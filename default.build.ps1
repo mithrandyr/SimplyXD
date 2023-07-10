@@ -1,4 +1,4 @@
-param([switch]$CommitRevision)
+param([switch]$CommitRevision, [switch]$RebuildDocs)
 New-Alias -Name HV -Value (Resolve-Path HandleVerbose.ps1)
 $moduleName = "SimplyXD"
 if(-not $version) {
@@ -6,13 +6,15 @@ if(-not $version) {
     $version = [version]::new($version.Major, $version.Minor, (Get-Date).ToString("yyyy"), $version.Revision + 1).tostring()
 }
 
-task Clean { remove "$ModuleName\dll" }
-task Build {
+task Build -If (-not $RebuildDocs) {
     Invoke-Build -File "BinarySrc\source.build.ps1" -Version $Version
+    remove "$ModuleName\dll"
+    New-Item -Path "$ModuleName\dll" -ItemType Directory | Out-Null
     Get-ChildItem -Path "BinarySrc\output" -Filter *.dll |
         Copy-Item -Destination "$moduleName\dll"
+    
     remove "BinarySrc\output"
-}, updateManifest, GenerateDocs
+}
 
 task GenerateDocs {
     Start-Job -ScriptBlock {
@@ -43,11 +45,11 @@ task updateManifest {
     
     $cmdlets += Get-ChildItem "$moduleName\Public" -Filter "*-*.ps1" | Select-Object -ExpandProperty basename
     Update-ModuleManifest -Path "$moduleName\$moduleName.psd1" -ModuleVersion $version -CmdletsToExport $cmdlets
-}
+} -If (-not $RebuildDocs)
 
 task revisionCommit {
     exec { git commit "$moduleName/$moduleName.psd1" -m "Updating version To $version" } | HV "Incrementing Version ($version) and Git Commit"
-} -If $CommitRevision
+} -If ($CommitRevision -and -not $RebuildDocs)
 
 
-task . Build, revisionCommit
+task . Build, updateManifest, GenerateDocs, revisionCommit
