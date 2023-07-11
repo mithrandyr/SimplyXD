@@ -5,28 +5,27 @@ online version:
 schema: 2.0.0
 ---
 
-# New-XdDocumentProvider
+# Add-XdDocumentProvider
 
 ## SYNOPSIS
-Creates a document provider
+Adds a Document Provider to the specified Document
 
 ## SYNTAX
 
 ### long
 ```
-New-XdDocumentProvider -DocumentId <Guid> -XmlData <String> -TemplateLibraryName <String>
- -TemplateGroupName <String> -TemplateName <String> [-DopaName <String>] [-TimeOut <Int32>]
- [<CommonParameters>]
+Add-XdDocumentProvider -DocumentId <Guid> -XmlData <String> -TemplateLibrary <String> -TemplateGroup <String>
+ -TemplateName <String> [-DopaName <String>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### short
 ```
-New-XdDocumentProvider -DocumentId <Guid> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
+Add-XdDocumentProvider -DocumentId <Guid> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates a document provider
+Adds a Document Provider to the specified Document
 
 ## EXAMPLES
 
@@ -40,7 +39,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -ContractName
-ContractName that determines which provider to execute - should not be specified
+The ContractName for the Document Provider
 
 ```yaml
 Type: String
@@ -55,7 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -DocumentId
-GUID of the document to associate this document provider with
+The GUID of the Document to add the Provider to
 
 ```yaml
 Type: Guid
@@ -65,12 +64,12 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -DopaName
-Name of the DOPA that should be used
+The name of the Document Output Post Action (DOPA) to be used.
 
 ```yaml
 Type: String
@@ -85,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -InputMetaData
-MetaData structure to be used with the Contract - should not be specified
+The required Input MetaData for the Provider
 
 ```yaml
 Type: String
@@ -99,13 +98,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateGroupName
-Name of the TemplateGroup to find the template to execute
+### -TemplateGroup
+The name of the TemplateGroup where the Template is located
 
 ```yaml
 Type: String
 Parameter Sets: long
-Aliases:
+Aliases: TemplateGroupName
 
 Required: True
 Position: Named
@@ -114,13 +113,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateLibraryName
-Name of the TemplateLibrary to find the TemplateGroup
+### -TemplateLibrary
+The name of the TemplateLibrary where the TemplateGroup is located
 
 ```yaml
 Type: String
 Parameter Sets: long
-Aliases:
+Aliases: TemplateLibraryName
 
 Required: True
 Position: Named
@@ -130,7 +129,7 @@ Accept wildcard characters: False
 ```
 
 ### -TemplateName
-Name of the template to execute
+The Name of the template to execute
 
 ```yaml
 Type: String
@@ -160,7 +159,7 @@ Accept wildcard characters: False
 ```
 
 ### -XmlData
-XML data to be used in the execution of the template
+The XML that will be used as the data source for the document.
 
 ```yaml
 Type: String
@@ -178,6 +177,8 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
+
+### System.Guid
 
 ### System.Int32
 

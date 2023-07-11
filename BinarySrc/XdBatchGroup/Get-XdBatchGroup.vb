@@ -7,7 +7,7 @@ Public Class GetBatchGroup
     <Parameter(Mandatory:=True, ParameterSetName:="one")>
     Public Property Name As String
 
-    <Parameter(Mandatory:=False, ParameterSetName:="search")>
+    <Parameter(Mandatory:=False, ParameterSetName:="search", Position:=0)>
     Public Property Search As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="id")>
@@ -31,7 +31,7 @@ Public Class GetBatchGroup
                     Dim bg = ExecuteWithTimeout(xdp.BatchGroups.Where(Function(x) x.BatchGroupId = BatchGroupId).FirstOrDefaultAsync)
                     WriteObject(bg)
                 Catch ex As Exception
-                    WriteError(StandardErrors.XDPMissing("BatchGroup", BatchGroupId.ToString, ex))
+                    WriteErrorMissing("BatchGroup", BatchGroupId.ToString, ex)
                 End Try
         End Select
     End Sub

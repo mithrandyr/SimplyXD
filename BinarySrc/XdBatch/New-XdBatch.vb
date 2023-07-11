@@ -3,14 +3,18 @@
 Public Class NewBatch
     Inherits baseCmdlet
 
-    <Parameter(Mandatory:=True)>
+    <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property BatchGroupId As Guid
 
     <Parameter()>
-    Public Property BatchName As String = String.Format("{0}-{1:yyyyMMdd-HHmmss-fff}", Environment.UserName, Date.Now)
+    <[Alias]("BatchName")>
+    Public Property Name As String = $"{Environment.UserName}-{Date.Now:yyyyMMdd-HHmmss-fff}"
+
+    <Parameter()>
+    Public Property Description As String
 
     Protected Overrides Sub EndProcessing()
-        Dim nBatch As New Batch With {.BatchGroupId = BatchGroupId, .Status = BatchStatus.Created, .Name = BatchName}
+        Dim nBatch As New Batch With {.BatchGroupId = BatchGroupId, .Status = BatchStatus.Created, .Name = Name, .Description = Description}
         xdp.AddToBatches(nBatch)
         If SaveChanges(nBatch) Then WriteObject(nBatch)
     End Sub

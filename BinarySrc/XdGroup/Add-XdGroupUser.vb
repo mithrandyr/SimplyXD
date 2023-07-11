@@ -1,7 +1,7 @@
 ﻿
-<Cmdlet(VerbsCommon.Add, "XdGroupMember")>
+<Cmdlet(VerbsCommon.Add, "XdGroupUser")>
 <CmdletBinding(DefaultParameterSetName:="name-name")>
-Public Class Add_XdGroupMember
+Public Class Add_XdGroupUser
     Inherits baseCmdlet
 
     <ValidateNotNullOrEmpty>
@@ -27,7 +27,7 @@ Public Class Add_XdGroupMember
         If ParameterSetName.StartsWith("name") Then
             Dim g As Group = ExecuteWithTimeout(xdp.Groups.Where(Function(x) x.Name.Equals(GroupName)).FirstOrDefaultAsync)
             If g Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("Group", GroupName))
+                WriteErrorMissing("Group", GroupName)
                 Exit Sub
             End If
             GroupId = g.GroupId
@@ -36,7 +36,7 @@ Public Class Add_XdGroupMember
         If ParameterSetName.EndsWith("name") Then
             Dim u As UserProfile = ExecuteWithTimeout(xdp.UserProfiles.Where(Function(x) x.Name.Equals(UserName)).FirstOrDefaultAsync)
             If u Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("UserProfile", UserName))
+                WriteErrorMissing("UserProfile", UserName)
                 Exit Sub
             End If
             UserProfileId = u.UserProfileId

@@ -7,7 +7,14 @@ Public Class Connect_XdPortal
     <Parameter(Mandatory:=True, Position:=0)>
     Public Property PortalUri As String
 
+    <Parameter()>
+    <ValidateRange(1, 120)>
+    Public Property DefaultTimeout As Integer = 15
+
+    <Parameter()>
+    Public Property PortalUriAsIs As SwitchParameter
     Protected Overrides Sub EndProcessing()
-        ConnectXDPortal(PortalUri)
+        ConnectXDPortal(PortalUri, PortalUriAsIs.IsPresent)
+        Common.DefaultTimeout = DefaultTimeout
     End Sub
 End Class

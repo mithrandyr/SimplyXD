@@ -13,7 +13,7 @@ Connects to an Xpertdoc Portal
 ## SYNTAX
 
 ```
-Connect-XdPortal [-PortalUri] <String> [<CommonParameters>]
+Connect-XdPortal [-PortalUri] <String> [-DefaultTimeout <Int32>] [-PortalUriAsIs] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,6 +30,21 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -DefaultTimeout
+By default, actions against the Xpertdoc Portal will timeout in this many seconds.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PortalUri
 Url to the Xpertdoc Portal
 
@@ -40,6 +55,21 @@ Aliases:
 
 Required: True
 Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PortalUriAsIs
+Use the -PortalUri value as submitted, otherwise it will be appended with the latest API endpoint
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

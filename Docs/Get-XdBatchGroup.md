@@ -19,7 +19,7 @@ Get-XdBatchGroup -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
 
 ### search
 ```
-Get-XdBatchGroup [-Search <String>] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdBatchGroup [[-Search] <String>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
@@ -80,7 +80,7 @@ Parameter Sets: search
 Aliases:
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -5,10 +5,12 @@ Public Class New_XdTemplate
 
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
+    <[Alias]("TemplateLibraryName")>
     Public Property TemplateLibrary As String
 
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
+    <[Alias]("TemplateGroupName")>
     Public Property TemplateGroup As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="id")>
@@ -37,8 +39,7 @@ Public Class New_XdTemplate
         If ParameterSetName = "name" Then
             Dim tg = ExecuteWithTimeout(xdp.TemplateGroups.Expand(Function(x) x.TemplateLibrary).Where(Function(x) x.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper) And x.Name.ToUpper.Equals(TemplateGroup.ToUpper)).FirstOrDefaultAsync)
             If tg Is Nothing Then
-                Dim errMessage = String.Format("Cannot find the TemplateGroup '{0}' in the TemplateLibrary '{1}'.", TemplateGroup, TemplateLibrary)
-                WriteError(StandardErrors.XDPMissing("TemplateGroup", String.Format("{0}\{1}", TemplateLibrary, TemplateGroup)))
+                WriteErrorMissing("TemplateGroup", $"{TemplateLibrary}\{TemplateGroup}")
                 Exit Sub
             End If
 
@@ -56,7 +57,7 @@ Public Class New_XdTemplate
         xdp.AddToTemplates(nTemplate)
         If SaveChanges(nTemplate) Then
             Try
-                ExecuteWithTimeout(nTemplate.UpdateAssemblyAndSource(Assembly, String.Format("{0}.dll", Name), Source, String.Format("{0}.docx", Name), Comment).ExecuteAsync)
+                ExecuteWithTimeout(nTemplate.UpdateAssemblyAndSource(Assembly, $"{Name}.dll", Source, $"{Name}.docx", Comment).ExecuteAsync)
             Catch ex As Exception
                 WriteError(StandardErrors.TemplateBlobUpdate(ex, nTemplate))
             End Try

@@ -5,25 +5,25 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdGroupMember
+# Get-XdGroupUser
 
 ## SYNOPSIS
-Get Members of a group
+Get Users in a group
 
 ## SYNTAX
 
 ### name
 ```
-Get-XdGroupMember [-GroupName] <String> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdGroupUser [-GroupName] <String> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
 ```
-Get-XdGroupMember -GroupId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdGroupUser -GroupId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get Members of a group
+Get Users in a group
 
 ## EXAMPLES
 
@@ -37,7 +37,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -GroupId
-GUID of the group to return members from
+GUID of the group to return users from
 
 ```yaml
 Type: Guid
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -GroupName
-Name of the group to return
+Name of the group to return users from
 
 ```yaml
 Type: String

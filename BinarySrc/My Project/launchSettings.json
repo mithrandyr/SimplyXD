@@ -3,7 +3,8 @@
     "SimplyXD": {
       "commandName": "Executable",
       "executablePath": "pwsh",
-      "commandLineArgs": "-noprofile -nologo -noexit -command \"function prompt {'Testing SimplyXD> '}; Import-Module .\\publish\\SimplyXD.dll\"",
+      "commandLineArgs": "-noexit -nologo -noprofile -file \"ConstructModule.ps1\"",
+      "workingDirectory": "$(ProjectDir)",
       "remoteDebugEnabled": false,
       "nativeDebugging": true
     }

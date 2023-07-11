@@ -23,7 +23,7 @@ Public Class New_XdTemplateGroup
         If ParameterSetName = "name" Then
             Dim result = ExecuteWithTimeout(xdp.TemplateLibraries.Where(Function(x) x.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)?.TemplateLibraryId
             If result Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("TemplateLibrary", TemplateLibrary))
+                WriteErrorMissing("TemplateLibrary", TemplateLibrary)
                 Exit Sub
             End If
             TemplateLibraryId = result

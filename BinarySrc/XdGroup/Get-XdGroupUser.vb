@@ -1,5 +1,5 @@
 ﻿
-<Cmdlet(VerbsCommon.Get, "XdGroupMember")>
+<Cmdlet(VerbsCommon.Get, "XdGroupUser")>
 <CmdletBinding(DefaultParameterSetName:="name")>
 Public Class Get_XdGroupMember
     Inherits baseCmdlet

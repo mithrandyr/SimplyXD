@@ -13,7 +13,7 @@ Executes a batch
 ## SYNTAX
 
 ```
-Start-XdBatch -BatchId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Start-XdBatch [-BatchId] <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -39,7 +39,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

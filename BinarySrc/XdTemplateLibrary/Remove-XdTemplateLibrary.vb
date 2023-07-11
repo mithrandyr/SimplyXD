@@ -20,7 +20,7 @@ Public Class Remove_XdTemplateLibrary
             WriteVerbose("Looking up the TemplateLibraryId")
             Dim result = ExecuteWithTimeout(xdp.TemplateLibraries.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)?.TemplateLibraryId
             If result Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("TemplateLibrary", Name))
+                WriteErrorMissing("TemplateLibrary", Name)
                 Exit Sub
             End If
             TemplateLibraryId = result
@@ -28,8 +28,6 @@ Public Class Remove_XdTemplateLibrary
 
         WriteVerbose("Getting count of TemplateGroups in the TemplateLibrary")
         Dim groupCount As Integer = ExecuteWithTimeout(xdp.TemplateGroups.Where(Function(x) x.TemplateLibraryId = TemplateLibraryId).CountAsync)
-        Dim templateCount As Integer = ExecuteWithTimeout(xdp.Templates.Where(Function(x) x.TemplateGroup.TemplateLibraryId = TemplateLibraryId).CountAsync)
-        Dim errMessage = String.Format("TemplateLibrary '{0}' has {1} TemplateGroups and {2} Templates", If(Name, TemplateLibraryId), groupCount, templateCount)
 
         If groupCount = 0 OrElse Force.IsPresent Then
             Dim dTemplateLibrary = New TemplateLibrary With {.TemplateLibraryId = TemplateLibraryId}
@@ -38,7 +36,7 @@ Public Class Remove_XdTemplateLibrary
             WriteVerbose("Deleting the TemplateLibrary")
             SaveChanges()
         Else
-            WriteError(New ErrorRecord(New InvalidOperationException(errMessage), "TemplateLibraryIsNotEmpty", ErrorCategory.ResourceExists, TemplateLibraryId))
+            WriteErrorNotEmpty("TemplateLibrary", If(Name, TemplateLibraryId), groupCount)
         End If
     End Sub
 End Class

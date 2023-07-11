@@ -27,7 +27,7 @@ Public Class Remove_XdTemplateGroup
             WriteVerbose("Looking up the TemplateGroupId")
             Dim result = ExecuteWithTimeout(xdp.TemplateGroups.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper) And x.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)?.TemplateGroupId
             If result Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("TemplateGroup", String.Format("{0}\{1}", TemplateLibrary, Name)))
+                WriteErrorMissing("TemplateGroup", $"{TemplateLibrary}\{Name}")
                 Exit Sub
             End If
             TemplateGroupId = result
@@ -37,8 +37,6 @@ Public Class Remove_XdTemplateGroup
 
         WriteVerbose("Getting count of Templates in the TemplateGroup")
         Dim templateCount As Integer = ExecuteWithTimeout(xdp.Templates.Where(Function(x) x.TemplateGroupId = TemplateGroupId).CountAsync)
-        Dim errMessage = String.Format("TemplateGroup '{0}' has {1} templates", If(Name, TemplateGroupId), templateCount)
-
         If templateCount = 0 OrElse Force.IsPresent Then
             Dim dTemplateGroup = New TemplateGroup With {.TemplateGroupId = TemplateGroupId}
             xdp.AttachTo("TemplateGroups", dTemplateGroup)
@@ -46,7 +44,7 @@ Public Class Remove_XdTemplateGroup
             WriteVerbose("Deleting the TemplateGroup")
             SaveChanges()
         Else
-            WriteError(New ErrorRecord(New InvalidOperationException(errMessage), "TemplateGroupIsNotEmpty", ErrorCategory.ResourceExists, TemplateGroupId))
+            WriteErrorNotEmpty("TemplateGroup", If(Name, TemplateGroupId.ToString), templateCount)
         End If
     End Sub
 End Class

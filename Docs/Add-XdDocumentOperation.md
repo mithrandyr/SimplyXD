@@ -5,53 +5,74 @@ online version:
 schema: 2.0.0
 ---
 
-# Add-XdGroupMember
+# Add-XdDocumentOperation
 
 ## SYNOPSIS
-Adds UserProfile to Group
+Adds Operation to the specified Document
 
 ## SYNTAX
 
-### name-name
+### short
 ```
-Add-XdGroupMember -GroupName <String> -UserName <String> [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### name-id
-```
-Add-XdGroupMember -GroupName <String> -UserProfileId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Add-XdDocumentOperation -DocumentId <Guid> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
-### id-name
+### asposepdf
 ```
-Add-XdGroupMember -GroupId <Guid> -UserName <String> [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### id-id
-```
-Add-XdGroupMember -GroupId <Guid> -UserProfileId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Add-XdDocumentOperation -DocumentId <Guid> [-AsposePDF] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Adds UserProfile to Group
+Adds Operation to the specified Document
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> Add-XdGroupMember -GroupName Test -UserName SomeUser
+PS C:\> {{ Add example code here }}
 ```
 
-Adding 'SomeUser' to the group 'Test'
+{{ Add example description here }}
 
 ## PARAMETERS
 
-### -GroupId
-GUID for the Group
+### -AsposePDF
+Uses default configuration for Aspose PDF Conversion
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: asposepdf
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ContractName
+The ContractName for the Document Operation
+
+```yaml
+Type: String
+Parameter Sets: short
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DocumentId
+The GUID of the Document to add the Operation to
 
 ```yaml
 Type: Guid
-Parameter Sets: id-name, id-id
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -61,18 +82,18 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -GroupName
-Name of the Group
+### -InputMetaData
+The required Input MetaData for the Operation
 
 ```yaml
 Type: String
-Parameter Sets: name-name, name-id
+Parameter Sets: short
 Aliases:
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -86,36 +107,6 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 15
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -UserName
-Name of the UserProfile to add to the group
-
-```yaml
-Type: String
-Parameter Sets: name-name, id-name
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -UserProfileId
-GUID of the UserProfile to add to the Group
-
-```yaml
-Type: Guid
-Parameter Sets: name-id, id-id
-Aliases:
-
-Required: True
-Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -125,8 +116,6 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
-
-### System.String
 
 ### System.Guid
 

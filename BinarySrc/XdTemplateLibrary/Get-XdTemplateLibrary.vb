@@ -32,7 +32,7 @@ Public Class Get_XdTemplateLibrary
                 Try
                     tl = ExecuteWithTimeout(query.Where(Function(x) x.TemplateLibraryId = TemplateLibraryId).FirstOrDefaultAsync)
                 Catch ex As Exception
-                    WriteError(StandardErrors.XDPMissing("TemplateLibrary", TemplateLibraryId.ToString, ex))
+                    WriteErrorMissing("TemplateLibrary", TemplateLibraryId.ToString, ex)
                 End Try
             End If
 

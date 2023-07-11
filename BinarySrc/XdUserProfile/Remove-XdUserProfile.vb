@@ -20,7 +20,7 @@ Public Class Remove_XdUserProfile
         If ParameterSetName = "username" Then
             Dim result = ExecuteWithTimeout(xdp.UserProfiles.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)?.UserProfileId
             If result Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("UserProfile", Name))
+                WriteErrorMissing("UserProfile", Name)
                 Exit Sub
             End If
             UserProfileId = result

@@ -3,7 +3,7 @@
 Public Class NewXdDocument
     Inherits baseCmdlet
 
-    <Parameter(Mandatory:=True)>
+    <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property BatchId As String
 
     <Parameter()>

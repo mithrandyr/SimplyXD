@@ -64,7 +64,7 @@ Public Class Get_XdTemplate
                         Try
                             t = ExecuteWithTimeout(query.Where(Function(x) x.TemplateId = Id).FirstOrDefaultAsync)
                         Catch ex As Exception
-                            WriteError(StandardErrors.XDPMissing("Template", Id.ToString, ex))
+                            WriteErrorMissing("Template", Id.ToString, ex)
                         End Try
                     End If
 

@@ -1,9 +1,9 @@
-﻿<Cmdlet(VerbsCommon.[New], "XdDocumentProvider")>
+﻿<Cmdlet(VerbsCommon.Add, "XdDocumentProvider")>
 <CmdletBinding(DefaultParameterSetName:="long")>
-Public Class NewXdDocumentProvider
+Public Class AddXdDocumentProvider
     Inherits baseCmdlet
 
-    <Parameter(Mandatory:=True)>
+    <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property DocumentId As Guid
 
     <ValidateNotNullOrEmpty>
@@ -12,11 +12,13 @@ Public Class NewXdDocumentProvider
 
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="long")>
-    Public Property TemplateLibraryName As String
+    <[Alias]("TemplateLibraryName")>
+    Public Property TemplateLibrary As String
 
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="long")>
-    Public Property TemplateGroupName As String
+    <[Alias]("TemplateGroupName")>
+    Public Property TemplateGroup As String
 
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="long")>
@@ -40,11 +42,10 @@ Public Class NewXdDocumentProvider
         If ParameterSetName = "short" Then
             docProv.InputMetadata = InputMetaData
         Else
-            docProv.InputMetadata = String.Format(inputPattern, TemplateLibraryName, TemplateGroupName, TemplateName, Security.SecurityElement.Escape(XmlData), DopaName)
+            docProv.InputMetadata = String.Format(inputPattern, TemplateLibrary, TemplateGroup, TemplateName, $"<![CDATA[{XmlData}]]>", DopaName)
         End If
 
         xdp.AddToDocumentProviders(docProv)
         If SaveChanges(docProv) Then WriteObject(docProv)
     End Sub
-
 End Class

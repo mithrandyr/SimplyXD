@@ -15,11 +15,11 @@ Public Class RemoveBatch
     Protected Overrides Sub EndProcessing()
         Dim s As Integer = 0
         For Each b In batchList
-            WriteVerbose(String.Format("BatchId: {0}", b))
+            WriteVerbose($"BatchId: {b}")
             Dim nbatch = New Batch With {.BatchId = b}
             xdp.AttachTo("Batches", nbatch)
             xdp.DeleteObject(nbatch)
-            WriteProgress(New ProgressRecord(0, MyInvocation.MyCommand.Name, String.Format("Id:{0} | Total: {1}", b, batchList.Count)) With {.PercentComplete = s * 100 / batchList.Count})
+            WriteProgress(New ProgressRecord(0, MyInvocation.MyCommand.Name, $"Id:{b} | Total: {batchList.Count}") With {.PercentComplete = s * 100 / batchList.Count})
             SaveChanges(nbatch)
 
             s += 1

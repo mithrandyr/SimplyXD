@@ -76,7 +76,7 @@ Public Class Export_XdTemplate
         End If
 
         If Not Path.HasExtension(filePath) Then
-            filePath = Path.Combine(filePath, String.Format("{0}.{1}.{2}.zip", TemplateLibrary, TemplateGroup, Name))
+            filePath = Path.Combine(filePath, $"{TemplateLibrary}.{TemplateGroup}.{Name}.zip")
         End If
         Return filePath
     End Function
@@ -87,7 +87,7 @@ Public Class Export_XdTemplate
             If Force.IsPresent Then
                 File.Delete(filePath)
             Else
-                WriteError(New ErrorRecord(New Exception("File already exists"), "FileExists", ErrorCategory.ResourceExists, filePath))
+                WriteError(New InvalidOperationException("File already exists"), "FileExists", ErrorCategory.ResourceExists, filePath)
                 Return False
             End If
         End If
@@ -109,7 +109,7 @@ Public Class Export_XdTemplate
             t = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)
 
             If t Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("Template", String.Format("{0}\{1}\{2}", TemplateLibrary, TemplateGroup, Name)))
+                WriteErrorMissing("Template", $"{TemplateLibrary}\{TemplateGroup}\{Name}")
             Else
                 Return t
             End If
@@ -123,7 +123,7 @@ Public Class Export_XdTemplate
                 Name = t.Name
                 Return t
             Catch ex As Exception
-                WriteError(StandardErrors.XDPMissing("Template", Id.ToString, ex))
+                WriteErrorMissing("Template", Id.ToString, ex)
             End Try
 
         End If
@@ -136,18 +136,18 @@ Public Class Export_XdTemplate
             WriteVerbose("Creating information file in zip")
             Using zStream = zArchive.CreateEntry("details.txt").Open()
                 Using sw As New StreamWriter(zStream)
-                    sw.WriteLine(String.Format("Exported: {0}", DateTimeOffset.Now.ToString))
-                    sw.WriteLine(String.Format("Version: {0}", Version))
-                    sw.WriteLine(String.Format("Portal: {0}", PortalURI))
-                    sw.WriteLine(String.Format("TemplateLibrary: {0}", t.TemplateGroup.TemplateLibrary.Name))
-                    sw.WriteLine(String.Format("TemplateGroup: {0}", t.TemplateGroup.Name))
-                    sw.WriteLine(String.Format("TemplateName: {0}", t.Name))
+                    sw.WriteLine($"Exported: {DateTimeOffset.Now}")
+                    sw.WriteLine($"Version: {Version}")
+                    sw.WriteLine($"Portal: {PortalURI}")
+                    sw.WriteLine($"TemplateLibrary: {t.TemplateGroup.TemplateLibrary.Name}")
+                    sw.WriteLine($"TemplateGroup: {t.TemplateGroup.Name}")
+                    sw.WriteLine($"TemplateName: {t.Name}")
                 End Using
             End Using
 
             'Create DLL file in zip
             WriteVerbose("Creating DLL file in zip")
-            Using zStream = zArchive.CreateEntry(String.Format("{0}.dll", t.Name)).Open()
+            Using zStream = zArchive.CreateEntry($"{t.Name}.dll").Open()
                 WriteVerbose("Querying for DLL Content")
                 Dim bytelist = ExecuteWithTimeout(t.GetAssembly.GetValueAsync)
                 zStream.Write(bytelist, 0, bytelist.Count)
@@ -155,7 +155,7 @@ Public Class Export_XdTemplate
 
             'Create DOCX file in zip
             WriteVerbose("Creating DOCX file in zip")
-            Using zStream = zArchive.CreateEntry(String.Format("{0}.docx", t.Name)).Open()
+            Using zStream = zArchive.CreateEntry($"{t.Name}.docx").Open()
                 WriteVerbose("Querying for DOCX Content")
                 Dim bytelist = ExecuteWithTimeout(t.GetSource.GetValueAsync)
                 zStream.Write(bytelist, 0, bytelist.Count)

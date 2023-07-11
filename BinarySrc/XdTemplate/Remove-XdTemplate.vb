@@ -30,7 +30,7 @@ Public Class Remove_XdTemplate
             WriteVerbose("Looking up TemplateName")
             Dim result = ExecuteWithTimeout(xdp.Templates.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)?.TemplateId
             If result Is Nothing Then
-                WriteError(StandardErrors.XDPMissing("Template", Name))
+                WriteErrorMissing("Template", Name)
                 Exit Sub
             End If
             Id = result
@@ -42,7 +42,7 @@ Public Class Remove_XdTemplate
         xdp.AttachTo("Templates", dTemplate)
 
         xdp.DeleteObject(dTemplate)
-        WriteVerbose(String.Format("Deleting Template = {0}", Id.ToString))
+        WriteVerbose($"Deleting Template = {Id}")
         SaveChanges()
     End Sub
 End Class

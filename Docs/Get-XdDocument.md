@@ -14,14 +14,13 @@ Returns a document
 
 ### id
 ```
-Get-XdDocument -DocumentId <Guid> [-IncludeOutput] [-IncludeProviders] [-IncludeOperations] [-TimeOut <Int32>]
- [<CommonParameters>]
+Get-XdDocument -DocumentId <Guid> [-IncludeOutput] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### batch
 ```
-Get-XdDocument -BatchId <Guid> [-SequenceNumber <Int32>] [-IncludeOutput] [-IncludeProviders]
- [-IncludeOperations] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdDocument -BatchId <Guid> [-SequenceNumber <Int32>] [-IncludeOutput] [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -68,38 +67,8 @@ Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
-### -IncludeOperations
-Include the documentOperations in the result
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -IncludeOutput
 Include the output in the result
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -IncludeProviders
-include the providers in the result
 
 ```yaml
 Type: SwitchParameter

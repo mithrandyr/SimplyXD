@@ -36,7 +36,7 @@ Public Class GetBatch
                 Dim b = ExecuteWithTimeout(query.Where(Function(x) x.BatchId = BatchId).FirstOrDefaultAsync)
                 WriteObject(b)
             Catch ex As Exception
-                WriteError(StandardErrors.XDPMissing("Batch", BatchId.ToString, ex))
+                WriteErrorMissing("Batch", BatchId.ToString, ex)
             End Try
         Else
             If Not BatchGroupId.Equals(Guid.Empty) Then query = query.Where(Function(x) x.BatchGroupId = BatchGroupId)

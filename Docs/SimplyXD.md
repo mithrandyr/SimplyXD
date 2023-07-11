@@ -11,7 +11,13 @@ Locale: en-US
 PowerShell module that wraps the Xpertdoc Portal API.
 
 ## SimplyXD Cmdlets
-### [Add-XdGroupMember](Add-XdGroupMember.md)
+### [Add-XdDocumentOperation](Add-XdDocumentOperation.md)
+Adds Operation to the specified Document
+
+### [Add-XdDocumentProvider](Add-XdDocumentProvider.md)
+Adds a Document Provider to the specified Document
+
+### [Add-XdGroupUser](Add-XdGroupUser.md)
 Adds UserProfile to Group
 
 ### [Clear-XdBatchGroup](Clear-XdBatchGroup.md)
@@ -23,20 +29,32 @@ Connects to an Xpertdoc Portal
 ### [Export-XdTemplate](Export-XdTemplate.md)
 Exports a template into a zipfile
 
+### [Get-XdAddInPackage](Get-XdAddInPackage.md)
+Gets the AddIn Packages currently present in the XD Portal
+
 ### [Get-XdBatch](Get-XdBatch.md)
 Gets a Batch
 
 ### [Get-XdBatchGroup](Get-XdBatchGroup.md)
 Gets a batchgroup
 
+### [Get-XdConfig](Get-XdConfig.md)
+Gets the Administration Configuration for the XD portal
+
 ### [Get-XdDocument](Get-XdDocument.md)
 Returns a document
+
+### [Get-XdDocumentOperation](Get-XdDocumentOperation.md)
+Gets the Document Operations for this Document
+
+### [Get-XdDocumentProvider](Get-XdDocumentProvider.md)
+Gets the Document Provider for this Document
 
 ### [Get-XdGroup](Get-XdGroup.md)
 Returns a Group
 
-### [Get-XdGroupMember](Get-XdGroupMember.md)
-Get Members of a group
+### [Get-XdGroupUser](Get-XdGroupUser.md)
+Get Users in a group
 
 ### [Get-XdPortal](Get-XdPortal.md)
 Returns the connected portal
@@ -59,11 +77,11 @@ Imports a template from a zipfile.
 ### [New-XdBatch](New-XdBatch.md)
 Creates a new Batch
 
+### [New-XdBatchGroup](New-XdBatchGroup.md)
+Creates a new BatchGroup
+
 ### [New-XdDocument](New-XdDocument.md)
 Creates a Document
-
-### [New-XdDocumentProvider](New-XdDocumentProvider.md)
-Creates a document provider
 
 ### [New-XdTemplate](New-XdTemplate.md)
 Creates a template
@@ -79,6 +97,9 @@ Creates a UserProfile
 
 ### [Remove-XdBatch](Remove-XdBatch.md)
 Removes a batch
+
+### [Remove-XdBatchGroup](Remove-XdBatchGroup.md)
+Removes the BatchGroup
 
 ### [Remove-XdTemplate](Remove-XdTemplate.md)
 Removes the template.

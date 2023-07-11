@@ -13,7 +13,8 @@ Creates a new Batch
 ## SYNTAX
 
 ```
-New-XdBatch -BatchGroupId <Guid> [-BatchName <String>] [-TimeOut <Int32>] [<CommonParameters>]
+New-XdBatch -BatchGroupId <Guid> [-Name <String>] [-Description <String>] [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,17 +42,32 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -BatchName
-Name of the batchgroup to create the batch in
+### -Description
+Description for the Batch
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the Batch
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: BatchName
 
 Required: False
 Position: Named

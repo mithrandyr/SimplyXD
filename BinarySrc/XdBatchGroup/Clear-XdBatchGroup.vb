@@ -31,7 +31,7 @@ Public Class ClearBatch
     Protected Overrides Sub EndProcessing()
         Dim bg = ExecuteWithTimeout(xdp.BatchGroups.Where(Function(x) x.Name.ToUpper().Equals(BatchGroup.ToUpper())).FirstOrDefaultAsync())
         If bg Is Nothing Then
-            WriteError(StandardErrors.XDPMissing("BatchGroup", BatchGroup))
+            WriteErrorMissing("BatchGroup", BatchGroup)
             Exit Sub
         End If
 
@@ -105,7 +105,7 @@ Public Class ClearBatch
         Try
             Console.TreatControlCAsInput = True
             While taskList.Any(Function(x) x.Status = TaskStatus.Running)
-                Dim pRecord = New ProgressRecord(1, "Cleaning Batches from " & bg.Name, String.Format("{0} out of {1}", stats.Deleted, DeleteLimit))
+                Dim pRecord = New ProgressRecord(1, $"Cleaning Batches from {bg.Name}", $"{stats.Deleted} out of {DeleteLimit}")
                 Dim percent As Double = stats.Deleted / DeleteLimit
                 pRecord.PercentComplete = percent * 100
                 If percent > 0 Then pRecord.SecondsRemaining = (timer.Elapsed.TotalSeconds / percent) - timer.Elapsed.TotalSeconds
