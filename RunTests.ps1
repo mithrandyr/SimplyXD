@@ -1,11 +1,15 @@
 [cmdletBinding()]
 Param([Parameter(Mandatory)][string]$XDPortalURI)
+$modulePath = "$PSScriptRoot\SimplyXD"
+$moduleTests = "$PSScriptRoot\Tests\*.tests.ps1"
 
-Import-Module -Path "$PSScriptRoot\SimplyXD"
+Start-Job -ScriptBlock {
+    Import-Module -Name $using:modulePath
 
-$testConfig = New-PesterConfiguration
-$testConfig.Output.Verbosity = "Detailed"
-$testConfig.Output.StackTraceVerbosity = "Firstline"
-$testConfig.Run.Container = New-PesterContainer -Path "$PSScriptRoot\Tests\*.tests.ps1" -Data @{URI=$XDPortalURI}
-
-Invoke-Pester -Configuration $testConfig
+    $testConfig = New-PesterConfiguration
+    $testConfig.Output.Verbosity = "Detailed"
+    $testConfig.Output.StackTraceVerbosity = "Firstline"
+    $testConfig.Run.Container = New-PesterContainer -Path $using:moduleTests -Data @{URI=$using:XDPortalURI}
+    
+    Invoke-Pester -Configuration $testConfig
+} | Receive-Job -AutoRemoveJob -Wait

@@ -7,11 +7,14 @@ Public Class NewBatch
     Public Property BatchGroupId As Guid
 
     <Parameter()>
-    <[Alias]("Name")>
-    Public Property BatchName As String = $"{Environment.UserName}-{Date.Now:yyyyMMdd-HHmmss-fff}"
+    <[Alias]("BatchName")>
+    Public Property Name As String = $"{Environment.UserName}-{Date.Now:yyyyMMdd-HHmmss-fff}"
+
+    <Parameter()>
+    Public Property Description As String
 
     Protected Overrides Sub EndProcessing()
-        Dim nBatch As New Batch With {.BatchGroupId = BatchGroupId, .Status = BatchStatus.Created, .Name = BatchName}
+        Dim nBatch As New Batch With {.BatchGroupId = BatchGroupId, .Status = BatchStatus.Created, .Name = Name, .Description = Description}
         xdp.AddToBatches(nBatch)
         If SaveChanges(nBatch) Then WriteObject(nBatch)
     End Sub
