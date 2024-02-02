@@ -23,7 +23,7 @@ Public Class Add_XdDocumentOperation
             InputMetaData = "
                 <ConvertDocumentOperationAddInMetadata>
                     <SaveFormat>Pdf</SaveFormat>
-                    <Compliance>Pdf15</Compliance>
+                    <Compliance>Pdf17</Compliance>
                     <PrettyFormat>false</PrettyFormat>
                     <UseAntiAliasing>false</UseAntiAliasing>
                     <UseHighQualityRendering>false</UseHighQualityRendering>
