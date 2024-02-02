@@ -3,7 +3,6 @@ Describe "Xpertdoc Batch Testing" {
     BeforeAll {
         Connect-XDPortal -PortalUri $Uri
         $shared = @{}
-        $shared.Uri = $Uri
     }
     It "New-XdBatchGroup" {
         $shared.BatchGroup = New-XdBatchGroup -Name "pestertest" -Description "for pester testing, can be removed"
