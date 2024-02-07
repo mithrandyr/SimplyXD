@@ -35,4 +35,12 @@
     <None Include="test\Test-Xd.vb" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SimplyXD.Cmdlets\SimplyXD.Engine.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
