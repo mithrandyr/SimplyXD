@@ -1,12 +1,11 @@
-﻿Imports Xpertdoc.Portal.SdkCore
+﻿
 
-Partial Public Class XDPortal
+Partial Public Class Engine
     Public Class Admin
         Public Shared Function GetAddInPackage(name As String) As AddInPackage
             Dim query = XDP.AddInPackages.Where(Function(x) x.Name.ToUpper.Equals(name.ToUpper)).FirstOrDefaultAsync
 
             Return ExecuteWithTimeout(query)
-
         End Function
         Public Shared Iterator Function SearchAddInPackage(Optional search As String = "") As IEnumerable(Of AddInPackage)
             Dim query = XDP.AddInPackages.AsQueryable

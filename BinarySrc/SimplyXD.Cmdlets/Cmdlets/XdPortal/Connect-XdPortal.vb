@@ -14,7 +14,9 @@ Public Class Connect_XdPortal
     <Parameter()>
     Public Property PortalUriAsIs As SwitchParameter
     Protected Overrides Sub EndProcessing()
-        ConnectXDPortal(PortalUri, PortalUriAsIs.IsPresent)
-        Common.DefaultTimeout = DefaultTimeout
+        'ConnectXDPortal(PortalUri, PortalUriAsIs.IsPresent)
+        'Common.DefaultTimeout = DefaultTimeout
+
+        Engine.Connect(PortalUri, DefaultTimeout, PortalUriAsIs.IsPresent)
     End Sub
 End Class

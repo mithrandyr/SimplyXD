@@ -1,7 +1,6 @@
-Imports System.Threading
 Imports Xpertdoc.Portal.SdkCore
 
-Public Class XDPortal
+Public Class Engine
     Private Shared _XDP As PortalODataContext
     Private Shared _TimeoutS As Integer
     Friend Shared ReadOnly Property TimeoutS As Integer
@@ -19,11 +18,27 @@ Public Class XDPortal
         End Get
     End Property
 
-    Public Shared Sub Connect(PortalUri As String, Optional timeoutSeconds As Integer = 30)
+    Public Shared Sub Connect(PortalUri As String, timeoutSeconds As Integer, asIs As Boolean)
         _TimeoutS = timeoutSeconds
+        If Not asIs Then
+            Dim temp = New Uri(PortalUri)
+            If temp.AbsolutePath.Length > 1 Then
+                Dim tempBase = temp.AbsoluteUri.Substring(0, temp.AbsoluteUri.LastIndexOf(temp.AbsolutePath))
+                PortalUri = $"{tempBase.TrimEnd("/")}/odata4/v18"
+            Else
+                PortalUri = $"{temp.AbsoluteUri.TrimEnd("/")}/odata4/v18"
+            End If
+        End If
+
         _XDP = New PortalODataContext(PortalUri) With {.Credentials = Net.CredentialCache.DefaultCredentials, .MergeOption = Microsoft.OData.Client.MergeOption.NoTracking}
     End Sub
+    Public Shared ReadOnly Property CurrentPortalURI As String
+        Get
+            Return XDP.BaseUri.ToString()
+        End Get
+    End Property
 
+#Region "Utility functions"
     Friend Shared Function ExecuteWithTimeout(Of t)(cmd As Task(Of t), Optional wait As Integer = 0) As t
         If wait = 0 Then wait = TimeoutS * 1000
 
@@ -95,4 +110,5 @@ Public Class XDPortal
             End Try
         End Using
     End Function
+#End Region
 End Class
