@@ -13,18 +13,20 @@ task Build {
 
     exec { dotnet build "SimplyXD.Cmdlets" -c $Configuration -o "output\bin" -p:Version=$Version -p:AssemblyVersion=$version} | HV "Building SimplyXD ($version)" "."
     Move-Item "output\bin\SimplyXD.Cmdlets.dll" -Destination "output"
-    Remove-Item "output\bin" -Exclude "SimplyXD.*" -Recurse
+    
+    if(-not $DebugOnly) {
+        Remove-Item "output\bin" -Exclude "SimplyXD.Engine.dll" -Recurse
+        $Script:envList += @("win-x86", "linux-x64", "osx-x64")
+    }
 
-    if(-not $DebugOnly) { $Script:envList += @("win-x86", "linux-x64", "osx-x64")}
     foreach($env in $Script:envList) {
         exec { dotnet publish "SimplyXD.Cmdlets" -c $Configuration -r $env -o "output\bin\$env"} | HV "Building PlatformSpecific Dependencies $env" "."
         Remove-Item "output\bin\$env" -Include "SimplyXD.*" -Recurse
     }
-
 }
 
 task DeDup {
-    if(-not $DebugOnly -and -not $SkipDedup) {
+    if(-not $DebugOnly) {
         $first = $Script:envList[0]
         $safeFiles = @{}
 

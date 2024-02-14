@@ -30,7 +30,10 @@ Public Class ContextHandling
         Dim asmPath As String = String.Empty
         If asmName.Name.Equals("SimplyXD.Engine", StringComparison.OrdinalIgnoreCase) Then
             IsEngineLoaded = True
-            Return Assembly.LoadFile(Path.Combine(BinPath, "SimplyXD.Engine.dll"))
+            asmPath = Path.Combine(BinPath, "SimplyXD.Engine.dll")
+
+            If Diagnostics.Debugger.IsAttached Then Debug.WriteLine($"{asmName.Name} >> {asmPath}", "AssemblyLoading")
+            Return Assembly.LoadFile(asmPath)
         End If
 
         If IsEngineLoaded Then
@@ -50,7 +53,7 @@ Public Class ContextHandling
                 End If
             End If
             If Not String.IsNullOrWhiteSpace(asmPath) Then
-                Debug.WriteLine($"{asmName.Name} >> {asmPath}", "AssemblyLoading")
+                If Diagnostics.Debugger.IsAttached Then Debug.WriteLine($"{asmName.Name} >> {asmPath}", "AssemblyLoading")
                 Return Assembly.LoadFile(asmPath)
             End If
         End If
