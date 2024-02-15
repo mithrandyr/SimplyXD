@@ -12,7 +12,7 @@ task Build {
     if($DebugOnly) { $configuration = "Debug"}
 
     exec { dotnet build "SimplyXD.Cmdlets" -c $Configuration -o "output\bin" -p:Version=$Version -p:AssemblyVersion=$version} | HV "Building SimplyXD ($version)" "."
-    Move-Item "output\bin\SimplyXD.Cmdlets.dll" -Destination "output"
+    Move-Item "output\bin\SimplyXD.dll" -Destination "output"
     
     if(-not $DebugOnly) {
         Remove-Item "output\bin" -Exclude "SimplyXD.Engine.dll" -Recurse

@@ -4,6 +4,7 @@
     <RootNamespace>SimplyXD.Cmdlets</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ImportedNamespaces>SimplyXD=False,System.Management.Automation=False,Xpertdoc.Portal.SdkCore=False,Microsoft.VisualBasic=True,System=True,System.Collections=True,System.Collections.Generic=True,System.Diagnostics=True,System.Linq=True,System.Xml.Linq=True,System.Threading.Tasks=True,SimplyXD.Cmdlets=True</ImportedNamespaces>
+    <AssemblyName>SimplyXD</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
