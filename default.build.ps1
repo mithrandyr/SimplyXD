@@ -6,9 +6,9 @@ if(-not $version) {
     $version = [version]::new($version.Major, $version.Minor, $version.Revision + 1).tostring()
 }
 
-task Clean {
+task Clean -If (-not $RebuildDocs) {
     remove "$moduleName\bin"
-    remove "$module.Cmdlets.dll"
+    remove "$moduleName.dll"
 }
 task Build -If (-not $RebuildDocs) {
     Invoke-Build -File "BinarySrc\source.build.ps1" -Version $Version
@@ -25,26 +25,28 @@ task Build -If (-not $RebuildDocs) {
 }
 
 task GenerateDocs {
+    Write-Host  "$BuildRoot\$moduleName\$moduleName.dll"
     Start-Job -ScriptBlock {
             Set-Location $using:BuildRoot
-            Import-Module ".\$using:moduleName\$using:moduleName.Cmdlets.dll" -Verbose:$false
+            Import-Module ".\$using:moduleName\$using:moduleName.dll" -Verbose:$false
             
             if(-not (Test-Path "Docs")) {
                 New-MarkdownHelp -Module $using:moduleName -OutputFolder Docs -AlphabeticParamsOrder -WithModulePage
                 New-MarkdownAboutHelp -OutputFolder Docs -AboutName $using:moduleName
             }
             else { Update-MarkdownHelpModule -Path "Docs" -AlphabeticParamsOrder -Force -RefreshModulePage }
-          } |
-      Receive-Job -Wait -AutoRemoveJob |
-      ForEach-Object { "  $($_.Name)" } |
-      HV "Generating Module Documentation" "."
+            
+        } |
+        Receive-Job -Wait -AutoRemoveJob |
+        ForEach-Object { "  $($_.Name)" } |
+        HV "Generating Module Documentation" "."
 }
 
 task updateManifest {
     Import-Module PowerShellGet -Verbose:$false
     $cmdlets = Start-Job -ScriptBlock {
-            Set-Location $using:BuildRoot  
-            Import-Module ".\$using:moduleName\$using:moduleName.Cmdlets.dll"    
+            Set-Location $using:BuildRoot
+            Import-Module ".\$using:moduleName\$using:moduleName.dll"    
             Get-Command -Module $using:moduleName
         } |
         Receive-Job -AutoRemoveJob -wait |
