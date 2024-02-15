@@ -12,7 +12,7 @@ task Clean {
 }
 task Build -If (-not $RebuildDocs) {
     Invoke-Build -File "BinarySrc\source.build.ps1" -Version $Version
-    Get-ChildItem "BinarySrc\output" | Copy-Item "$moduleName"
+    Get-ChildItem "BinarySrc\output" | Copy-Item -Destination "$moduleName" -Recurse
     
     <#
     remove "$moduleName\dll"
