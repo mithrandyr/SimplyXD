@@ -9,7 +9,7 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'dll\SimplyXD.dll'
+RootModule = 'SimplyXD.dll'
 
 # Version number of this module.
 ModuleVersion = '1.3.2024.52'
