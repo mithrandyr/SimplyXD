@@ -3,7 +3,7 @@ New-Alias -Name HV -Value (Resolve-Path HandleVerbose.ps1)
 $moduleName = "SimplyXD"
 if(-not $version) {
     $version = [Version](Import-PowerShellDataFile -Path "$moduleName\$moduleName.psd1")["ModuleVersion"]
-    $version = [version]::new($version.Major, $version.Minor, $version.Revision + 1).tostring()
+    $version = [version]::new($version.Major, $version.Minor, $version.Build + 1).tostring()
 }
 
 task Clean -If (-not $RebuildDocs) {
