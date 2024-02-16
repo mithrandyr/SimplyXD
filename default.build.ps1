@@ -22,10 +22,10 @@ task GenerateDocs {
             Import-Module ".\$using:moduleName\$using:moduleName.dll" -Verbose:$false
             
             if(-not (Test-Path "Docs")) {
-                New-MarkdownHelp -Module $using:moduleName -OutputFolder Docs -AlphabeticParamsOrder -WithModulePage -ErrorAction SilentlyContinue
+                New-MarkdownHelp -Module $using:moduleName -OutputFolder Docs -AlphabeticParamsOrder -WithModulePage
                 New-MarkdownAboutHelp -OutputFolder Docs -AboutName $using:moduleName
             }
-            else { Update-MarkdownHelpModule -Path "Docs" -AlphabeticParamsOrder -Force -RefreshModulePage -ErrorAction SilentlyContinue }
+            else { Update-MarkdownHelpModule -Path "Docs" -AlphabeticParamsOrder -Force -RefreshModulePage }
             
         } |
         Receive-Job -Wait -AutoRemoveJob | write-host
