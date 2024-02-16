@@ -4,11 +4,8 @@ Public Class Remove_XdTemplate
     Inherits baseCmdlet
 
 #Region "PowerShell Properties"
-    <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipeline:=True)>
-    Property InputObject As Template
-
     <[Alias]("TemplateId")>
-    <Parameter(Mandatory:=True, ParameterSetName:="id")>
+    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Property Id As Guid
 
     <ValidateNotNullOrEmpty>
@@ -34,8 +31,6 @@ Public Class Remove_XdTemplate
                 Exit Sub
             End If
             Id = result
-        ElseIf ParameterSetName = "obj" Then
-            Id = InputObject.TemplateId
         End If
 
         Dim dTemplate = New Template With {.TemplateId = Id}

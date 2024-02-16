@@ -4,9 +4,6 @@ Public Class Set_XdUserProfile
     Inherits baseCmdlet
 
 #Region "PowerShell Properties"
-    <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipeline:=True)>
-    Property InputObject As UserProfile
-
     <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Property UserProfileId As Guid
 
@@ -31,8 +28,6 @@ Public Class Set_XdUserProfile
     Protected Overrides Sub ProcessRecord()
         Try
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.OverwriteChanges
-
-            If ParameterSetName = "obj" Then UserProfileId = InputObject.UserProfileId
 
             Dim nUserProfile As UserProfile = ExecuteWithTimeout(xdp.UserProfiles.Where(Function(x) x.UserProfileId = UserProfileId).FirstOrDefaultAsync)
             If nUserProfile Is Nothing Then

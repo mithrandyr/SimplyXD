@@ -4,10 +4,7 @@ Public Class Remove_XdUserProfile
     Inherits baseCmdlet
 
 #Region "PowerShell Properties"
-    <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipeline:=True)>
-    Property InputObject As UserProfile
-
-    <Parameter(Mandatory:=True, ParameterSetName:="id")>
+    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Property UserProfileId As Guid
 
     <ValidateNotNullOrEmpty>
@@ -24,8 +21,6 @@ Public Class Remove_XdUserProfile
                 Exit Sub
             End If
             UserProfileId = result
-        ElseIf ParameterSetName = "obj" Then
-            UserProfileId = InputObject.UserProfileId
         End If
 
         Dim dUserProfile = New UserProfile With {.UserProfileId = UserProfileId}

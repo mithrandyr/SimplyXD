@@ -13,11 +13,8 @@ Public Class Remove_XdTemplateGroup
     <Parameter(Mandatory:=True, ParameterSetName:="name", Position:=0)>
     Public Property Name As String
 
-    <Parameter(Mandatory:=True, ParameterSetName:="id")>
+    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateGroupId As Guid
-
-    <Parameter(Mandatory:=True, ParameterSetName:="obj")>
-    Public Property InputObject As TemplateGroup
 
     <Parameter()>
     Public Property Force As SwitchParameter
@@ -31,8 +28,6 @@ Public Class Remove_XdTemplateGroup
                 Exit Sub
             End If
             TemplateGroupId = result
-        ElseIf ParameterSetName = "obj" Then
-            TemplateGroupId = InputObject.TemplateGroupId
         End If
 
         WriteVerbose("Getting count of Templates in the TemplateGroup")

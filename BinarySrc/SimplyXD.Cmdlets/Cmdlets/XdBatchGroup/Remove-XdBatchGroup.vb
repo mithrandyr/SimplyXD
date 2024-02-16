@@ -10,9 +10,6 @@ Public Class RemoveBatchGroup
     <Parameter(ParameterSetName:="name", Mandatory:=True, Position:=0)>
     Public Property Name As String
 
-    <Parameter(Mandatory:=True, ParameterSetName:="obj")>
-    Public Property InputObject As BatchGroup
-
     <Parameter()>
     Public Property Force As SwitchParameter
 
@@ -25,8 +22,6 @@ Public Class RemoveBatchGroup
                 Exit Sub
             End If
             BatchGroupId = result
-        ElseIf ParameterSetName = "obj" Then
-            BatchGroupId = InputObject.BatchGroupId
         End If
 
         WriteVerbose("Getting count of Batches in the BatchGroup")
@@ -39,8 +34,6 @@ Public Class RemoveBatchGroup
             SaveChanges(dBatchGroup)
         Else
             WriteErrorNotEmpty("BatchGroup", If(Name, BatchGroupId.ToString), batchCount)
-
         End If
     End Sub
-
 End Class

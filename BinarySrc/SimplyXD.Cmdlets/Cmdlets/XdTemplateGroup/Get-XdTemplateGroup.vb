@@ -10,15 +10,16 @@ Public Class Get_XdTemplateGroup
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property TemplateLibrary As String
 
-    <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipeline:=True)>
-    Public Property InputObject As TemplateLibrary
+    <[Alias]("TemplateLibraryId")>
+    <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipelineByPropertyName:=True)>
+    Public Property InputObject As Guid
 
     <ValidateNotNullOrEmpty>
     <[Alias]("TemplateGroup")>
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property Name As String
 
-    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="id")>
     Public Property TemplateGroupId As Guid
 
     <Parameter()>
@@ -40,7 +41,7 @@ Public Class Get_XdTemplateGroup
                 query = query.Where(Function(x) x.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper) And x.Name.ToUpper.Equals(Name.ToUpper))
 
             Case "obj"
-                query = query.Where(Function(x) x.TemplateLibraryId = InputObject.TemplateLibraryId)
+                query = query.Where(Function(x) x.TemplateLibraryId = InputObject)
 
             Case "id"
                 query = query.Where(Function(x) x.TemplateGroupId = TemplateGroupId)
