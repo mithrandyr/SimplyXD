@@ -1,4 +1,4 @@
-param([switch]$CommitRevision, [switch]$RebuildDocs)
+param([switch]$CommitRevision, [switch]$RebuildDocs, [switch]$GenerateMAML)
 New-Alias -Name HV -Value (Resolve-Path HandleVerbose.ps1)
 $moduleName = "SimplyXD"
 if(-not $version) {
@@ -16,7 +16,6 @@ task Build -If (-not $RebuildDocs) {
 }
 
 task GenerateDocs {
-    Write-Host  "$BuildRoot\$moduleName\$moduleName.dll"
     Start-Job -ScriptBlock {
             Set-Location $using:BuildRoot
             Import-Module ".\$using:moduleName\$using:moduleName.dll" -Verbose:$false
@@ -25,12 +24,12 @@ task GenerateDocs {
                 New-MarkdownHelp -Module $using:moduleName -OutputFolder Docs -AlphabeticParamsOrder -WithModulePage
                 New-MarkdownAboutHelp -OutputFolder Docs -AboutName $using:moduleName
             }
-            else { Update-MarkdownHelpModule -Path "Docs" -AlphabeticParamsOrder -Force -RefreshModulePage }
+            else { Update-MarkdownHelpModule -Path "Docs" -AlphabeticParamsOrder -Force -RefreshModulePage }            
             
         } |
-        Receive-Job -Wait -AutoRemoveJob | write-host
-        #ForEach-Object { "  $($_.Name)" } |
-        #HV "Generating Module Documentation" "."
+        Receive-Job -Wait -AutoRemoveJob |
+        ForEach-Object { "  $($_.Name)" } |
+        HV "Generating Module Documentation" "."
 }
 
 task updateManifest {
@@ -52,5 +51,17 @@ task revisionCommit {
     exec { git commit "$moduleName/$moduleName.psd1" -m "Updating version To $version" } | HV "Incrementing Version ($version) and Git Commit"
 } -If ($CommitRevision -and -not $RebuildDocs)
 
-
-task . Clean, Build, updateManifest, GenerateDocs, revisionCommit
+if(-not $GenerateMAML) {
+    task . Clean, Build, updateManifest, GenerateDocs, revisionCommit
+}
+else {
+    task . {
+        Start-Job -ScriptBlock {
+            Set-Location $using:BuildRoot
+            Import-Module ".\$using:moduleName\$using:moduleName.dll" -Verbose:$false
+            
+            New-ExternalHelp -Path "Docs" -OutputPath ".\$using:moduleName\en-US" -Force
+        } |
+        Receive-Job -Wait -AutoRemoveJob
+    }
+}
