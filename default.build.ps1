@@ -32,6 +32,16 @@ task GenerateDocs {
         HV "Generating Module Documentation" "."
 }
 
+task MAML {
+    Start-Job -ScriptBlock {
+        Set-Location $using:BuildRoot
+        Import-Module ".\$using:moduleName\$using:moduleName.dll" -Verbose:$false
+        
+        New-ExternalHelp -Path "Docs" -OutputPath ".\$using:moduleName\en-US" -Force
+    } |
+    Receive-Job -Wait -AutoRemoveJob
+}
+
 task updateManifest {
     Import-Module PowerShellGet -Verbose:$false
     $cmdlets = Start-Job -ScriptBlock {
@@ -51,17 +61,4 @@ task revisionCommit {
     exec { git commit "$moduleName/$moduleName.psd1" -m "Updating version To $version" } | HV "Incrementing Version ($version) and Git Commit"
 } -If ($CommitRevision -and -not $RebuildDocs)
 
-if(-not $GenerateMAML) {
-    task . Clean, Build, updateManifest, GenerateDocs, revisionCommit
-}
-else {
-    task . {
-        Start-Job -ScriptBlock {
-            Set-Location $using:BuildRoot
-            Import-Module ".\$using:moduleName\$using:moduleName.dll" -Verbose:$false
-            
-            New-ExternalHelp -Path "Docs" -OutputPath ".\$using:moduleName\en-US" -Force
-        } |
-        Receive-Job -Wait -AutoRemoveJob
-    }
-}
+task . Clean, Build, updateManifest, GenerateDocs, MAML, revisionCommit
