@@ -3,28 +3,29 @@
 Public Class Get_XdTemplate
     Inherits baseCmdlet
 
-    <Parameter(ParameterSetName:="search", ValueFromPipelineByPropertyName:=True, Position:=0)>
+    <Parameter(ParameterSetName:="search", Position:=0)>
     Public Property Search As String
 
     <Parameter(ParameterSetName:="search")>
-    <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property TemplateLibrary As String
 
     <Parameter(ParameterSetName:="search")>
-    <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property TemplateGroup As String
 
     <ValidateNotNullOrEmpty>
     <[Alias]("TemplateName")>
-    <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property Name As String
 
     <[Alias]("TemplateId")>
-    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipeline:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="id")>
     Public Property Id As Guid
 
-    <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipeline:=True)>
-    Public Property InputObject As TemplateGroup
+    <[Alias]("TemplateGroupId")>
+    <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipelineByPropertyName:=True)>
+    Public Property InputObject As Guid
 
     <Parameter()>
     Public Property IncludeContent As SwitchParameter
@@ -37,7 +38,7 @@ Public Class Get_XdTemplate
 
             If ParameterSetName = "obj" Then
                 'Return all templates for a given templateGroup
-                For Each t In GenerateResults(query.Where(Function(x) x.TemplateGroupId = InputObject.TemplateGroupId), "Template")
+                For Each t In GenerateResults(query.Where(Function(x) x.TemplateGroupId = InputObject), "Template")
                     Output(t)
                 Next
             Else

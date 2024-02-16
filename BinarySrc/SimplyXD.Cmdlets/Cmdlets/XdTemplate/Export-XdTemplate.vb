@@ -7,25 +7,22 @@ Public Class Export_XdTemplate
 
     <[Alias]("TemplateLibraryName")>
     <ValidateNotNullOrEmpty>
-    <Parameter(ParameterSetName:="name", Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
+    <Parameter(ParameterSetName:="name", Mandatory:=True)>
     Public Property TemplateLibrary As String
 
     <[Alias]("TemplateGroupName")>
     <ValidateNotNullOrEmpty>
-    <Parameter(ParameterSetName:="name", Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
+    <Parameter(ParameterSetName:="name", Mandatory:=True)>
     Public Property TemplateGroup As String
 
     <[Alias]("TemplateName")>
     <ValidateNotNullOrEmpty>
-    <Parameter(ParameterSetName:="name", Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
+    <Parameter(ParameterSetName:="name", Mandatory:=True)>
     Public Property Name As String
 
     <[Alias]("TemplateId")>
-    <Parameter(ParameterSetName:="id", Mandatory:=True, ValueFromPipeline:=True)>
+    <Parameter(ParameterSetName:="id", Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
     Public Property Id As Guid
-
-    <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipeline:=True)>
-    Public Property InputObject As Template
 
     <Parameter(ValueFromPipelineByPropertyName:=True)>
     Public Property ExportPath As String
@@ -115,7 +112,7 @@ Public Class Export_XdTemplate
             End If
         Else
             WriteVerbose("Getting Template by Id")
-            If InputObject IsNot Nothing Then Id = InputObject.TemplateId
+            'If InputObject IsNot Nothing Then Id = InputObject.TemplateId
             Try
                 t = ExecuteWithTimeout(query.Where(Function(x) x.TemplateId = Id).FirstOrDefaultAsync)
                 TemplateLibrary = t.TemplateGroup.TemplateLibrary.Name
@@ -125,7 +122,6 @@ Public Class Export_XdTemplate
             Catch ex As Exception
                 WriteErrorMissing("Template", Id.ToString, ex)
             End Try
-
         End If
     End Function
 

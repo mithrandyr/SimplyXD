@@ -13,15 +13,6 @@ task Clean -If (-not $RebuildDocs) {
 task Build -If (-not $RebuildDocs) {
     Invoke-Build -File "BinarySrc\source.build.ps1" -Version $Version
     Get-ChildItem "BinarySrc\output" | Copy-Item -Destination "$moduleName" -Recurse
-    
-    <#
-    remove "$moduleName\dll"
-    New-Item -Path "$moduleName\dll" -ItemType Directory | Out-Null
-    Get-ChildItem -Path "BinarySrc\output" -Filter *.dll |
-        Copy-Item -Destination "$moduleName\dll"
-    
-    remove "BinarySrc\output"
-    #>
 }
 
 task GenerateDocs {
@@ -31,15 +22,15 @@ task GenerateDocs {
             Import-Module ".\$using:moduleName\$using:moduleName.dll" -Verbose:$false
             
             if(-not (Test-Path "Docs")) {
-                New-MarkdownHelp -Module $using:moduleName -OutputFolder Docs -AlphabeticParamsOrder -WithModulePage
+                New-MarkdownHelp -Module $using:moduleName -OutputFolder Docs -AlphabeticParamsOrder -WithModulePage -ErrorAction SilentlyContinue
                 New-MarkdownAboutHelp -OutputFolder Docs -AboutName $using:moduleName
             }
-            else { Update-MarkdownHelpModule -Path "Docs" -AlphabeticParamsOrder -Force -RefreshModulePage }
+            else { Update-MarkdownHelpModule -Path "Docs" -AlphabeticParamsOrder -Force -RefreshModulePage -ErrorAction SilentlyContinue }
             
         } |
-        Receive-Job -Wait -AutoRemoveJob |
-        ForEach-Object { "  $($_.Name)" } |
-        HV "Generating Module Documentation" "."
+        Receive-Job -Wait -AutoRemoveJob | write-host
+        #ForEach-Object { "  $($_.Name)" } |
+        #HV "Generating Module Documentation" "."
 }
 
 task updateManifest {
