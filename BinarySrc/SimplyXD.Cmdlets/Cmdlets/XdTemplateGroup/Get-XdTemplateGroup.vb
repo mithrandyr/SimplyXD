@@ -21,7 +21,8 @@ Public Class Get_XdTemplateGroup
     <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateGroupId As Guid
 
-
+    <Parameter()>
+    Public Property IncludeCount As SwitchParameter
 
     Protected Overrides Sub EndProcessing()
         Dim query = xdp.TemplateGroups.Expand(Function(x) x.TemplateLibrary).AsQueryable
@@ -48,17 +49,24 @@ Public Class Get_XdTemplateGroup
 
         If ParameterSetName = "search" Or ParameterSetName = "obj" Then
             For Each gr In GenerateResults(query, "TemplateGroup")
-                WriteObject(gr.AsPSObject)
+                SendObject(gr)
             Next
         Else
             Dim tg As TemplateGroup
             Try
                 tg = ExecuteWithTimeout(query.FirstOrDefaultAsync)
-                If tg IsNot Nothing Then WriteObject(tg.AsPSObject)
+                If tg IsNot Nothing Then SendObject(tg)
             Catch ex As Exception
                 WriteErrorMissing("TemplateGroup", If(Name, TemplateGroupId), ex)
             End Try
+        End If
+    End Sub
 
+    Private Sub SendObject(x As TemplateGroup)
+        If IncludeCount Then
+            WriteObject(AppendCount(x, xdp.Templates.Where(Function(t) t.TemplateGroupId = x.TemplateGroupId).CountAsync(), "TemplateCount"))
+        Else
+            WriteObject(x)
         End If
     End Sub
 End Class

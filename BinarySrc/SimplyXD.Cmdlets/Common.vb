@@ -1,37 +1,21 @@
 ﻿Imports System.Linq.Expressions
 
 Module Common
-    Private _CurrentXDPortal As String
-
     Public Property DefaultTimeout As Integer = Common.DefaultTimeout
 
-    Sub ConnectXDPortal(uri As String, Optional asIs As Boolean = False)
-        If asIs Then
-            _CurrentXDPortal = uri
-        Else
-            Dim temp = New Uri(uri)
-            If temp.AbsolutePath.Length > 1 Then
-                Dim tempBase = temp.AbsoluteUri.Substring(0, temp.AbsoluteUri.LastIndexOf(temp.AbsolutePath))
-                _CurrentXDPortal = $"{tempBase.TrimEnd("/")}/odata4/v18"
-            Else
-                _CurrentXDPortal = $"{temp.AbsoluteUri.TrimEnd("/")}/odata4/v18"
-            End If
-        End If
-    End Sub
+    'ReadOnly Property PortalURI As String
+    '    Get
+    '        Return
+    '    End Get
+    'End Property
 
-    ReadOnly Property PortalURI As String
-        Get
-            Return _CurrentXDPortal
-        End Get
-    End Property
-
-    Function XDPortal() As PortalODataContext
-        If _CurrentXDPortal Is Nothing Then
-            Throw New InvalidOperationException("No Xpertdoc Portal connected, please use 'Connect-XdPortal'.")
-        Else
-            Return New PortalODataContext(_CurrentXDPortal) With {.Credentials = Net.CredentialCache.DefaultCredentials, .MergeOption = Microsoft.OData.Client.MergeOption.NoTracking}
-        End If
-    End Function
+    'Function XDPortal() As PortalODataContext
+    '    If _CurrentXDPortal Is Nothing Then
+    '        Throw New InvalidOperationException("No Xpertdoc Portal connected, please use 'Connect-XdPortal'.")
+    '    Else
+    '        Return New PortalODataContext(_CurrentXDPortal) With {.Credentials = Net.CredentialCache.DefaultCredentials, .MergeOption = Microsoft.OData.Client.MergeOption.NoTracking}
+    '    End If
+    'End Function
 
     <Runtime.CompilerServices.Extension()>
     Public Function WherePropertyIsIn(Of T, TSet)(ByVal query As IQueryable(Of T), ByVal valuesList As IEnumerable(Of TSet), ByVal propertySelector As Expression(Of Func(Of T, TSet))) As IQueryable(Of T)

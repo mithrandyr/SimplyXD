@@ -1,12 +1,6 @@
 ﻿Public MustInherit Class baseCmdlet
     Inherits PSCmdlet
-    Private _xdp As PortalODataContext
-    Friend ReadOnly Property xdp As PortalODataContext
-        Get
-            If _xdp Is Nothing Then _xdp = XDPortal()
-            Return _xdp
-        End Get
-    End Property
+    Friend ReadOnly Property xdp As PortalODataContext = Engine.XDP
 
     <Parameter(ValueFromPipelineByPropertyName:=True)>
     Public Property TimeOut As Integer = 15
@@ -14,7 +8,6 @@
     Public Function SaveChanges(x As Object) As Boolean
         Return SaveChanges(0, x)
     End Function
-
 
     Public Function SaveChanges(Optional timeoutMS As Integer = 0, Optional x As Object = Nothing) As Boolean
         If timeoutMS <= 0 Then timeoutMS = TimeOut * 1000
@@ -95,4 +88,11 @@
     Public Sub FinishWriteProgress(Optional ActivityId As Integer = 0)
         WriteProgress(New ProgressRecord(ActivityId, "Finished", "Completed") With {.RecordType = ProgressRecordType.Completed})
     End Sub
+
+    Public Function AppendCount(origObject As Object, cmd As Task(Of Integer), Optional propertyName As String = "Count") As PSObject
+        Dim rCount = ExecuteWithTimeout(cmd)
+        Dim newObject = PSObject.AsPSObject(origObject)
+        newObject.Properties.Add(New PSNoteProperty(propertyName, rCount))
+        Return newObject
+    End Function
 End Class

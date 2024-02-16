@@ -138,7 +138,7 @@ Public Class Export_XdTemplate
                 Using sw As New StreamWriter(zStream)
                     sw.WriteLine($"Exported: {DateTimeOffset.Now}")
                     sw.WriteLine($"Version: {Version}")
-                    sw.WriteLine($"Portal: {PortalURI}")
+                    sw.WriteLine($"Portal: {Engine.CurrentPortalURI}")
                     sw.WriteLine($"TemplateLibrary: {t.TemplateGroup.TemplateLibrary.Name}")
                     sw.WriteLine($"TemplateGroup: {t.TemplateGroup.Name}")
                     sw.WriteLine($"TemplateName: {t.Name}")

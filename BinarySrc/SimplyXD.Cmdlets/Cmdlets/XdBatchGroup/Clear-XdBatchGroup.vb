@@ -81,7 +81,7 @@ Public Class ClearBatch
         For i = 1 To Concurrency
             taskList.Add(Task.Run(Sub()
                                       Dim batchid As Guid
-                                      Dim xdp2 = XDPortal()
+                                      Dim xdp2 = Engine.NewXDP
                                       While (stats.Deleted + stats.Skipped) < stats.DeleteLimit
                                           If deleteQueue.TryDequeue(batchid) Then
                                               Dim nbatch = New Batch With {.BatchId = batchid}

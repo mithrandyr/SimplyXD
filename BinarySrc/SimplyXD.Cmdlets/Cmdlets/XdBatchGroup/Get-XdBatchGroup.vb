@@ -13,6 +13,9 @@ Public Class GetBatchGroup
     <Parameter(Mandatory:=True, ParameterSetName:="id")>
     Public Property BatchGroupId As Guid
 
+    <Parameter()>
+    Public Property IncludeCount As SwitchParameter
+
     Protected Overrides Sub EndProcessing()
         Select Case ParameterSetName
             Case "search"
@@ -21,18 +24,26 @@ Public Class GetBatchGroup
                     query = query.Where(Function(x) x.Name.Contains(Search))
                 End If
                 For Each gr In GenerateResults(query, "BatchGroup")
-                    WriteObject(gr)
+                    SendObject(gr)
                 Next
             Case "one"
                 Dim bg = ExecuteWithTimeout(xdp.BatchGroups.Where(Function(x) x.Name.ToUpper().Equals(Name.ToUpper())).FirstOrDefaultAsync())
-                WriteObject(bg)
+                SendObject(bg)
             Case "id"
                 Try
                     Dim bg = ExecuteWithTimeout(xdp.BatchGroups.Where(Function(x) x.BatchGroupId = BatchGroupId).FirstOrDefaultAsync)
-                    WriteObject(bg)
+                    SendObject(bg)
                 Catch ex As Exception
                     WriteErrorMissing("BatchGroup", BatchGroupId.ToString, ex)
                 End Try
         End Select
+    End Sub
+
+    Private Sub SendObject(x As BatchGroup)
+        If IncludeCount Then
+            WriteObject(AppendCount(x, xdp.Batches.Where(Function(b) b.BatchGroupId = x.BatchGroupId).CountAsync(), "BatchCount"))
+        Else
+            WriteObject(x)
+        End If
     End Sub
 End Class

@@ -13,6 +13,9 @@ Public Class Get_XdTemplateLibrary
     <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipeline:=True)>
     Public Property TemplateLibraryId As Guid
 
+    <Parameter()>
+    Public Property IncludeCount As SwitchParameter
+
     Protected Overrides Sub EndProcessing()
         Dim query = xdp.TemplateLibraries.AsQueryable
 
@@ -22,21 +25,28 @@ Public Class Get_XdTemplateLibrary
             End If
 
             For Each tl In GenerateResults(query, "TemplateLibrary")
-                    WriteObject(tl)
-                Next
-            Else
-                Dim tl As TemplateLibrary
+                SendObject(tl)
+            Next
+        Else
+            Dim tl As TemplateLibrary
             If ParameterSetName = "name" Then
                 tl = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)
             Else
                 Try
                     tl = ExecuteWithTimeout(query.Where(Function(x) x.TemplateLibraryId = TemplateLibraryId).FirstOrDefaultAsync)
+                    If tl IsNot Nothing Then SendObject(tl)
                 Catch ex As Exception
                     WriteErrorMissing("TemplateLibrary", TemplateLibraryId.ToString, ex)
                 End Try
             End If
+        End If
+    End Sub
 
-            If tl IsNot Nothing Then WriteObject(tl)
+    Private Sub SendObject(x As TemplateLibrary)
+        If IncludeCount Then
+            WriteObject(AppendCount(x, xdp.TemplateGroups.Where(Function(tg) tg.TemplateLibraryId = x.TemplateLibraryId).CountAsync(), "GroupCount"))
+        Else
+            WriteObject(x)
         End If
     End Sub
 End Class

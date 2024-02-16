@@ -4,11 +4,10 @@ Public Class Get_XdPortal
     Inherits PSCmdlet
 
     Protected Overrides Sub EndProcessing()
-        'If PortalURI Is Nothing Then
-        '    WriteWarning("No Xpertdoc Portal connection, use 'Connect-XdPortal'.")
-        'Else
-        '    WriteObject(PortalURI)
-        'End If
-        WriteObject(Engine.CurrentPortalURI)
+        If Engine.CurrentPortalURI Is Nothing Then
+            WriteWarning("No Xpertdoc Portal connection, use 'Connect-XdPortal'.")
+        Else
+            WriteObject(Engine.CurrentPortalURI)
+        End If
     End Sub
 End Class
