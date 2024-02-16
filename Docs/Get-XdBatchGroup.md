@@ -14,17 +14,17 @@ Gets a batchgroup
 
 ### one
 ```
-Get-XdBatchGroup -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdBatchGroup -Name <String> [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### search
 ```
-Get-XdBatchGroup [[-Search] <String>] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdBatchGroup [-Search <String>] [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
 ```
-Get-XdBatchGroup -BatchGroupId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdBatchGroup -BatchGroupId <Guid> [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,6 +56,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -IncludeCount
+Results Will include a 'BatchCount' property reports the count of Batches in the BatchGroup.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Name
 Name of the batchgroup to return
 
@@ -80,7 +95,7 @@ Parameter Sets: search
 Aliases:
 
 Required: False
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

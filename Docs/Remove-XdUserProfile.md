@@ -12,11 +12,6 @@ Removes a UserProfile
 
 ## SYNTAX
 
-### obj
-```
-Remove-XdUserProfile -InputObject <UserProfile> [-TimeOut <Int32>] [<CommonParameters>]
-```
-
 ### id
 ```
 Remove-XdUserProfile -UserProfileId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
@@ -40,21 +35,6 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
-
-### -InputObject
-UserProfile to remove
-
-```yaml
-Type: UserProfile
-Parameter Sets: obj
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
 
 ### -Name
 Name of the UserProfile to remove
@@ -97,7 +77,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

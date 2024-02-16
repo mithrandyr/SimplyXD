@@ -14,7 +14,7 @@ Returns userprofiles
 
 ### search
 ```
-Get-XdUserProfile [[-Search] <String>] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdUserProfile [-Search <String>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### username
@@ -65,7 +65,7 @@ Parameter Sets: search
 Aliases:
 
 Required: False
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -14,17 +14,17 @@ Returns templatelibraries
 
 ### search
 ```
-Get-XdTemplateLibrary [[-Search] <String>] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateLibrary [[-Search] <String>] [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### name
 ```
-Get-XdTemplateLibrary -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateLibrary -Name <String> [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
 ```
-Get-XdTemplateLibrary -TemplateLibraryId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateLibrary -TemplateLibraryId <Guid> [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,6 +40,21 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
+
+### -IncludeCount
+Results Will include a 'GroupCount' property reports the count of TemplateGroups in the TemplateLibrary.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Name
 Name of the templatelibrary to return
