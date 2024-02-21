@@ -41,8 +41,4 @@
     <ProjectReference Include="..\SimplyXD.Engine\SimplyXD.Engine.vbproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>
