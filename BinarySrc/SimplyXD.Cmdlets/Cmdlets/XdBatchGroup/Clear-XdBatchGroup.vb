@@ -48,9 +48,7 @@ Public Class ClearBatch
         Dim timer = Stopwatch.StartNew
         Dim stats As New ClearBatchStats With {.TotalItems = TotalItems, .DeleteLimit = DeleteLimit}
         Dim taskList As New List(Of Task)
-        'Dim deleteQueue As New Concurrent.ConcurrentQueue(Of Guid)
         Dim deleteQueue As New BlockingCollection(Of Guid)
-
 
         'Task to query for items to delete
         taskList.Add(Task.Run(
@@ -62,10 +60,10 @@ Public Class ClearBatch
                         If token.IsCancellationRequested() Then Exit Sub
                         'make sure queue has enough items in it
                         If deleteQueue.Count < queryCount Then
-                            For Each batchId In GenerateResults(FilterOutQueue(query, deleteQueue), Nothing, 10).Select(Function(x) x.BatchId) '.Where(Function(x) Not foundList.Contains(x))
+                            For Each batchId In GenerateResults(FilterOutQueue(query, deleteQueue), Nothing, queryCount).Select(Function(x) x.BatchId)
                                 If token.IsCancellationRequested() Then Exit Sub
                                 deleteQueue.Add(batchId)
-                                Threading.Interlocked.Increment(stats.Found)
+                                stats.Found += 1
                                 If stats.Found >= stats.DeleteLimit Then Exit While
                             Next
                         Else
@@ -78,9 +76,7 @@ Public Class ClearBatch
                 End Try
             End Sub, token))
 
-        'Tasks to delete items
         'setup threads to run deletes
-        'THIS IS NOT CONSISTENTLY WORKING PROPERLY!!!!
         For i = 1 To Concurrency
             taskList.Add(Task.Run(Sub()
                                       Dim batchid As Guid
@@ -94,7 +90,8 @@ Public Class ClearBatch
                                               xdp2.SaveChangesAsync.Wait()
                                               Threading.Interlocked.Increment(stats.Deleted)
                                           Catch ex As Exception
-                                              WriteWarning($"Could not remove '{batchid}' -- {ex.Message}")
+                                              'this could be a problem, solution would be to add message to a concurrent queue and then in the main thread dequeue and report out...
+                                              WriteWarning($"Could not remove '{batchid}' -- {ex.Message}") 
                                               Threading.Interlocked.Increment(stats.Skipped)
                                           End Try
                                       Next
