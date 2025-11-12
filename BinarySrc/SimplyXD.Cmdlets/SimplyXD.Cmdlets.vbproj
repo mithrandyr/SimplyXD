@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="test\Test-Xd.vb" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.1" />
   </ItemGroup>
 
@@ -31,10 +27,6 @@
     <Import Include="SimplyXD" />
     <Import Include="System.Management.Automation" />
     <Import Include="Xpertdoc.Portal.SdkCore" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="test\Test-Xd.vb" />
   </ItemGroup>
 
   <ItemGroup>
