@@ -41,7 +41,7 @@ Public Class GetBatchGroup
 
     Private Sub SendObject(x As BatchGroup)
         If IncludeCount Then
-            WriteObject(AppendCount(x, xdp.Batches.Where(Function(b) b.BatchGroupId = x.BatchGroupId).CountAsync(), "BatchCount"))
+            WriteObject(AppendProperty(x, xdp.Batches.Where(Function(b) b.BatchGroupId = x.BatchGroupId).CountAsync(), "BatchCount"))
         Else
             WriteObject(x)
         End If

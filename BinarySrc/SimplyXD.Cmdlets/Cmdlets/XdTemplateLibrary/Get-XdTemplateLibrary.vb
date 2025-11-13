@@ -44,7 +44,7 @@ Public Class Get_XdTemplateLibrary
 
     Private Sub SendObject(x As TemplateLibrary)
         If IncludeCount Then
-            WriteObject(AppendCount(x, xdp.TemplateGroups.Where(Function(tg) tg.TemplateLibraryId = x.TemplateLibraryId).CountAsync(), "GroupCount"))
+            WriteObject(AppendProperty(x, xdp.TemplateGroups.Where(Function(tg) tg.TemplateLibraryId = x.TemplateLibraryId).CountAsync(), "GroupCount"))
         Else
             WriteObject(x)
         End If
