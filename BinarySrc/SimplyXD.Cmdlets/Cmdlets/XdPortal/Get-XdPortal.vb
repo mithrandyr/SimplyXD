@@ -2,7 +2,6 @@
 <CmdletBinding()>
 Public Class Get_XdPortal
     Inherits PSCmdlet
-
     Protected Overrides Sub EndProcessing()
         If Engine.CurrentPortalURI Is Nothing Then
             WriteWarning("No Xpertdoc Portal connection, use 'Connect-XdPortal'.")

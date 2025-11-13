@@ -4,7 +4,7 @@ Public Class Get_XdDocument
     Inherits baseCmdlet
 
 #Region "PowerShell Parameters"
-    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipeline:=True, ValueFromPipelineByPropertyName:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Public Property DocumentId As Guid
 
     <Parameter(Mandatory:=True, ParameterSetName:="batch", ValueFromPipelineByPropertyName:=True)>

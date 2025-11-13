@@ -17,7 +17,7 @@ Public Class Set_XdTemplate
     <Parameter(Mandatory:=True, ParameterSetName:="name")>
     Public Property Name As String
 
-    <Parameter(Mandatory:=True, ParameterSetName:="id")>
+    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateId As Guid
 
     <Parameter()>

@@ -7,8 +7,11 @@ Public Class ClearBatch
     Inherits baseCmdlet
 
 
+    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
+    Public Property BatchGroupId As Guid
+
     <ValidateNotNullOrEmpty>
-    <Parameter(Mandatory:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="name", Position:=0)>
     Public Property BatchGroup As String
 
     <Parameter()>
@@ -32,9 +35,17 @@ Public Class ClearBatch
     Public Property Concurrency As Integer = 10
 
     Protected Overrides Sub EndProcessing()
-        Dim bg = ExecuteWithTimeout(xdp.BatchGroups.Where(Function(x) x.Name.ToUpper().Equals(BatchGroup.ToUpper())).FirstOrDefaultAsync())
+        Dim bgQuery = xdp.BatchGroups
+
+        If ParameterSetName = "name" Then
+            bgQuery = bgQuery.Where(Function(x) x.Name.ToUpper().Equals(BatchGroup.ToUpper()))
+        Else
+            bgQuery = bgQuery.Where(Function(x) x.BatchGroupId = BatchGroupId)
+        End If
+
+        Dim bg = ExecuteWithTimeout(bgQuery.FirstOrDefaultAsync())
         If bg Is Nothing Then
-            WriteErrorMissing("BatchGroup", BatchGroup)
+            WriteErrorMissing("BatchGroup", If(BatchGroup, BatchGroupId.ToString))
             Exit Sub
         End If
 

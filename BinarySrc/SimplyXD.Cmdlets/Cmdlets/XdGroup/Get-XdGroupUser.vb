@@ -5,7 +5,7 @@ Public Class Get_XdGroupMember
     Inherits baseCmdlet
 
     <ValidateNotNullOrEmpty>
-    <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True, Position:=0)>
+    <Parameter(Mandatory:=True, ParameterSetName:="name", Position:=0)>
     Public Property GroupName As String
 
     <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
