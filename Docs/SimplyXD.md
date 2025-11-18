@@ -35,6 +35,9 @@ Gets the AddIn Packages currently present in the XD Portal
 ### [Get-XdBatch](Get-XdBatch.md)
 Gets a Batch
 
+### [Get-XdBatchCount](Get-XdBatchCount.md)
+Gets count of batches (by status)
+
 ### [Get-XdBatchGroup](Get-XdBatchGroup.md)
 Gets a batchgroup
 
@@ -124,4 +127,7 @@ Updates a UserProfile
 
 ### [Start-XdBatch](Start-XdBatch.md)
 Executes a batch
+
+### [Test-XdPortal](Test-XdPortal.md)
+{{ Fill in the Synopsis }}
 

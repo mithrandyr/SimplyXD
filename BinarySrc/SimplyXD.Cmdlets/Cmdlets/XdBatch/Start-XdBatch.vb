@@ -9,15 +9,17 @@ Public Class StartXdBatch
     Protected Overrides Sub ProcessRecord()
         Dim nbatch As Batch
         Try
+            xdp.MergeOption = Microsoft.OData.Client.MergeOption.OverwriteChanges
             nbatch = ExecuteWithTimeout(xdp.Batches.Where(Function(x) x.BatchId = BatchId).FirstOrDefaultAsync)
         Catch ex As Exception
             WriteErrorMissing("Batch", BatchId.ToString, ex)
             Exit Sub
+        Finally
+            xdp.MergeOption = Microsoft.OData.Client.MergeOption.NoTracking
         End Try
 
         If nbatch.Status = BatchStatus.Created Then
             Try
-                xdp.AttachTo("Batches", nbatch)
                 nbatch.Execute.ExecuteAsync()
                 nbatch.Status = BatchStatus.Queued
                 WriteObject(nbatch)

@@ -916,7 +916,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>BatchGroupId</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BatchGroupId Description }}</maml:para>
+            <maml:para>GUID of BatchGroup to remove all batches from</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Guid</command:parameterValue>
           <dev:type>
@@ -1027,7 +1027,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>BatchGroupId</maml:name>
         <maml:description>
-          <maml:para>{{ Fill BatchGroupId Description }}</maml:para>
+          <maml:para>GUID of BatchGroup to remove all batches from</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Guid</command:parameterValue>
         <dev:type>
@@ -2056,11 +2056,11 @@
       <command:verb>Get</command:verb>
       <command:noun>XdBatchCount</command:noun>
       <maml:description>
-        <maml:para>{{ Fill in the Synopsis }}</maml:para>
+        <maml:para>Gets count of batches (by status)</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>{{ Fill in the Description }}</maml:para>
+      <maml:para>Gets count of batches (by status).  Can be filtered by BatchGroupId.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -2068,7 +2068,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>BatchGroupId</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BatchGroupId Description }}</maml:para>
+            <maml:para>Limit counts to this BatchGroupId.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Guid</command:parameterValue>
           <dev:type>
@@ -2080,7 +2080,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>TimeOut</maml:name>
           <maml:description>
-            <maml:para>{{ Fill TimeOut Description }}</maml:para>
+            <maml:para>Actions against the Xpertdoc Portal will timeout in this many seconds.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -2095,7 +2095,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>BatchGroupId</maml:name>
         <maml:description>
-          <maml:para>{{ Fill BatchGroupId Description }}</maml:para>
+          <maml:para>Limit counts to this BatchGroupId.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Guid</command:parameterValue>
         <dev:type>
@@ -2107,7 +2107,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>TimeOut</maml:name>
         <maml:description>
-          <maml:para>{{ Fill TimeOut Description }}</maml:para>
+          <maml:para>Actions against the Xpertdoc Portal will timeout in this many seconds.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -2155,7 +2155,7 @@
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Get-XdBatchCount</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
