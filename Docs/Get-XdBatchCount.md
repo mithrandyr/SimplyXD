@@ -5,30 +5,19 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdGroup
+# Get-XdBatchCount
 
 ## SYNOPSIS
-Returns a Group
+Gets count of batches (by status)
 
 ## SYNTAX
 
-### search
 ```
-Get-XdGroup [-Search <String>] [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### name
-```
-Get-XdGroup -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### id
-```
-Get-XdGroup -GroupId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdBatchCount [-BatchGroupId <Guid>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns a Group
+Gets count of batches (by status).  Can be filtered by BatchGroupId.
 
 ## EXAMPLES
 
@@ -37,52 +26,22 @@ Returns a Group
 PS C:\> {{ Add example code here }}
 ```
 
-{{ Add example description here }}
+Get-XdBatchCount
 
 ## PARAMETERS
 
-### -GroupId
-GUID of the group to return
+### -BatchGroupId
+Limit counts to this BatchGroupId.
 
 ```yaml
 Type: Guid
-Parameter Sets: id
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Name
-Group with this name will be returned
-
-```yaml
-Type: String
-Parameter Sets: name
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Search
-Groups containing this will be returned
-
-```yaml
-Type: String
-Parameter Sets: search
+Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -105,8 +64,6 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
-
-### System.String
 
 ### System.Guid
 
