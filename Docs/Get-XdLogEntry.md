@@ -5,30 +5,20 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdTemplateLibrary
+# Get-XdLogEntry
 
 ## SYNOPSIS
-Returns templatelibraries
+Gets Log Entries, newest first.
 
 ## SYNTAX
 
-### search
 ```
-Get-XdTemplateLibrary [[-Search] <String>] [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### name
-```
-Get-XdTemplateLibrary -Name <String> [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### id
-```
-Get-XdTemplateLibrary -TemplateLibraryId <Guid> [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdLogEntry [-AsCount] [-TailCount <Int32>] [-OnOrAfter <DateTime>] [-Before <DateTime>] [-Level <String[]>]
+ [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns templatelibraries
+Gets Log Entries, newest first.  Use -AsCount to just a count of Log Entries, overrides -TailCount.
 
 ## EXAMPLES
 
@@ -41,8 +31,8 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -IncludeCount
-Results Will include a 'GroupCount' property reports the count of TemplateGroups in the TemplateLibrary.
+### -AsCount
+Return a count instead of LogEntries.
 
 ```yaml
 Type: SwitchParameter
@@ -56,48 +46,64 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-Name of the templatelibrary to return
+### -Before
+Limits results to all entries before this DateTime.
 
 ```yaml
-Type: String
-Parameter Sets: name
-Aliases: TemplateLibrary
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Search
-Templatelibraries whose name contain this value will be returned
-
-```yaml
-Type: String
-Parameter Sets: search
+Type: DateTime
+Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateLibraryId
-GUID of the templatelibrary to return
+### -Level
+Limits results to only the specified values, otherwise no filtering on level.
 
 ```yaml
-Type: Guid
-Parameter Sets: id
+Type: String[]
+Parameter Sets: (All)
 Aliases:
+Accepted values: Trace, Debug, Info, Warn, Error, Fatal
 
-Required: True
+Required: False
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OnOrAfter
+Limits results to all entries on or after this DateTime.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TailCount
+Limits results to this many of the newest items, (Default = 100).
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 100
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -120,10 +126,6 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
-
-### System.String
-
-### System.Guid
 
 ### System.Int32
 
