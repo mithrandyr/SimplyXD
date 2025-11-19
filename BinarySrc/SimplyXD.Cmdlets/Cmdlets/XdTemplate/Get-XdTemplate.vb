@@ -85,6 +85,7 @@ Public Class Get_XdTemplate
         If IncludeContent.IsPresent Then
             obj.Properties.Add(New PSNoteProperty("ContentAssembly", ExecuteWithTimeout(t.GetAssembly.GetValueAsync)))
             obj.Properties.Add(New PSNoteProperty("ContentSource", ExecuteWithTimeout(t.GetSource.GetValueAsync)))
+            xdp.Detach(t)
         End If
 
         WriteObject(obj)

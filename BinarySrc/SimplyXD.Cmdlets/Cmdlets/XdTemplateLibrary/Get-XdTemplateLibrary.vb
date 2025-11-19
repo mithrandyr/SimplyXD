@@ -7,16 +7,16 @@ Public Class Get_XdTemplateLibrary
     Public Property Search As String
 
     <[Alias]("TemplateLibrary")>
-    <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipelineByPropertyName:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="name", ValueFromPipeline:=True)>
     Public Property Name As String
 
-    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipeline:=True)>
+    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
     Public Property TemplateLibraryId As Guid
 
     <Parameter()>
     Public Property IncludeCount As SwitchParameter
 
-    Protected Overrides Sub EndProcessing()
+    Protected Overrides Sub ProcessRecord()
         Dim query = xdp.TemplateLibraries.AsQueryable
 
         If ParameterSetName = "search" Then
