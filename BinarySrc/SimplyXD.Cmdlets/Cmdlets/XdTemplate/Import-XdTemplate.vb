@@ -45,6 +45,7 @@ Public Class Import_XdTemplate
             End If
 
             If UploadContent(t) AndAlso PassThru.IsPresent Then WriteObject(t.AsPSObject)
+            xdp.Detach(t)
         Finally
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.NoTracking
         End Try

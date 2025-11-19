@@ -52,6 +52,7 @@ Public Class Export_XdTemplate
 
             'output the generated zip
             WriteObject(New FileInfo(currentFilePath))
+            xdp.Detach(t)
         Finally
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.NoTracking
             If needsCleanup AndAlso Path.HasExtension(currentFilePath) AndAlso File.Exists(currentFilePath) Then

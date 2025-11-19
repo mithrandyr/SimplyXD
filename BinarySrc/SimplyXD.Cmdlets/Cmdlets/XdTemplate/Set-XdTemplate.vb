@@ -31,21 +31,22 @@ Public Class Set_XdTemplate
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.OverwriteChanges
             Dim uTemplate As Template
             Dim query = xdp.Templates.Expand(Function(x) x.TemplateGroup.TemplateLibrary).AsQueryable
-            Try
-                Select Case ParameterSetName
-                    Case "name"
-                        uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper) And x.TemplateGroup.Name.ToUpper.Equals(TemplateGroup.ToUpper) And x.TemplateGroup.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)
-                        If uTemplate Is Nothing Then
-                            WriteErrorMissing("Template", $"{TemplateLibrary}\{TemplateGroup}\{Name}")
-                            Exit Sub
-                        End If
-                    Case "id"
+
+            Select Case ParameterSetName
+                Case "name"
+                    uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper) And x.TemplateGroup.Name.ToUpper.Equals(TemplateGroup.ToUpper) And x.TemplateGroup.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)
+                    If uTemplate Is Nothing Then
+                        WriteErrorMissing("Template", $"{TemplateLibrary}\{TemplateGroup}\{Name}")
+                        Exit Sub
+                    End If
+                Case "id"
+                    Try
                         uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.TemplateId = TemplateId).FirstOrDefaultAsync)
-                End Select
-            Catch ex As Exception
-                WriteErrorWrapped(ex, "TemplateRetrievalFailed")
-                Exit Sub
-            End Try
+                    Catch ex As Exception
+                        WriteErrorMissing("Template", TemplateId.ToString, ex)
+                        Exit Sub
+                    End Try
+            End Select
 
             If MyInvocation.BoundParameters.ContainsKey("Description") Then
                 uTemplate.Description = Description
@@ -55,8 +56,8 @@ Public Class Set_XdTemplate
                 If SaveChanges() AndAlso Passthru.IsPresent Then
                     WriteObject(uTemplate.AsPSObject)
                 End If
-                xdp.Detach(uTemplate)
             End If
+            xdp.Detach(uTemplate)
         Finally
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.NoTracking
         End Try

@@ -47,5 +47,6 @@ Public Class AddXdDocumentProvider
 
         xdp.AddToDocumentProviders(docProv)
         If SaveChanges(docProv) Then WriteObject(docProv)
+        xdp.Detach(docProv)
     End Sub
 End Class

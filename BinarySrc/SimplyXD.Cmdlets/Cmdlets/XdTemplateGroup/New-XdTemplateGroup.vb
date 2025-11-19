@@ -40,5 +40,6 @@ Public Class New_XdTemplateGroup
 
         xdp.AddToTemplateGroups(nTemplateGroup)
         If SaveChanges(nTemplateGroup) Then WriteObject(nTemplateGroup)
+        xdp.Detach(nTemplateGroup)
     End Sub
 End Class

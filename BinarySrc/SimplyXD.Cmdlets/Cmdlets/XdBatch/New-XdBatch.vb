@@ -17,5 +17,6 @@ Public Class NewBatch
         Dim nBatch As New Batch With {.BatchGroupId = BatchGroupId, .Status = BatchStatus.Created, .Name = Name, .Description = Description}
         xdp.AddToBatches(nBatch)
         If SaveChanges(nBatch) Then WriteObject(nBatch)
+        xdp.Detach(nBatch)
     End Sub
 End Class

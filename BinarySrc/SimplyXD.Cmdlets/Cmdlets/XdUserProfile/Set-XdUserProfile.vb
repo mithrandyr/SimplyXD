@@ -42,6 +42,7 @@ Public Class Set_XdUserProfile
 
                 xdp.UpdateObject(nUserProfile)
                 If SaveChanges(nUserProfile) AndAlso PassThru.IsPresent Then WriteObject(nUserProfile)
+                xdp.Detach(nUserProfile)
             End If
         Finally
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.NoTracking

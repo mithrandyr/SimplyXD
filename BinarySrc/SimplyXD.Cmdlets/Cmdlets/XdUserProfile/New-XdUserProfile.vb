@@ -28,5 +28,6 @@ Public Class New_XdUserProfile
 
         xdp.AddToUserProfiles(nUserProfile)
         If SaveChanges(nUserProfile) Then WriteObject(nUserProfile)
+        xdp.Detach(nUserProfile)
     End Sub
 End Class

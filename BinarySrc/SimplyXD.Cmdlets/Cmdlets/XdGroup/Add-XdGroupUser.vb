@@ -46,6 +46,7 @@ Public Class Add_XdGroupUser
 
         xdp.AddToUserGroups(nUG)
         SaveChanges(nUG)
+        xdp.Detach(nUG)
     End Sub
 End Class
 

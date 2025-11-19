@@ -46,5 +46,6 @@ Public Class Add_XdDocumentOperation
 
         xdp.AddToDocumentOperations(docOperation)
         If SaveChanges(docOperation) Then WriteObject(docOperation)
+        xdp.Detach(docOperation)
     End Sub
 End Class

@@ -25,6 +25,6 @@ Public Class New_XdTemplateLibrary
 
         xdp.AddToTemplateLibraries(nTemplateLibrary)
         If SaveChanges(nTemplateLibrary) Then WriteObject(nTemplateLibrary)
-
+        xdp.Detach(nTemplateLibrary)
     End Sub
 End Class

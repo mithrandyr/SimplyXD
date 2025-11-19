@@ -35,29 +35,30 @@ Public Class Set_XdTemplateContent
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.OverwriteChanges
             Dim uTemplate As Template
             Dim query = xdp.Templates.Expand(Function(x) x.TemplateGroup.TemplateLibrary).AsQueryable
-            Try
-                Select Case ParameterSetName
-                    Case "name"
-                        uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper) And x.TemplateGroup.Name.ToUpper.Equals(TemplateGroup.ToUpper) And x.TemplateGroup.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)
-                        If uTemplate Is Nothing Then
-                            WriteErrorMissing("Template", $"{TemplateLibrary}\{TemplateGroup}\{Name}")
-                            Exit Sub
-                        End If
-                    Case "id"
+
+            Select Case ParameterSetName
+                Case "name"
+                    uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper) And x.TemplateGroup.Name.ToUpper.Equals(TemplateGroup.ToUpper) And x.TemplateGroup.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)
+                    If uTemplate Is Nothing Then
+                        WriteErrorMissing("Template", $"{TemplateLibrary}\{TemplateGroup}\{Name}")
+                        Exit Sub
+                    End If
+                Case "id"
+                    Try
                         uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.TemplateId = TemplateId).FirstOrDefaultAsync)
-                End Select
-            Catch ex As Exception
-                WriteErrorWrapped(ex, "TemplateRetrievalFailed")
-                Exit Sub
-            End Try
+                    Catch ex As Exception
+                        WriteErrorMissing("Template", TemplateId.ToString, ex)
+                        Exit Sub
+                    End Try
+            End Select
 
             Try
                 WriteVerbose("Updating Template Content")
                 ExecuteWithTimeout(uTemplate.UpdateAssemblyAndSource(Assembly, uTemplate.AssemblyBlobFileName, Source, uTemplate.SourceBlobFileName, Comment).ExecuteAsync)
+                xdp.Detach(uTemplate)
             Catch ex As Exception
                 WriteError(StandardErrors.TemplateBlobUpdate(ex, uTemplate))
             End Try
-
         Finally
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.NoTracking
         End Try

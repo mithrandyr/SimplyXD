@@ -14,6 +14,7 @@ Public Class NewXdDocument
         xdp.AddToDocuments(doc)
 
         If SaveChanges(doc) Then WriteObject(doc)
+        xdp.Detach(doc)
     End Sub
 
 End Class

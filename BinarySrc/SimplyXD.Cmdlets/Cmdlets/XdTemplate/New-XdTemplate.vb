@@ -62,6 +62,7 @@ Public Class New_XdTemplate
                 WriteError(StandardErrors.TemplateBlobUpdate(ex, nTemplate))
             End Try
             WriteObject(nTemplate)
+            xdp.Detach(nTemplate)
         End If
     End Sub
 End Class
