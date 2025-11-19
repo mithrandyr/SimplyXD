@@ -35,14 +35,12 @@ Public Class AddXdDocumentProvider
     <Parameter(Mandatory:=True, ParameterSetName:="short")>
     Public Property InputMetaData As String
 
-    Private inputPattern As String = "<ExecuteTemplateDocumentProviderMetadata><TemplateLibraryName>{0}</TemplateLibraryName><TemplateGroupName>{1}</TemplateGroupName><TemplateName>{2}</TemplateName><TemplateId></TemplateId><InMemory>true</InMemory><ExecutionData>{3}</ExecutionData><DocumentOutputPostActionName>{4}</DocumentOutputPostActionName></ExecuteTemplateDocumentProviderMetadata>"
-
     Protected Overrides Sub EndProcessing()
         Dim docProv As New DocumentProvider With {.ContractName = ContractName, .DocumentId = DocumentId, .Status = ExecutionStatus.Created}
         If ParameterSetName = "short" Then
             docProv.InputMetadata = InputMetaData
         Else
-            docProv.InputMetadata = String.Format(inputPattern, TemplateLibrary, TemplateGroup, TemplateName, $"<![CDATA[{XmlData}]]>", DopaName)
+            docProv.InputMetadata = String.Format(Constants.DocumentProviderMetaData, TemplateLibrary, TemplateGroup, TemplateName, $"<![CDATA[{XmlData}]]>", DopaName)
         End If
 
         xdp.AddToDocumentProviders(docProv)
