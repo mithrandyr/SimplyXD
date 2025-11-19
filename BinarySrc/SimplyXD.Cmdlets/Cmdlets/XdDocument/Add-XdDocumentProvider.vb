@@ -28,8 +28,8 @@ Public Class AddXdDocumentProvider
     Public Property DopaName As String
 
     <ValidateNotNullOrEmpty>
-    <Parameter(Mandatory:=True, ParameterSetName:="short")>
-    Public Property ContractName As String = "Xpertdoc.DocumentServices.Handler.Operations.ExecuteTemplateDocumentProvider"
+    <Parameter()>
+    Public Property ContractName As String = Constants.DefaultContract
 
     <ValidateNotNullOrEmpty>
     <Parameter(Mandatory:=True, ParameterSetName:="short")>
@@ -40,7 +40,7 @@ Public Class AddXdDocumentProvider
         If ParameterSetName = "short" Then
             docProv.InputMetadata = InputMetaData
         Else
-            docProv.InputMetadata = String.Format(Constants.DocumentProviderMetaData, TemplateLibrary, TemplateGroup, TemplateName, $"<![CDATA[{XmlData}]]>", DopaName)
+            docProv.InputMetadata = String.Format(Constants.DefaultMetaData, TemplateLibrary, TemplateGroup, TemplateName, $"<![CDATA[{XmlData}]]>", DopaName)
         End If
 
         xdp.AddToDocumentProviders(docProv)

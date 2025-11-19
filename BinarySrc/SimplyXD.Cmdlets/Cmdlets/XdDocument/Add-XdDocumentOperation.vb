@@ -19,22 +19,8 @@ Public Class Add_XdDocumentOperation
 
     Protected Overrides Sub ProcessRecord()
         If AsposePDF Then
-            ContractName = "Xpertdoc.Picassofish.ConvertDocumentOperationAddIn"
-            InputMetaData = "
-                <ConvertDocumentOperationAddInMetadata>
-                    <SaveFormat>Pdf</SaveFormat>
-                    <Compliance>Pdf17</Compliance>
-                    <PrettyFormat>false</PrettyFormat>
-                    <UseAntiAliasing>false</UseAntiAliasing>
-                    <UseHighQualityRendering>false</UseHighQualityRendering>
-                    <UpdateSdtContent>true</UpdateSdtContent>
-                    <ColorMode>Normal</ColorMode>
-                    <DmlRenderingMode>Fallback</DmlRenderingMode>
-                    <DmlEffectsRenderingMode>Simplified</DmlEffectsRenderingMode>
-                    <UpdateFields>true</UpdateFields>
-                    <MemoryOptimization>false</MemoryOptimization>
-                </ConvertDocumentOperationAddInMetadata>
-            "
+            ContractName = Constants.AsposeContract
+            InputMetaData = Constants.AsposeMetaData
         End If
 
         Dim docOperation As New DocumentOperation With {

@@ -43,6 +43,13 @@ Module ErrorExtensions
     End Sub
 
     <Extension()>
+    Sub WriteErrorBatchFailed(this As baseCmdlet, b As Batch, Optional innerEx As Exception = Nothing)
+        Dim errorId = $"XDPortal-BatchError"
+        Dim ex As New XDPBatchExecutionError(b.ErrorMessage, b.BatchId, StandardErrors.GetInnermostException(innerEx))
+        this.WriteError(ex, errorId, ErrorCategory.InvalidOperation, b)
+    End Sub
+
+    <Extension()>
     Public Sub WriteErrorWrapped(this As baseCmdlet, ex As Exception, errId As String, Optional errObject As Object = Nothing)
         Dim wex = WrappedException.GenerateMessageFromInnermost(ex)
         this.WriteError(wex, errId, ErrorCategory.NotSpecified, errObject)

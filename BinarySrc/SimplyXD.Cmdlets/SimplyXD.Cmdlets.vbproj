@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Cmdlets\Test-XDPerformance.vb" />
+    <None Include="Cmdlets\Helpers\Test-XDPerformance.vb" />
   </ItemGroup>
 
   <ItemGroup>
