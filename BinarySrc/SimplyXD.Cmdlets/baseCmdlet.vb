@@ -70,7 +70,8 @@
 
         While iteration < limit
             If objectName IsNot Nothing Then WriteProgress(New ProgressRecord(0, MyInvocation.MyCommand.Name, activityMessage) With {.CurrentOperation = iteration, .PercentComplete = (iteration * 100) / limit})
-            Dim rList = ExecuteWithTimeout(cmd.Skip(iteration).ToListAsync())
+            Dim take = Math.Min(10, limit - iteration)
+            Dim rList = ExecuteWithTimeout(cmd.Skip(iteration).Take(take).ToListAsync())
             If rList Is Nothing Then Exit While
 
             For Each r In rList
