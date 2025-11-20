@@ -18,6 +18,12 @@ Public Class Invoke_XdTemplateByBatch
 
     <Parameter(Mandatory:=True)>
     Public Property XmlData As String
+
+    <Parameter()>
+    Public Property ConvertToPDF As SwitchParameter
+
+    <Parameter()>
+    Public Property ReturnDocument As SwitchParameter
 #End Region
 
     Protected Overrides Sub EndProcessing()
@@ -59,14 +65,16 @@ Public Class Invoke_XdTemplateByBatch
             xdp.AddToDocumentProviders(dp)
             SaveChanges(dp)
 
-            'Create and attach DocumentOperation (convert to pdf)
-            dOp = New DocumentOperation With {
-                .DocumentId = d.DocumentId,
-                .ContractName = Constants.AsposeContract,
-                .InputMetadata = Constants.AsposeMetaData
-            }
-            xdp.AddToDocumentOperations(dOp)
-            SaveChanges(dOp)
+            If ConvertToPDF Then
+                'Create and attach DocumentOperation (convert to pdf)
+                dOp = New DocumentOperation With {
+                    .DocumentId = d.DocumentId,
+                    .ContractName = Constants.AsposeContract,
+                    .InputMetadata = Constants.AsposeMetaData
+                }
+                xdp.AddToDocumentOperations(dOp)
+                SaveChanges(dOp)
+            End If
 
             'Execute batch
             Dim batchExecutionResult = ExecuteWithTimeout(b.ExecuteAndWait(TimeOut * 1000).GetValueAsync)
@@ -74,11 +82,13 @@ Public Class Invoke_XdTemplateByBatch
             If batchExecutionResult.BatchStatus <> BatchStatus.Completed Then
                 b = ExecuteWithTimeout(xdp.Batches.Where(Function(x) x.BatchId = b.BatchId).FirstOrDefaultAsync)
                 WriteErrorBatchFailed(b)
+            ElseIf ReturnDocument Then
+                WriteObject(ExecuteWithTimeout(d.GetOutput.GetValueAsync), False)
             End If
             xdp.DeleteObject(b)
             SaveChanges(b)
         Finally
-            For Each entity In {bg, b, d, dp}
+            For Each entity In {bg, b, d, dp, dOp}
                 If entity IsNot Nothing Then xdp.Detach(entity)
             Next
             xdp.MergeOption = Microsoft.OData.Client.MergeOption.NoTracking
