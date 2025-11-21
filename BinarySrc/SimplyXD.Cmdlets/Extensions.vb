@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.OData.Client
 
 Module Extensions
@@ -26,4 +27,12 @@ Module Extensions
         obj.Properties.Add(New PSNoteProperty(name, value))
         Return obj
     End Function
+
+    <Extension()>
+    Public Sub SaveChangesWithTimeout(this As PortalODataContext, timeoutSeconds As Integer)
+        Dim timeoutMS = timeoutSeconds * 1000
+        Using dsr = this.SaveChangesAsync()
+            If Not dsr.Wait(timeoutMS) Then Throw New TimeoutException($"SaveChanges timeout of {timeoutMS / 1000}s exceeded.")
+        End Using
+    End Sub
 End Module
