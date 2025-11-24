@@ -30,7 +30,12 @@ Public Class Get_XdTemplateLibrary
         Else
             Dim tl As TemplateLibrary
             If ParameterSetName = "name" Then
-                tl = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)
+                tl = ExecuteWithTimeout(query.Where(Function(x) x.Name.Equals(Name)).FirstOrDefaultAsync)
+                If tl IsNot Nothing Then
+                    SendObject(tl)
+                Else
+                    WriteErrorMissing("TemplateLibrary", Name)
+                End If
             Else
                 Try
                     tl = ExecuteWithTimeout(query.Where(Function(x) x.TemplateLibraryId = TemplateLibraryId).FirstOrDefaultAsync)
@@ -44,7 +49,7 @@ Public Class Get_XdTemplateLibrary
 
     Private Sub SendObject(x As TemplateLibrary)
         If IncludeCount Then
-            WriteObject(AppendProperty(x, xdp.TemplateGroups.Where(Function(tg) tg.TemplateLibraryId = x.TemplateLibraryId).CountAsync(), "GroupCount"))
+            WriteObject(AppendCount(x, xdp.TemplateGroups.Where(Function(tg) tg.TemplateLibraryId = x.TemplateLibraryId).CountAsync(), "GroupCount"))
         Else
             WriteObject(x)
         End If

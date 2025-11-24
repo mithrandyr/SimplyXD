@@ -32,21 +32,20 @@ Public Class Set_XdTemplate
             Dim uTemplate As Template
             Dim query = xdp.Templates.Expand(Function(x) x.TemplateGroup.TemplateLibrary).AsQueryable
 
-            Select Case ParameterSetName
-                Case "name"
-                    uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper) And x.TemplateGroup.Name.ToUpper.Equals(TemplateGroup.ToUpper) And x.TemplateGroup.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)
-                    If uTemplate Is Nothing Then
-                        WriteErrorMissing("Template", $"{TemplateLibrary}\{TemplateGroup}\{Name}")
-                        Exit Sub
-                    End If
-                Case "id"
-                    Try
-                        uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.TemplateId = TemplateId).FirstOrDefaultAsync)
-                    Catch ex As Exception
-                        WriteErrorMissing("Template", TemplateId.ToString, ex)
-                        Exit Sub
-                    End Try
-            End Select
+            If ParameterSetName = "name" Then
+                uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper) And x.TemplateGroup.Name.ToUpper.Equals(TemplateGroup.ToUpper) And x.TemplateGroup.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper)).FirstOrDefaultAsync)
+                If uTemplate Is Nothing Then
+                    WriteErrorMissing("Template", $"{TemplateLibrary}\{TemplateGroup}\{Name}")
+                    Exit Sub
+                End If
+            Else 'ParameterSetName = 'id'
+                Try
+                    uTemplate = ExecuteWithTimeout(query.Where(Function(x) x.TemplateId = TemplateId).FirstOrDefaultAsync)
+                Catch ex As Exception
+                    WriteErrorMissing("Template", TemplateId.ToString, ex)
+                    Exit Sub
+                End Try
+            End If
 
             If MyInvocation.BoundParameters.ContainsKey("Description") Then
                 uTemplate.Description = Description
