@@ -26,8 +26,11 @@ Public Class Get_XdGroup
 
             Case "name"
                 Dim g As Group = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)
-                If g IsNot Nothing Then WriteObject(g)
-
+                If g IsNot Nothing Then
+                    WriteObject(g)
+                Else
+                    WriteErrorMissing("Group", Name)
+                End If
             Case "id"
                 Try
                     Dim g As Group = ExecuteWithTimeout(query.Where(Function(x) x.GroupId = GroupId).FirstOrDefaultAsync)
