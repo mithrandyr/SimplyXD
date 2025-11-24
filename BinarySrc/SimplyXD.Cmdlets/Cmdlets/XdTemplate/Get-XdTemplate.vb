@@ -61,6 +61,11 @@ Public Class Get_XdTemplate
                     Dim t As Template
                     If ParameterSetName = "name" Then
                         t = ExecuteWithTimeout(query.Where(Function(x) x.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)
+                        If t IsNot Nothing Then
+                            Output(t)
+                        Else
+                            WriteErrorMissing("Template", Name)
+                        End If
                     Else
                         Try
                             t = ExecuteWithTimeout(query.Where(Function(x) x.TemplateId = Id).FirstOrDefaultAsync)
