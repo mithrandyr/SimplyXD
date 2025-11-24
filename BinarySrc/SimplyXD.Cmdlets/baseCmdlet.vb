@@ -90,7 +90,7 @@
         WriteProgress(New ProgressRecord(ActivityId, "Finished", "Completed") With {.RecordType = ProgressRecordType.Completed})
     End Sub
 
-    Public Function AppendProperty(origObject As Object, cmd As Task(Of Integer), Optional propertyName As String = "Count") As PSObject
+    Public Function AppendCount(origObject As Object, cmd As Task(Of Integer), Optional propertyName As String = "Count") As PSObject
         Dim result = ExecuteWithTimeout(cmd)
         Dim newObject = PSObject.AsPSObject(origObject)
         newObject.Properties.Add(New PSNoteProperty(propertyName, result))
