@@ -31,11 +31,7 @@ Public Class Get_XdTemplateLibrary
             Dim tl As TemplateLibrary
             If ParameterSetName = "name" Then
                 tl = ExecuteWithTimeout(query.Where(Function(x) x.Name.Equals(Name)).FirstOrDefaultAsync)
-                If tl IsNot Nothing Then
-                    SendObject(tl)
-                Else
-                    WriteErrorMissing("TemplateLibrary", Name)
-                End If
+                If tl IsNot Nothing Then SendObject(tl)
             Else
                 Try
                     tl = ExecuteWithTimeout(query.Where(Function(x) x.TemplateLibraryId = TemplateLibraryId).FirstOrDefaultAsync)
