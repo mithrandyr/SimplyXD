@@ -12,7 +12,7 @@
 RootModule = 'SimplyXD.dll'
 
 # Version number of this module.
-ModuleVersion = '1.4.68'
+ModuleVersion = '1.4.69'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -85,7 +85,8 @@ CmdletsToExport = 'Add-XdDocumentOperation', 'Add-XdDocumentProvider',
                'New-XdTemplateLibrary', 'New-XdUserProfile', 'Remove-XdBatch', 
                'Remove-XdBatchGroup', 'Remove-XdTemplate', 'Remove-XdTemplateGroup', 
                'Remove-XdTemplateLibrary', 'Remove-XdUserProfile', 'Set-XdTemplate', 
-               'Set-XdTemplateContent', 'Set-XdUserProfile', 'Start-XdBatch'
+               'Set-XdTemplateContent', 'Set-XdUserProfile', 'Start-XdBatch', 
+               'Test-XdPortal'
 
 # Variables to export from this module
 # VariablesToExport = @()
