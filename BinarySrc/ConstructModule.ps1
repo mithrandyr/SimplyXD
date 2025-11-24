@@ -1,7 +1,7 @@
 Invoke-Build -DebugOnly
 
 $PSModuleAutoLoadingPreference = "none"
-Import-Module .\Output\SimplyXD.dll -Verbose
+Import-Module .\Output\SimplyXD.dll
 
-Clear-Host
+#Clear-Host
 function prompt { "SimplyXD Testing> " }

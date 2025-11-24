@@ -22,11 +22,6 @@ Remove-XdBatchGroup -BatchGroupId <Guid> [-Force] [-TimeOut <Int32>] [<CommonPar
 Remove-XdBatchGroup [-Name] <String> [-Force] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
-### obj
-```
-Remove-XdBatchGroup -InputObject <BatchGroup> [-Force] [-TimeOut <Int32>] [<CommonParameters>]
-```
-
 ## DESCRIPTION
 Removes the BatchGroup
 
@@ -65,21 +60,6 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -InputObject
-The BatchGroup to remove
-
-```yaml
-Type: BatchGroup
-Parameter Sets: obj
-Aliases:
-
-Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

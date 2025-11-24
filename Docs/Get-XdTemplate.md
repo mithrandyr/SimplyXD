@@ -14,7 +14,7 @@ Returns templates
 
 ### search
 ```
-Get-XdTemplate [[-Search] <String>] [-TemplateLibrary <String>] [-TemplateGroup <String>] [-IncludeContent]
+Get-XdTemplate [-Search <String>] [-TemplateLibrary <String>] [-TemplateGroup <String>] [-IncludeContent]
  [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
@@ -31,7 +31,7 @@ Get-XdTemplate -Id <Guid> [-IncludeContent] [-TimeOut <Int32>] [<CommonParameter
 
 ### obj
 ```
-Get-XdTemplate -InputObject <TemplateGroup> [-IncludeContent] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplate -InputObject <Guid> [-IncludeContent] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -59,7 +59,7 @@ Aliases: TemplateId
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -82,14 +82,14 @@ Accept wildcard characters: False
 TemplateGroup object, all Templates in this Group will be returned
 
 ```yaml
-Type: TemplateGroup
+Type: Guid
 Parameter Sets: obj
-Aliases:
+Aliases: TemplateGroupId
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -104,7 +104,7 @@ Aliases: TemplateName
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -117,9 +117,9 @@ Parameter Sets: search
 Aliases:
 
 Required: False
-Position: 0
+Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

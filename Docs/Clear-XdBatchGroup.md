@@ -12,6 +12,13 @@ Removes all batches from a batchgroup.
 
 ## SYNTAX
 
+### id
+```
+Clear-XdBatchGroup -BatchGroupId <Guid> [-DeleteLimit <Int32>] [-SortByCreation <String>] [-Status <String>]
+ [-MinimumAgeInMinutes <Int32>] [-Concurrency <Int32>] [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### name
 ```
 Clear-XdBatchGroup -BatchGroup <String> [-DeleteLimit <Int32>] [-SortByCreation <String>] [-Status <String>]
  [-MinimumAgeInMinutes <Int32>] [-Concurrency <Int32>] [-TimeOut <Int32>] [<CommonParameters>]
@@ -36,13 +43,28 @@ Name of the batchgroup
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: name
 Aliases:
 
 Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BatchGroupId
+GUID of BatchGroup to remove all batches from
+
+```yaml
+Type: Guid
+Parameter Sets: id
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

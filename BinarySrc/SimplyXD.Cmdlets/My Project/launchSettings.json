@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "SimplyXD": {
+      "commandName": "Executable",
+      "executablePath": "pwsh",
+      "commandLineArgs": "-noexit -nologo -noprofile -file \"ConstructModule.ps1\"",
+      "workingDirectory": "$(ProjectDir)\\..\\",
+      "remoteDebugEnabled": false,
+      "nativeDebugging": false
+    }
+  }
+}

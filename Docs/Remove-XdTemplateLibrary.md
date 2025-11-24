@@ -14,7 +14,7 @@ Removes the TemplateLibrary
 
 ### name
 ```
-Remove-XdTemplateLibrary [-Name] <String> [-Force] [-TimeOut <Int32>] [<CommonParameters>]
+Remove-XdTemplateLibrary -Name <String> [-Force] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
@@ -60,7 +60,7 @@ Parameter Sets: name
 Aliases: TemplateLibrary
 
 Required: True
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -77,7 +77,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

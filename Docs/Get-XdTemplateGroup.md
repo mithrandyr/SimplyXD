@@ -14,22 +14,24 @@ Return TemplateGroups
 
 ### search
 ```
-Get-XdTemplateGroup [[-Search] <String>] [-TemplateLibrary <String>] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateGroup [[-Search] <String>] [-TemplateLibrary <String>] [-IncludeCount] [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
 ### name
 ```
-Get-XdTemplateGroup -TemplateLibrary <String> -Name <String> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateGroup -TemplateLibrary <String> -Name <String> [-IncludeCount] [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
 ### obj
 ```
-Get-XdTemplateGroup -InputObject <TemplateLibrary> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateGroup -InputObject <Guid> [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### id
 ```
-Get-XdTemplateGroup -TemplateGroupId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateGroup -TemplateGroupId <Guid> [-IncludeCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,18 +48,33 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -IncludeCount
+Results Will include a 'TemplateCount' property reports the count of Templates in the TemplateGroup.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -InputObject
 TemplateLibray object, will return all TemplateGroups in this TemplateLibrary
 
 ```yaml
-Type: TemplateLibrary
+Type: Guid
 Parameter Sets: obj
-Aliases:
+Aliases: TemplateLibraryId
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -102,7 +119,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

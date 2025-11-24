@@ -24,12 +24,6 @@ Export-XdTemplate -Id <Guid> [-ExportPath <String>] [-Version <String>] [-Force]
  [<CommonParameters>]
 ```
 
-### obj
-```
-Export-XdTemplate -InputObject <Template> [-ExportPath <String>] [-Version <String>] [-Force]
- [-TimeOut <Int32>] [<CommonParameters>]
-```
-
 ## DESCRIPTION
 Exports a template into a zipfile
 
@@ -85,22 +79,7 @@ Aliases: TemplateId
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -InputObject
-A TemplateGroup, all templates for this group will be returned.
-
-```yaml
-Type: Template
-Parameter Sets: obj
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -115,7 +94,7 @@ Aliases: TemplateName
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -130,7 +109,7 @@ Aliases: TemplateGroupName
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -145,7 +124,7 @@ Aliases: TemplateLibraryName
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

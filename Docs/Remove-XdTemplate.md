@@ -12,11 +12,6 @@ Removes the template.
 
 ## SYNTAX
 
-### obj
-```
-Remove-XdTemplate -InputObject <Template> [-TimeOut <Int32>] [<CommonParameters>]
-```
-
 ### id
 ```
 Remove-XdTemplate -Id <Guid> [-TimeOut <Int32>] [<CommonParameters>]
@@ -53,22 +48,7 @@ Aliases: TemplateId
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -InputObject
-Template to remove
-
-```yaml
-Type: Template
-Parameter Sets: obj
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

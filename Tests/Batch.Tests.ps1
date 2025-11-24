@@ -1,7 +1,5 @@
-Param([parameter(Mandatory)][string]$Uri)
 Describe "Xpertdoc Batch Testing" {
     BeforeAll {
-        Connect-XDPortal -PortalUri $Uri
         $shared = @{}
     }
     It "New-XdBatchGroup" {
@@ -38,6 +36,4 @@ Describe "Xpertdoc Batch Testing" {
         { Remove-XdBatchGroup -Name $shared.BatchGroup.Name -ErrorAction Stop} | Should -Throw
         Remove-XdBatchGroup -BatchGroupId $shared.BatchGroup.BatchGroupId -Force
     }
-    
-
 }

@@ -1,9 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SimplyXD", "SimplyXD.vbproj", "{B0534F70-C70F-4E33-B941-8541380E32DB}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SimplyXD.Cmdlets", "SimplyXD.Cmdlets\SimplyXD.Cmdlets.vbproj", "{B0534F70-C70F-4E33-B941-8541380E32DB}"
+EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SimplyXD.Engine", "SimplyXD.Engine\SimplyXD.Engine.vbproj", "{296A954E-24DF-4B35-85AF-F78383F69145}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F4780BA2-F03B-47C3-8ADA-5F9C745D84C7}"
+	ProjectSection(SolutionItems) = preProject
+		ConstructModule.ps1 = ConstructModule.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +22,10 @@ Global
 		{B0534F70-C70F-4E33-B941-8541380E32DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0534F70-C70F-4E33-B941-8541380E32DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0534F70-C70F-4E33-B941-8541380E32DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{296A954E-24DF-4B35-85AF-F78383F69145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{296A954E-24DF-4B35-85AF-F78383F69145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{296A954E-24DF-4B35-85AF-F78383F69145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{296A954E-24DF-4B35-85AF-F78383F69145}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,12 +15,12 @@ Adds a Document Provider to the specified Document
 ### long
 ```
 Add-XdDocumentProvider -DocumentId <Guid> -XmlData <String> -TemplateLibrary <String> -TemplateGroup <String>
- -TemplateName <String> [-DopaName <String>] [-TimeOut <Int32>] [<CommonParameters>]
+ -TemplateName <String> [-DopaName <String>] [-ContractName <String>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### short
 ```
-Add-XdDocumentProvider -DocumentId <Guid> -ContractName <String> -InputMetaData <String> [-TimeOut <Int32>]
+Add-XdDocumentProvider -DocumentId <Guid> [-ContractName <String>] -InputMetaData <String> [-TimeOut <Int32>]
  [<CommonParameters>]
 ```
 
@@ -34,7 +34,7 @@ Adds a Document Provider to the specified Document
 PS C:\> {{ Add example code here }}
 ```
 
-{{ Add example description here }}
+Add-XdDocumentOperation -DocumentId "someguid"
 
 ## PARAMETERS
 
@@ -43,10 +43,10 @@ The ContractName for the Document Provider
 
 ```yaml
 Type: String
-Parameter Sets: short
+Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

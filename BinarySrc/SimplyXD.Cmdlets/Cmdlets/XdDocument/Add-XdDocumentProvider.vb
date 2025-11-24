@@ -1,0 +1,50 @@
+﻿<Cmdlet(VerbsCommon.Add, "XdDocumentProvider")>
+<CmdletBinding(DefaultParameterSetName:="long")>
+Public Class AddXdDocumentProvider
+    Inherits baseCmdlet
+
+    <Parameter(Mandatory:=True, ValueFromPipelineByPropertyName:=True)>
+    Public Property DocumentId As Guid
+
+    <ValidateNotNullOrEmpty>
+    <Parameter(Mandatory:=True, ParameterSetName:="long")>
+    Public Property XmlData As String
+
+    <ValidateNotNullOrEmpty>
+    <Parameter(Mandatory:=True, ParameterSetName:="long")>
+    <[Alias]("TemplateLibraryName")>
+    Public Property TemplateLibrary As String
+
+    <ValidateNotNullOrEmpty>
+    <Parameter(Mandatory:=True, ParameterSetName:="long")>
+    <[Alias]("TemplateGroupName")>
+    Public Property TemplateGroup As String
+
+    <ValidateNotNullOrEmpty>
+    <Parameter(Mandatory:=True, ParameterSetName:="long")>
+    Public Property TemplateName As String
+
+    <Parameter(Mandatory:=False, ParameterSetName:="long")>
+    Public Property DopaName As String
+
+    <ValidateNotNullOrEmpty>
+    <Parameter()>
+    Public Property ContractName As String = Constants.DefaultContract
+
+    <ValidateNotNullOrEmpty>
+    <Parameter(Mandatory:=True, ParameterSetName:="short")>
+    Public Property InputMetaData As String
+
+    Protected Overrides Sub EndProcessing()
+        Dim docProv As New DocumentProvider With {.ContractName = ContractName, .DocumentId = DocumentId, .Status = ExecutionStatus.Created}
+        If ParameterSetName = "short" Then
+            docProv.InputMetadata = InputMetaData
+        Else
+            docProv.InputMetadata = String.Format(Constants.DefaultMetaData, TemplateLibrary, TemplateGroup, TemplateName, $"<![CDATA[{XmlData}]]>", DopaName)
+        End If
+
+        xdp.AddToDocumentProviders(docProv)
+        If SaveChanges(docProv) Then WriteObject(docProv)
+        xdp.Detach(docProv)
+    End Sub
+End Class
