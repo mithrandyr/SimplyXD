@@ -1,4 +1,5 @@
-﻿<Cmdlet(VerbsDiagnostic.Test, "XdPortal")>
+﻿'Not IN use
+<Cmdlet(VerbsDiagnostic.Test, "XdPortal")>
 <CmdletBinding()>
 Public Class Test_XdPortal
     Inherits baseCmdlet

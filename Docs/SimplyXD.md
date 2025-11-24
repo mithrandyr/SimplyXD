@@ -59,6 +59,9 @@ Returns a Group
 ### [Get-XdGroupUser](Get-XdGroupUser.md)
 Get Users in a group
 
+### [Get-XdLogEntry](Get-XdLogEntry.md)
+Gets Log Entries, newest first.
+
 ### [Get-XdPortal](Get-XdPortal.md)
 Returns the connected portal
 
@@ -76,6 +79,12 @@ Returns userprofiles
 
 ### [Import-XdTemplate](Import-XdTemplate.md)
 Imports a template from a zipfile.
+
+### [Invoke-XdTemplateByBatch](Invoke-XdTemplateByBatch.md)
+Executes a Template by using Document Services.
+
+### [Measure-XDPerformance](Measure-XDPerformance.md)
+Measures the throughput of Xpertdoc Portal Document Services for a given template/data.
 
 ### [New-XdBatch](New-XdBatch.md)
 Creates a new Batch

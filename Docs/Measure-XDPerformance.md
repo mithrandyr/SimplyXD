@@ -5,27 +5,23 @@ online version:
 schema: 2.0.0
 ---
 
-# Add-XdDocumentProvider
+# Measure-XDPerformance
 
 ## SYNOPSIS
-Adds a Document Provider to the specified Document
+Measures the throughput of Xpertdoc Portal Document Services for a given template/data.
 
 ## SYNTAX
 
-### long
 ```
-Add-XdDocumentProvider -DocumentId <Guid> -XmlData <String> -TemplateLibrary <String> -TemplateGroup <String>
- -TemplateName <String> [-DopaName <String>] [-ContractName <String>] [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### short
-```
-Add-XdDocumentProvider -DocumentId <Guid> [-ContractName <String>] -InputMetaData <String> [-TimeOut <Int32>]
- [<CommonParameters>]
+Measure-XDPerformance -TemplateLibraryName <String> -TemplateGroupName <String> -TemplateName <String>
+ -BatchGroupName <Object> -XmlData <String[]> [-NumThreads <Int32>] [-DocsPerThread <Int32>] [-ConvertToPDF]
+ [-KeepErrors] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Adds a Document Provider to the specified Document
+Measures the throughput of Xpertdoc Portal Document Services for a given template/data.
+Enables specifying the concurrency, the documents per thread, an array of XML (randomly
+chosen for each execution).
 
 ## EXAMPLES
 
@@ -34,15 +30,30 @@ Adds a Document Provider to the specified Document
 PS C:\> {{ Add example code here }}
 ```
 
-Add-XdDocumentOperation -DocumentId "someguid"
+{{ Add example description here }}
 
 ## PARAMETERS
 
-### -ContractName
-The ContractName for the Document Provider
+### -BatchGroupName
+Name of the BatchGroup where the batches will be created/executed.
 
 ```yaml
-Type: String
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ConvertToPDF
+Will add a documentOperation to the batches to convert the result to PDF.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
@@ -53,27 +64,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DocumentId
-The GUID of the Document to add the Provider to
+### -DocsPerThread
+The number of batches/documents to be created/executed per concurrent thread.
 
 ```yaml
-Type: Guid
+Type: Int32
 Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -DopaName
-The name of the Document Output Post Action (DOPA) to be used.
-
-```yaml
-Type: String
-Parameter Sets: long
 Aliases:
 
 Required: False
@@ -83,12 +79,42 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputMetaData
-The required Input MetaData for the Provider
+### -KeepErrors
+If set, errored batches will not be deleted.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NumThreads
+The number of concurrent threads making requests against the Xpertdoc Portal.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateGroupName
+Name of the TemplateGroup where the Template is stored.
 
 ```yaml
 Type: String
-Parameter Sets: short
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -98,28 +124,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateGroup
-The name of the TemplateGroup where the Template is located
+### -TemplateLibraryName
+Name of the TemplateLibrary where the TemplateGroup exists.
 
 ```yaml
 Type: String
-Parameter Sets: long
-Aliases: TemplateGroupName
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TemplateLibrary
-The name of the TemplateLibrary where the TemplateGroup is located
-
-```yaml
-Type: String
-Parameter Sets: long
-Aliases: TemplateLibraryName
+Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -129,11 +140,11 @@ Accept wildcard characters: False
 ```
 
 ### -TemplateName
-The Name of the template to execute
+Name of the template to be used.
 
 ```yaml
 Type: String
-Parameter Sets: long
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -162,14 +173,14 @@ Accept wildcard characters: False
 The XML that will be used as the data source for the document.
 
 ```yaml
-Type: String
-Parameter Sets: long
+Type: String[]
+Parameter Sets: (All)
 Aliases:
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -178,7 +189,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.Guid
+### System.String[]
 
 ### System.Int32
 

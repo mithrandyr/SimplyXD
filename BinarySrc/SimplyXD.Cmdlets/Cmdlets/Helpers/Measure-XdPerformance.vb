@@ -1,16 +1,10 @@
-﻿'This is not complete!
-Imports System.Collections.ObjectModel
-Imports System.ComponentModel
-Imports System.ComponentModel.DataAnnotations
-Imports System.Linq.Expressions
-Imports System.Management.Automation.Language
-Imports System.Net.Http.Headers
+﻿Imports System.Collections.ObjectModel
 Imports System.Threading
 Imports Microsoft.OData.Client
 
-<Cmdlet(VerbsDiagnostic.Test, "XDPerformance")>
+<Cmdlet(VerbsDiagnostic.Measure, "XDPerformance")>
 <CmdletBinding()>
-Public Class Test_XDPerformance
+Public Class Measure_XDPerformance
     Inherits baseCmdlet
 
 #Region "Parameters"
