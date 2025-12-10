@@ -12,7 +12,7 @@
 RootModule = 'SimplyXD.dll'
 
 # Version number of this module.
-ModuleVersion = '1.4.70'
+ModuleVersion = '1.5.70'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
