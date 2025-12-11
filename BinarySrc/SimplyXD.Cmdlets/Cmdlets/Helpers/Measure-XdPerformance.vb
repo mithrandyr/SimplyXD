@@ -123,11 +123,14 @@ Public Class Measure_XDPerformance
                                       Interlocked.Increment(result.Errored)
                                       If Not (KeepErrors.IsPresent Or NoDelete.IsPresent) Then
                                           threadXDP.DeleteObject(b)
+                                          threadXDP.SaveChangesWithTimeout(TimeOut)
                                       End If
                                   Else
-                                      threadXDP.DeleteObject(b)
+                                      If Not NoDelete.IsPresent Then
+                                          threadXDP.DeleteObject(b)
+                                          threadXDP.SaveChangesWithTimeout(TimeOut)
+                                      End If
                                   End If
-                                  threadXDP.SaveChangesWithTimeout(TimeOut)
                                   Interlocked.Add(result.TotalTimeMs, sw.ElapsedMilliseconds)
                               Catch
                                   Interlocked.Increment(result.Errored)
