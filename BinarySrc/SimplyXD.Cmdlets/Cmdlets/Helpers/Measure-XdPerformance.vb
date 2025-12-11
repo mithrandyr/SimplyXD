@@ -33,8 +33,12 @@ Public Class Measure_XDPerformance
 
     <Parameter()>
     Public Property ConvertToPDF As SwitchParameter
-    <Parameter()>
+
+    <Parameter(ParameterSetName:="KeepErrors")>
     Public Property KeepErrors As SwitchParameter
+
+    <Parameter(ParameterSetName:="NoDelete")>
+    Public Property NoDelete As SwitchParameter
 #End Region
 
     Private listData As List(Of String)
@@ -117,13 +121,16 @@ Public Class Measure_XDPerformance
 
                                   If batchExecutionResult.BatchStatus <> BatchStatus.Completed Then
                                       Interlocked.Increment(result.Errored)
-                                      If Not KeepErrors.IsPresent Then
+                                      If Not (KeepErrors.IsPresent Or NoDelete.IsPresent) Then
                                           threadXDP.DeleteObject(b)
+                                          threadXDP.SaveChangesWithTimeout(TimeOut)
                                       End If
                                   Else
-                                      threadXDP.DeleteObject(b)
+                                      If Not NoDelete.IsPresent Then
+                                          threadXDP.DeleteObject(b)
+                                          threadXDP.SaveChangesWithTimeout(TimeOut)
+                                      End If
                                   End If
-                                  threadXDP.SaveChangesWithTimeout(TimeOut)
                                   Interlocked.Add(result.TotalTimeMs, sw.ElapsedMilliseconds)
                               Catch
                                   Interlocked.Increment(result.Errored)

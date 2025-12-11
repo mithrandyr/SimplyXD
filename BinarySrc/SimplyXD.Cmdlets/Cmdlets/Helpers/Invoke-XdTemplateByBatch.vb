@@ -24,6 +24,9 @@ Public Class Invoke_XdTemplateByBatch
 
     <Parameter()>
     Public Property ReturnDocument As SwitchParameter
+
+    <Parameter()>
+    Public Property NoDelete As SwitchParameter
 #End Region
 
     Protected Overrides Sub EndProcessing()
@@ -85,8 +88,10 @@ Public Class Invoke_XdTemplateByBatch
             ElseIf ReturnDocument Then
                 WriteObject(ExecuteWithTimeout(d.GetOutput.GetValueAsync), False)
             End If
-            xdp.DeleteObject(b)
-            SaveChanges(b)
+            If Not NoDelete.IsPresent Then
+                xdp.DeleteObject(b)
+                SaveChanges(b)
+            End If
         Finally
             For Each entity In {bg, b, d, dp, dOp}
                 If entity IsNot Nothing Then xdp.Detach(entity)

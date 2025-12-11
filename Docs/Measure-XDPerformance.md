@@ -12,10 +12,18 @@ Measures the throughput of Xpertdoc Portal Document Services for a given templat
 
 ## SYNTAX
 
+### KeepErrors
 ```
 Measure-XDPerformance -TemplateLibraryName <String> -TemplateGroupName <String> -TemplateName <String>
  -BatchGroupName <Object> -XmlData <String[]> [-NumThreads <Int32>] [-DocsPerThread <Int32>] [-ConvertToPDF]
  [-KeepErrors] [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### NoDelete
+```
+Measure-XDPerformance -TemplateLibraryName <String> -TemplateGroupName <String> -TemplateName <String>
+ -BatchGroupName <Object> -XmlData <String[]> [-NumThreads <Int32>] [-DocsPerThread <Int32>] [-ConvertToPDF]
+ [-NoDelete] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -84,7 +92,22 @@ If set, errored batches will not be deleted.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: KeepErrors
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoDelete
+Skips deleting the Batches after they complete execution.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: NoDelete
 Aliases:
 
 Required: False

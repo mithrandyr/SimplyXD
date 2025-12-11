@@ -14,7 +14,7 @@ Executes a Template by using Document Services.
 
 ```
 Invoke-XdTemplateByBatch -TemplateLibraryName <String> -TemplateGroupName <String> -TemplateName <String>
- -BatchGroupName <String> -XmlData <String> [-ConvertToPDF] [-ReturnDocument] [-TimeOut <Int32>]
+ -BatchGroupName <String> -XmlData <String> [-ConvertToPDF] [-ReturnDocument] [-NoDelete] [-TimeOut <Int32>]
  [<CommonParameters>]
 ```
 
@@ -53,6 +53,21 @@ Accept wildcard characters: False
 
 ### -ConvertToPDF
 Will add a documentOperation to the batch to convert the result to PDF.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoDelete
+Skips deleting the Batch after it completes execution.
 
 ```yaml
 Type: SwitchParameter
