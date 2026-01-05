@@ -27,7 +27,7 @@ Public Class Measure_XDPerformance
     <Parameter()>
     Public Property NumThreads As Integer = 8
 
-    <ValidateRange(1, 1000)>
+    <ValidateRange(1, 100000)>
     <Parameter()>
     Public Property DocsPerThread As Integer = 100
 
@@ -213,9 +213,9 @@ Public Class Measure_XDPerformance
                 Return Math.Round(TotalTimeMs / (Completed - Errored), 0)
             End Get
         End Property
-        Public ReadOnly Property AvgDocTimeMs As Integer
+        Public ReadOnly Property DocsPerMinute As Integer
             Get
-                Return Math.Round(StopDT.Subtract(StartDT).TotalMilliseconds / Completed, 0)
+                Return Math.Truncate(Completed / StopDT.Subtract(StartDT).TotalMinutes)
             End Get
         End Property
 
