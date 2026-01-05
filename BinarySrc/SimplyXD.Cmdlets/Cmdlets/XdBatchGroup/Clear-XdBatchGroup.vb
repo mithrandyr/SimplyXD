@@ -57,7 +57,7 @@ Public Class ClearBatch
         Dim tokenSource = New Threading.CancellationTokenSource
         Dim token = tokenSource.Token
         Dim timer = Stopwatch.StartNew
-        Dim stats As New ClearBatchStats With {.BatchGroupId = BatchGroupId, .TotalItems = TotalItems, .DeleteLimit = DeleteLimit}
+        Dim stats As New ClearBatchStats With {.TotalItems = TotalItems, .DeleteLimit = DeleteLimit}
         Dim taskList As New List(Of Task)
         Dim deleteQueue As New BlockingCollection(Of Guid)
         Dim found As New HashSet(Of Guid)
@@ -143,7 +143,11 @@ Public Class ClearBatch
             FinishWriteProgress()
             stats.Finished(timer.Elapsed.TotalSeconds)
             stats.Errors = errorList.ToList
-            WriteObject(stats)
+            If ParameterSetName = "name" Then
+                WriteObject(stats.AsPSObject.AppendProperty("BatchGroupName", BatchGroup))
+            Else
+                WriteObject(stats.AsPSObject.AppendProperty("BatchGroupId", BatchGroupId))
+            End If
             deleteQueue.Dispose()
         End Try
 
@@ -166,7 +170,7 @@ Public Class ClearBatch
     End Function
 
     Private Class ClearBatchStats
-        Public BatchGroupId As Guid
+        'Public BatchGroupId As Guid
         Public Deleted As Integer
         Public TotalItems As Integer
         Public DeleteLimit As Integer
