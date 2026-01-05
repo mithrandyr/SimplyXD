@@ -34,7 +34,7 @@ Public Class ClearBatch
     <ValidateRange(1, 50)>
     Public Property Concurrency As Integer = 10
 
-    Protected Overrides Sub EndProcessing()
+    Protected Overrides Sub ProcessRecord()
         Dim bgQuery = xdp.BatchGroups
 
         If ParameterSetName = "name" Then
@@ -60,6 +60,8 @@ Public Class ClearBatch
         Dim stats As New ClearBatchStats With {.TotalItems = TotalItems, .DeleteLimit = DeleteLimit}
         Dim taskList As New List(Of Task)
         Dim deleteQueue As New BlockingCollection(Of Guid)
+        Dim found As New HashSet(Of Guid)
+        Dim errorList As New HashSet(Of String)
 
         'Task to query for items to delete
         taskList.Add(Task.Run(
@@ -71,9 +73,10 @@ Public Class ClearBatch
                         If token.IsCancellationRequested() Then Exit Sub
                         'make sure queue has enough items in it
                         If deleteQueue.Count < queryCount Then
-                            For Each batchId In GenerateResults(FilterOutQueue(query, deleteQueue), Nothing, queryCount).Select(Function(x) x.BatchId)
+                            For Each batchId In GenerateResults(query, Nothing, queryCount).Select(Function(x) x.BatchId).Where(Function(x) Not found.Contains(x))
                                 If token.IsCancellationRequested() Then Exit Sub
                                 deleteQueue.Add(batchId)
+                                found.Add(batchId)
                                 stats.Found += 1
                                 If stats.Found >= stats.DeleteLimit Then Exit While
                             Next
@@ -82,6 +85,10 @@ Public Class ClearBatch
                         End If
                         remainingItems = ExecuteWithTimeout(query.CountAsync())
                     End While
+                Catch ex As Exception
+                    Dim errString As String = $"Could not retrieve more batches{vbNewLine} -- {ex.Message}"
+                    If ex.InnerException IsNot Nothing Then errString += $"{vbNewLine} -- {ex.InnerException.Message}"
+                    errorList.Add(errString)
                 Finally
                     deleteQueue.CompleteAdding()
                 End Try
@@ -98,11 +105,12 @@ Public Class ClearBatch
                                           xdp2.AttachTo("Batches", nbatch)
                                           xdp2.DeleteObject(nbatch)
                                           Try
-                                              xdp2.SaveChangesAsync.Wait()
+                                              xdp2.SaveChangesAsync.Wait(TimeOut)
                                               Threading.Interlocked.Increment(stats.Deleted)
                                           Catch ex As Exception
-                                              'this could be a problem, solution would be to add message to a concurrent queue and then in the main thread dequeue and report out...
-                                              WriteWarning($"Could not remove '{batchid}' -- {ex.Message}") 
+                                              Dim errString As String = $"Could not remove '{batchid}'{vbNewLine} -- {ex.Message}"
+                                              If ex.InnerException IsNot Nothing Then errString += $"{vbNewLine} -- {ex.InnerException.Message}"
+                                              errorList.Add(errString)
                                               Threading.Interlocked.Increment(stats.Skipped)
                                           End Try
                                       Next
@@ -133,20 +141,18 @@ Public Class ClearBatch
             Console.TreatControlCAsInput = False
             timer.Stop()
             FinishWriteProgress()
-            WriteObject(stats)
+            stats.Finished(timer.Elapsed.TotalSeconds)
+            stats.Errors = errorList.ToList
+            If ParameterSetName = "name" Then
+                WriteObject(stats.AsPSObject.AppendProperty("BatchGroupName", BatchGroup))
+            Else
+                WriteObject(stats.AsPSObject.AppendProperty("BatchGroupId", BatchGroupId))
+            End If
             deleteQueue.Dispose()
         End Try
 
     End Sub
 
-    Private Function FilterOutQueue(query As IQueryable(Of Batch), queue As BlockingCollection(Of Guid)) As IQueryable(Of Batch)
-        If queue.Count > 0 Then
-            For Each id In queue.ToArray()
-                query = query.Where(Function(x) x.BatchId <> id)
-            Next
-        End If
-        Return query
-    End Function
     Private Function GenerateQuery(batchgroupId As Guid) As IQueryable(Of Batch)
         Dim query = xdp.Batches
         Dim minimumAge = Date.Now.AddMinutes(-1 * MinimumAgeInMinutes)
@@ -164,10 +170,25 @@ Public Class ClearBatch
     End Function
 
     Private Class ClearBatchStats
+        'Public BatchGroupId As Guid
         Public Deleted As Integer
         Public TotalItems As Integer
         Public DeleteLimit As Integer
         Public Found As Integer
         Public Skipped As Integer
+        Public Errors As List(Of String)
+        Public ReadOnly Property ElapsedSeconds As Double
+        Public ReadOnly Property ProcessedPerSecond As Double
+            Get
+                If ElapsedSeconds > 0 Then
+                    Return Math.Round((Deleted + Skipped) / ElapsedSeconds, 2)
+                Else
+                    Return 0
+                End If
+            End Get
+        End Property
+        Protected Friend Sub Finished(timeSeconds As Double)
+            _ElapsedSeconds = Math.Round(timeSeconds, 2)
+        End Sub
     End Class
 End Class

@@ -27,7 +27,7 @@ Public Class Measure_XDPerformance
     <Parameter()>
     Public Property NumThreads As Integer = 8
 
-    <ValidateRange(1, 1000)>
+    <ValidateRange(1, 100000)>
     <Parameter()>
     Public Property DocsPerThread As Integer = 100
 
@@ -62,6 +62,7 @@ Public Class Measure_XDPerformance
     Protected Overrides Sub EndProcessing()
         If stopCmdlet Then Exit Sub
         Dim readOnlyData = New ReadOnlyCollection(Of String)(listData)
+        Dim errorList As New Concurrent.ConcurrentBag(Of String)
 
         Dim result = New PerformanceResult With {.NumThreads = NumThreads, .DocsPerThread = DocsPerThread, .StartDT = DateTime.Now()}
 
@@ -132,8 +133,9 @@ Public Class Measure_XDPerformance
                                       End If
                                   End If
                                   Interlocked.Add(result.TotalTimeMs, sw.ElapsedMilliseconds)
-                              Catch
+                              Catch ex As Exception
                                   Interlocked.Increment(result.Errored)
+                                  errorList.Add($"{taskId:d4}-{item:d6} -- {ex.Message}")
                               Finally
                                   For Each entity In {b, d, dp, dOp}
                                       If entity IsNot Nothing Then threadXDP.Detach(entity)
@@ -159,7 +161,11 @@ Public Class Measure_XDPerformance
         End While
 
         result.StopDT = DateTime.Now()
-        WriteObject(result)
+        If errorList.Count > 0 Then
+            WriteObject(result.AsPSObject.AppendProperty("Errors", errorList.ToArray()))
+        Else
+            WriteObject(result)
+        End If
         FinishWriteProgress()
         cts.Dispose()
     End Sub
@@ -213,9 +219,9 @@ Public Class Measure_XDPerformance
                 Return Math.Round(TotalTimeMs / (Completed - Errored), 0)
             End Get
         End Property
-        Public ReadOnly Property AvgDocTimeMs As Integer
+        Public ReadOnly Property DocsPerMinute As Integer
             Get
-                Return Math.Round(StopDT.Subtract(StartDT).TotalMilliseconds / Completed, 0)
+                Return Math.Truncate(Completed / StopDT.Subtract(StartDT).TotalMinutes)
             End Get
         End Property
 
