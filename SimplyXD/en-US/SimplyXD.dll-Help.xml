@@ -5210,7 +5210,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>KeepErrors</maml:name>
           <maml:description>
             <maml:para>If set, errored batches will not be deleted.</maml:para>
@@ -5453,7 +5453,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>KeepErrors</maml:name>
         <maml:description>
           <maml:para>If set, errored batches will not be deleted.</maml:para>
