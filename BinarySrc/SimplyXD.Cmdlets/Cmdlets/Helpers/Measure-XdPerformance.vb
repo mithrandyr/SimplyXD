@@ -34,7 +34,7 @@ Public Class Measure_XDPerformance
     <Parameter()>
     Public Property ConvertToPDF As SwitchParameter
 
-    <Parameter(ParameterSetName:="KeepErrors")>
+    <Parameter(Mandatory:=True, ParameterSetName:="KeepErrors")>
     Public Property KeepErrors As SwitchParameter
 
     <Parameter(ParameterSetName:="NoDelete")>
@@ -62,27 +62,29 @@ Public Class Measure_XDPerformance
     Protected Overrides Sub EndProcessing()
         If stopCmdlet Then Exit Sub
         Dim readOnlyData = New ReadOnlyCollection(Of String)(listData)
-        Dim errorList As New Concurrent.ConcurrentBag(Of String)
-
+        Dim errorBag As New Concurrent.ConcurrentBag(Of String)
+        Dim batchExecutionBag As New Concurrent.ConcurrentBag(Of ThreadTiming)
+        Dim threadExecutions As Integer
         Dim result = New PerformanceResult With {.NumThreads = NumThreads, .DocsPerThread = DocsPerThread, .StartDT = DateTime.Now()}
 
         Dim tasks As New List(Of Task)
-
-        For Each taskId In Enumerable.Range(0, NumThreads)
+        For Each taskId In Enumerable.Range(1, NumThreads)
             tasks.Add(Task.Run(
                       Sub()
+                          Dim id As Integer
                           Dim threadXDP = Engine.NewXDP
                           threadXDP.MergeOption = Microsoft.OData.Client.MergeOption.OverwriteChanges
 
                           Dim sw As New Stopwatch, rnd As New Random
-                          For Each item In Enumerable.Range(0, DocsPerThread)
+                          For Each item In Enumerable.Range(1, DocsPerThread)
                               If cts.IsCancellationRequested Then Exit Sub
                               Dim b As Batch, d As Document, dp As DocumentProvider, dOp As DocumentOperation
                               Try
                                   sw.Restart()
+                                  id = Interlocked.Increment(threadExecutions)
                                   'Create the batch
                                   b = New Batch With {.BatchGroupId = batchGroupId,
-                                                    .Description = "Created by Test-XdPerformance",
+                                                    .Description = "Created by Measure-XdPerformance",
                                                     .Name = String.Format("Document-{0:d4}-{1:d6}", taskId, item)}
                                   threadXDP.AddToBatches(b)
                                   threadXDP.SaveChangesWithTimeout(TimeOut)
@@ -100,20 +102,20 @@ Public Class Measure_XDPerformance
                                                                      TemplateLibraryName,
                                                                      TemplateGroupName,
                                                                      TemplateName,
-                                                                     $"<![CDATA[{readOnlyData.IndexOf(rnd.Next(readOnlyData.Count))}]]>",
+                                                                     $"<![CDATA[{readOnlyData.Item(rnd.Next(readOnlyData.Count))}]]>",
                                                                      Nothing)
                                   }
-                                  xdp.AddToDocumentProviders(dp)
+                                  threadXDP.AddToDocumentProviders(dp)
                                   threadXDP.SaveChangesWithTimeout(TimeOut)
 
                                   If ConvertToPDF Then
                                       'Create and attach DocumentOperation (convert to pdf)
                                       dOp = New DocumentOperation With {
-                                        .DocumentId = d.DocumentId,
-                                        .ContractName = Constants.AsposeContract,
-                                        .InputMetadata = Constants.AsposeMetaData
+                                          .DocumentId = d.DocumentId,
+                                          .ContractName = Constants.AsposeContract,
+                                          .InputMetadata = Constants.AsposeMetaData
                                       }
-                                      xdp.AddToDocumentOperations(dOp)
+                                      threadXDP.AddToDocumentOperations(dOp)
                                       threadXDP.SaveChangesWithTimeout(TimeOut)
                                   End If
 
@@ -121,38 +123,34 @@ Public Class Measure_XDPerformance
                                   Dim batchExecutionResult = b.ExecuteAndWait(TimeOut * 1000).GetValue
 
                                   If batchExecutionResult.BatchStatus <> BatchStatus.Completed Then
-                                      Interlocked.Increment(result.Errored)
                                       If Not (KeepErrors.IsPresent Or NoDelete.IsPresent) Then
                                           threadXDP.DeleteObject(b)
                                           threadXDP.SaveChangesWithTimeout(TimeOut)
                                       End If
                                   Else
+                                      b = threadXDP.Batches.First(Function(x) x.BatchId = b.BatchId)
                                       If Not NoDelete.IsPresent Then
                                           threadXDP.DeleteObject(b)
                                           threadXDP.SaveChangesWithTimeout(TimeOut)
                                       End If
                                   End If
-                                  Interlocked.Add(result.TotalTimeMs, sw.ElapsedMilliseconds)
+                                  sw.Stop()
+                                  batchExecutionBag.Add(New ThreadTiming(id, sw.ElapsedMilliseconds, b.EndTime.Value.Subtract(b.StartTime.Value).TotalMilliseconds))
                               Catch ex As Exception
-                                  Interlocked.Increment(result.Errored)
-                                  errorList.Add($"{taskId:d4}-{item:d6} -- {ex.Message}")
+                                  errorBag.Add($"[{id}] {taskId:d4}-{item:d6} -- {ex.Message}")
                               Finally
                                   For Each entity In {b, d, dp, dOp}
                                       If entity IsNot Nothing Then threadXDP.Detach(entity)
                                   Next
                               End Try
-
-                              Interlocked.Increment(result.Completed)
                           Next
                       End Sub, cts.Token)
                       )
         Next
 
         While True
-            Dim completed = Interlocked.Read(result.Completed)
-            If completed > 0 Then
-                WriteProgress(New ProgressRecord(0, "Test-XDPerformance", $"{completed} out of {result.Total}") With {.PercentComplete = completed * 100 / result.Total})
-            End If
+            Dim completed = errorBag.Count + batchExecutionBag.Count
+            WriteProgress(New ProgressRecord(0, "Test-XDPerformance", $"{completed} out of {NumThreads * DocsPerThread}") With {.PercentComplete = completed * 100 / (NumThreads * DocsPerThread)})
             If tasks.All(Function(t) t.IsCompleted) Then
                 Exit While
             Else
@@ -161,13 +159,12 @@ Public Class Measure_XDPerformance
         End While
 
         result.StopDT = DateTime.Now()
-        If errorList.Count > 0 Then
-            WriteObject(result.AsPSObject.AppendProperty("Errors", errorList.ToArray()))
-        Else
-            WriteObject(result)
-        End If
+        result.WasCanceled = cts.IsCancellationRequested
+        result.Errors = errorBag.ToList
+        result.Timing = batchExecutionBag.ToList
         FinishWriteProgress()
         cts.Dispose()
+        WriteObject(result)
     End Sub
 
     Protected Overrides Sub StopProcessing()
@@ -204,26 +201,44 @@ Public Class Measure_XDPerformance
     Private Class PerformanceResult
         Public Property NumThreads As Integer
         Public Property DocsPerThread As Integer
-        Public Property Completed As Integer
-        Public Property Errored As Integer
         Public Property StartDT As DateTime
         Public Property StopDT As DateTime
-        Public Property TotalTimeMs As Long
-        Public ReadOnly Property Total As Integer
+        Public Property WasCanceled As Boolean
+        Public Property Timing As List(Of ThreadTiming)
+        Public Property Errors As List(Of String)
+        Public ReadOnly Property Processed As Integer
             Get
-                Return Me.NumThreads * Me.DocsPerThread
-            End Get
-        End Property
-        Public ReadOnly Property AvgTimePerDocMs As Integer
-            Get
-                Return Math.Round(TotalTimeMs / (Completed - Errored), 0)
-            End Get
-        End Property
-        Public ReadOnly Property DocsPerMinute As Integer
-            Get
-                Return Math.Truncate(Completed / StopDT.Subtract(StartDT).TotalMinutes)
+                Return Timing.Count + Errors.Count
             End Get
         End Property
 
+        Public ReadOnly Property AvgRoundTripMs As Integer
+            Get
+                Return Math.Round(Timing.Average(Function(t) t.RequestTimeMs), 0)
+            End Get
+        End Property
+        Public ReadOnly Property AvgBatchExecutionMs As Integer
+            Get
+                Return Math.Round(Timing.Average(Function(t) t.BatchExecutionTimeMs), 0)
+            End Get
+        End Property
+
+        Public ReadOnly Property EstimatedDocsPerMinute As Integer
+            Get
+                Return Math.Truncate((60000 / AvgRoundTripMs) * NumThreads)
+            End Get
+        End Property
     End Class
+    Private Structure ThreadTiming
+        Public Id As Integer
+        Public RequestTimeMs As Integer
+        Public BatchExecutionTimeMs As Integer
+        Public NetworkTimeMs As Integer
+        Public Sub New(i As Integer, r As Integer, b As Integer)
+            Id = i
+            RequestTimeMs = r
+            BatchExecutionTimeMs = b
+            NetworkTimeMs = r - b
+        End Sub
+    End Structure
 End Class

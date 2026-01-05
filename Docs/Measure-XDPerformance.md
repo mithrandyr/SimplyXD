@@ -95,7 +95,7 @@ Type: SwitchParameter
 Parameter Sets: KeepErrors
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
