@@ -5,32 +5,37 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdBatch
+# Get-XdTemplateExecution
 
 ## SYNOPSIS
-Gets a Batch
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
-### bg
+### search
 ```
-Get-XdBatch [-BatchGroupId <Guid>] [-Limit <Int32>] [-SortByCreation <String>] [-Status <String>]
+Get-XdTemplateExecution [[-Search] <String>] [-TemplateLibrary <String>] [-TemplateGroup <String>]
  [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
-### search
+### name
 ```
-Get-XdBatch [-BatchGroupId <Guid>] [-Limit <Int32>] [-SortByCreation <String>] [-Status <String>]
- -Search <String> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateExecution -TemplateLibrary <String> -TemplateGroup <String> -Name <String> [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
-### batch
+### obj
 ```
-Get-XdBatch -BatchId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateExecution -InputObject <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+```
+
+### id
+```
+Get-XdTemplateExecution -TemplateExecutionId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets a Batch
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
@@ -43,57 +48,30 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -BatchGroupId
-GUID of the BatchGroup to return batches from
+### -InputObject
+{{ Fill InputObject Description }}
 
 ```yaml
 Type: Guid
-Parameter Sets: bg
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-```yaml
-Type: Guid
-Parameter Sets: search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -BatchId
-GUID of the batch to return
-
-```yaml
-Type: Guid
-Parameter Sets: batch
-Aliases:
+Parameter Sets: obj
+Aliases: TemplateId
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Limit
-maximum number of batches to return
+### -Name
+{{ Fill Name Description }}
 
 ```yaml
-Type: Int32
-Parameter Sets: bg, search
-Aliases:
+Type: String
+Parameter Sets: name
+Aliases: TemplateName
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -101,11 +79,53 @@ Accept wildcard characters: False
 ```
 
 ### -Search
-Batches containing this will be returned
+{{ Fill Search Description }}
 
 ```yaml
 Type: String
 Parameter Sets: search
+Aliases:
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateExecutionId
+{{ Fill TemplateExecutionId Description }}
+
+```yaml
+Type: Guid
+Parameter Sets: id
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -TemplateGroup
+{{ Fill TemplateGroup Description }}
+
+```yaml
+Type: String
+Parameter Sets: search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: name
 Aliases:
 
 Required: True
@@ -115,14 +135,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SortByCreation
-Sorts the batches by creation data
+### -TemplateLibrary
+{{ Fill TemplateLibrary Description }}
 
 ```yaml
 Type: String
-Parameter Sets: bg, search
+Parameter Sets: search
 Aliases:
-Accepted values: Ascending, Descending
 
 Required: False
 Position: Named
@@ -131,16 +150,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Status
-Batches with this status will be returned, if not specified all will be returned.
-
 ```yaml
 Type: String
-Parameter Sets: bg, search
+Parameter Sets: name
 Aliases:
-Accepted values: Completed, Created, Error, Queued, Running, TimedOut
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -148,7 +163,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-Actions against the Xpertdoc Portal will timeout in this many seconds.
+{{ Fill TimeOut Description }}
 
 ```yaml
 Type: Int32
@@ -166,6 +181,8 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
+
+### System.Guid
 
 ### System.Int32
 
