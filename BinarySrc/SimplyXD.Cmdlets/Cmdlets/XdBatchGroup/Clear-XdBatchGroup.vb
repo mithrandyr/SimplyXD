@@ -105,8 +105,11 @@ Public Class ClearBatch
                                           xdp2.AttachTo("Batches", nbatch)
                                           xdp2.DeleteObject(nbatch)
                                           Try
-                                              xdp2.SaveChangesAsync.Wait(TimeOut)
-                                              Threading.Interlocked.Increment(stats.Deleted)
+                                              If xdp2.SaveChangesAsync.Wait(TimeOut * 1000) Then
+                                                  Threading.Interlocked.Increment(stats.Deleted)
+                                              Else
+                                                  errorList.Add($"Delete for '{batchid}' took longer than {TimeOut} seconds to complete!")
+                                              End If
                                           Catch ex As Exception
                                               Dim errString As String = $"Could not remove '{batchid}'{vbNewLine} -- {ex.Message}"
                                               If ex.InnerException IsNot Nothing Then errString += $"{vbNewLine} -- {ex.InnerException.Message}"
