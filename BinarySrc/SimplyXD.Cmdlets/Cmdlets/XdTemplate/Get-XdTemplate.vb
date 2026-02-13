@@ -36,6 +36,8 @@ Public Class Get_XdTemplate
         Try
             Dim query = xdp.Templates.Expand(Function(x) x.TemplateGroup.TemplateLibrary).AsQueryable
 
+            'TODO update this to mimic Get-XdTemplateVersion with the -AsCount
+
             If ParameterSetName = "obj" Then
                 'Return all templates for a given templateGroup
                 For Each t In GenerateResults(query.Where(Function(x) x.TemplateGroupId = InputObject), "Template")
