@@ -3,7 +3,7 @@
 Public Class GetBatch
     Inherits baseCmdlet
 
-    <Parameter(Mandatory:=True, ParameterSetName:="bg", ValueFromPipelineByPropertyName:=True)>
+    <Parameter(ParameterSetName:="bg", ValueFromPipelineByPropertyName:=True)>
     <Parameter(ParameterSetName:="search")>
     Public Property BatchGroupId As Guid
 
