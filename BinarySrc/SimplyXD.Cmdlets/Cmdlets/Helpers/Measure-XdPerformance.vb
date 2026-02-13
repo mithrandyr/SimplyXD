@@ -39,6 +39,9 @@ Public Class Measure_XDPerformance
 
     <Parameter(ParameterSetName:="NoDelete")>
     Public Property NoDelete As SwitchParameter
+
+    <Parameter(ValueFromPipelineByPropertyName:=True)>
+    Public Overrides Property TimeOut As Integer = 31
 #End Region
 
     Private listData As List(Of String)

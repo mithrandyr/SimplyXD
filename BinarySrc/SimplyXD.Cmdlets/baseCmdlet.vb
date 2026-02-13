@@ -3,7 +3,7 @@
     Friend ReadOnly Property xdp As PortalODataContext = Engine.XDP
 
     <Parameter(ValueFromPipelineByPropertyName:=True)>
-    Public Property TimeOut As Integer = 15
+    Public Overridable Property TimeOut As Integer = 15
 
     Public Function SaveChanges(x As Object) As Boolean
         Return SaveChanges(0, x)
