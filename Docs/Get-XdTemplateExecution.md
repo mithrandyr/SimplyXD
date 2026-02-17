@@ -15,23 +15,18 @@ Returns executions of Templates.
 ### search
 ```
 Get-XdTemplateExecution [[-Search] <String>] [-TemplateLibrary <String>] [-TemplateGroup <String>]
- [-TimeOut <Int32>] [<CommonParameters>]
+ [-Limit <Int32>] [-AsCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### name
 ```
-Get-XdTemplateExecution -TemplateLibrary <String> -TemplateGroup <String> -Name <String> [-TimeOut <Int32>]
- [<CommonParameters>]
+Get-XdTemplateExecution -TemplateLibrary <String> -TemplateGroup <String> -Name <String> [-Limit <Int32>]
+ [-AsCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ### obj
 ```
-Get-XdTemplateExecution -InputObject <Guid> [-TimeOut <Int32>] [<CommonParameters>]
-```
-
-### id
-```
-Get-XdTemplateExecution -TemplateExecutionId <Guid> [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdTemplateExecution -InputObject <Guid> [-Limit <Int32>] [-AsCount] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,6 +43,21 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -AsCount
+Returns number of template versions.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -InputObject
 GUID of Template to return executions for.
 
@@ -60,6 +70,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Limit
+Limits how many results are returned.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -93,23 +118,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateExecutionId
-GUID of Template
-
-```yaml
-Type: Guid
-Parameter Sets: id
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -TemplateGroup
-{{ Fill TemplateGroup Description }}
+Name of the templategroup to return template executions from
 
 ```yaml
 Type: String
@@ -136,7 +146,7 @@ Accept wildcard characters: False
 ```
 
 ### -TemplateLibrary
-{{ Fill TemplateLibrary Description }}
+Name of the templatelibrary to return template executions from
 
 ```yaml
 Type: String
@@ -163,7 +173,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-{{ Fill TimeOut Description }}
+Actions against the Xpertdoc Portal will timeout in this many seconds.
 
 ```yaml
 Type: Int32

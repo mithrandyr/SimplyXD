@@ -69,7 +69,7 @@ Returns the connected portal
 Returns templates
 
 ### [Get-XdTemplateExecution](Get-XdTemplateExecution.md)
-{{ Fill in the Synopsis }}
+Returns executions of Templates.
 
 ### [Get-XdTemplateGroup](Get-XdTemplateGroup.md)
 Return TemplateGroups
@@ -145,7 +145,4 @@ Updates a UserProfile
 
 ### [Start-XdBatch](Start-XdBatch.md)
 Executes a batch
-
-### [Test-XdPortal](Test-XdPortal.md)
-{{ Fill in the Synopsis }}
 
