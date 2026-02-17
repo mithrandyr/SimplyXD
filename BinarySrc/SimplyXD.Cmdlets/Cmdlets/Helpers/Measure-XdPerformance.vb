@@ -74,6 +74,7 @@ Public Class Measure_XDPerformance
         For Each taskId In Enumerable.Range(1, NumThreads)
             tasks.Add(Task.Run(
                       Sub()
+                          'Task.Delay((taskId - 1) * 100).Wait() ' add delay to each thread to offset their API calls.
                           Dim id As Integer
                           Dim threadXDP = Engine.NewXDP
                           threadXDP.MergeOption = Microsoft.OData.Client.MergeOption.OverwriteChanges
