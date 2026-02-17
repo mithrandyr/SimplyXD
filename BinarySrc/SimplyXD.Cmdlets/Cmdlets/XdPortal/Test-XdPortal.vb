@@ -1,6 +1,6 @@
 ﻿'Not IN use
-<Cmdlet(VerbsDiagnostic.Test, "XdPortal")>
-<CmdletBinding()>
+'<Cmdlet(VerbsDiagnostic.Test, "XdPortal")>
+'<CmdletBinding()>
 Public Class Test_XdPortal
     Inherits baseCmdlet
 

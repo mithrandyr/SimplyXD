@@ -68,11 +68,17 @@ Returns the connected portal
 ### [Get-XdTemplate](Get-XdTemplate.md)
 Returns templates
 
+### [Get-XdTemplateExecution](Get-XdTemplateExecution.md)
+Returns executions of Templates.
+
 ### [Get-XdTemplateGroup](Get-XdTemplateGroup.md)
 Return TemplateGroups
 
 ### [Get-XdTemplateLibrary](Get-XdTemplateLibrary.md)
 Returns templatelibraries
+
+### [Get-XdTemplateVersion](Get-XdTemplateVersion.md)
+Get Template Versions
 
 ### [Get-XdUserProfile](Get-XdUserProfile.md)
 Returns userprofiles
@@ -122,6 +128,9 @@ Removes a TemplateGroup
 ### [Remove-XdTemplateLibrary](Remove-XdTemplateLibrary.md)
 Removes the TemplateLibrary
 
+### [Remove-XdTemplateVersion](Remove-XdTemplateVersion.md)
+Removes template versions.
+
 ### [Remove-XdUserProfile](Remove-XdUserProfile.md)
 Removes a UserProfile
 
@@ -136,7 +145,4 @@ Updates a UserProfile
 
 ### [Start-XdBatch](Start-XdBatch.md)
 Executes a batch
-
-### [Test-XdPortal](Test-XdPortal.md)
-{{ Fill in the Synopsis }}
 

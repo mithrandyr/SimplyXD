@@ -27,6 +27,9 @@ Public Class Invoke_XdTemplateByBatch
 
     <Parameter()>
     Public Property NoDelete As SwitchParameter
+
+    <Parameter(ValueFromPipelineByPropertyName:=True)>
+    Public Overrides Property TimeOut As Integer = 31
 #End Region
 
     Protected Overrides Sub EndProcessing()

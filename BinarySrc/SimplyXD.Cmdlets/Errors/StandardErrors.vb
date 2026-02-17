@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.OData.Client
+Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Friend Class StandardErrors
     Shared Function TemplateBlobUpdate(ex As Exception, t As Template) As ErrorRecord
@@ -19,8 +20,12 @@ Friend Class StandardErrors
 
     Shared Function GetProviderMessage(ex As Exception) As String
         If TypeOf ex Is DataServiceClientException Then
-            Dim err As JObject = JObject.Parse(ex.Message)("error")
-            Return $"[{err("code")}] {err("message")}"
+            Try
+                Dim err As JObject = JObject.Parse(ex.Message)("error")
+                Return $"[{err("code")}] {err("message")}"
+            Catch jex As JsonReaderException
+                Return ex.Message
+            End Try
         Else
             Return Nothing
         End If
@@ -59,5 +64,12 @@ Module ErrorExtensions
     Public Sub WriteErrorWrapped(this As baseCmdlet, ex As Exception, errId As String, errCategory As ErrorCategory, Optional errObject As Object = Nothing)
         Dim wex = WrappedException.GenerateMessageFromInnermost(ex)
         this.WriteError(wex, errId, errCategory, errObject)
+    End Sub
+
+    <Extension()>
+    Public Sub WriteErrorInvalidOp(this As baseCmdlet, itemType As String, itemValue As String, operation As String, reason As String)
+        Dim errorId = $"XDPortal-{itemType}InvalidOperation"
+        Dim ioex As New XDPItemInvalidOperation(itemType, itemValue, operation, reason)
+        this.WriteError(ioex, errorId, ErrorCategory.InvalidOperation, itemValue)
     End Sub
 End Module

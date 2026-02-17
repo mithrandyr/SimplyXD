@@ -25,20 +25,18 @@ Public Class Get_XdTemplateExecution
     <Parameter(Mandatory:=True, ParameterSetName:="obj", ValueFromPipelineByPropertyName:=True)>
     Public Property InputObject As Guid
 
-    <Parameter(Mandatory:=True, ParameterSetName:="id", ValueFromPipelineByPropertyName:=True)>
-    Public Property TemplateExecutionId As Guid
+    <Parameter()>
+    Public Property Limit As Integer = 0
+
+    <Parameter()>
+    Public Property AsCount As SwitchParameter
+
     Protected Overrides Sub ProcessRecord()
         Dim query = xdp.TemplateExecutions.Expand(Function(x) x.Template.TemplateGroup.TemplateLibrary).Expand(Function(x) x.TemplateExecutionData).AsQueryable
 
         If ParameterSetName = "obj" Then
             'Return all templates for a given templateGroup
-            For Each te In GenerateResults(query.Where(Function(x) x.TemplateId = InputObject), "TemplateExecution")
-                Output(te)
-            Next
-        ElseIf ParameterSetName = "id" Then
-            For Each te In ExecuteWithTimeout(query.Where(Function(x) x.TemplateExecutionId = TemplateExecutionId).Take(1).ToListAsync)
-                Output(te)
-            Next
+            query = query.Where(Function(x) x.TemplateId = InputObject)
         Else
             If Not String.IsNullOrWhiteSpace(TemplateGroup) Then
                 query = query.Where(Function(x) x.Template.TemplateGroup.Name.ToUpper.Equals(TemplateGroup.ToUpper))
@@ -48,18 +46,21 @@ Public Class Get_XdTemplateExecution
                 query = query.Where(Function(x) x.Template.TemplateGroup.TemplateLibrary.Name.ToUpper.Equals(TemplateLibrary.ToUpper))
             End If
 
-            If ParameterSetName = "search" Then
-                If Not String.IsNullOrWhiteSpace(Search) Then
-                    query = query.Where(Function(x) x.Template.Name.Contains(Search))
-                End If
-                For Each te In GenerateResults(query, "TemplateExecution")
-                    Output(te)
-                Next
-            Else
-                Dim te As TemplateExecution
-                te = ExecuteWithTimeout(query.Where(Function(x) x.Template.Name.ToUpper.Equals(Name.ToUpper)).FirstOrDefaultAsync)
-                If te IsNot Nothing Then Output(te)
+            If Not String.IsNullOrWhiteSpace(Search) Then
+                query = query.Where(Function(x) x.Template.Name.Contains(Search))
             End If
+
+            If Not String.IsNullOrWhiteSpace(Name) Then
+                query = query.Where(Function(x) x.Template.Name.ToUpper.Equals(Name.ToUpper))
+            End If
+        End If
+
+        If AsCount Then
+            WriteObject(ExecuteWithTimeout(query.CountAsync))
+        Else
+            For Each te In GenerateResults(query, "TemplateExecution", Limit)
+                Output(te)
+            Next
         End If
     End Sub
 

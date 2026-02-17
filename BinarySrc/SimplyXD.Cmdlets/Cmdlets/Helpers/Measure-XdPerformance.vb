@@ -39,6 +39,9 @@ Public Class Measure_XDPerformance
 
     <Parameter(ParameterSetName:="NoDelete")>
     Public Property NoDelete As SwitchParameter
+
+    <Parameter(ValueFromPipelineByPropertyName:=True)>
+    Public Overrides Property TimeOut As Integer = 31
 #End Region
 
     Private listData As List(Of String)
@@ -71,6 +74,7 @@ Public Class Measure_XDPerformance
         For Each taskId In Enumerable.Range(1, NumThreads)
             tasks.Add(Task.Run(
                       Sub()
+                          'Task.Delay((taskId - 1) * 100).Wait() ' add delay to each thread to offset their API calls.
                           Dim id As Integer
                           Dim threadXDP = Engine.NewXDP
                           threadXDP.MergeOption = Microsoft.OData.Client.MergeOption.OverwriteChanges
@@ -78,7 +82,7 @@ Public Class Measure_XDPerformance
                           Dim sw As New Stopwatch, rnd As New Random
                           For Each item In Enumerable.Range(1, DocsPerThread)
                               If cts.IsCancellationRequested Then Exit Sub
-                              Dim b As Batch, d As Document, dp As DocumentProvider, dOp As DocumentOperation
+                              Dim b As Batch, d As Document, dp As DocumentProvider, dOp As DocumentOperation, start = DateTime.Now
                               Try
                                   sw.Restart()
                                   id = Interlocked.Increment(threadExecutions)
@@ -135,7 +139,7 @@ Public Class Measure_XDPerformance
                                       End If
                                   End If
                                   sw.Stop()
-                                  batchExecutionBag.Add(New ThreadTiming(id, sw.ElapsedMilliseconds, b.EndTime.Value.Subtract(b.StartTime.Value).TotalMilliseconds))
+                                  batchExecutionBag.Add(New ThreadTiming(id, start, sw.ElapsedMilliseconds, b.EndTime.Value.Subtract(b.StartTime.Value).TotalMilliseconds))
                               Catch ex As Exception
                                   errorBag.Add($"[{id}] {taskId:d4}-{item:d6} -- {ex.Message}")
                               Finally
@@ -231,11 +235,13 @@ Public Class Measure_XDPerformance
     End Class
     Private Structure ThreadTiming
         Public Id As Integer
+        Public Start As DateTime
         Public RequestTimeMs As Integer
         Public BatchExecutionTimeMs As Integer
         Public NetworkTimeMs As Integer
-        Public Sub New(i As Integer, r As Integer, b As Integer)
+        Public Sub New(i As Integer, s As DateTime, r As Integer, b As Integer)
             Id = i
+            Start = s
             RequestTimeMs = r
             BatchExecutionTimeMs = b
             NetworkTimeMs = r - b
