@@ -5,26 +5,26 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-XdBatch
+# Get-XdBatchError
 
 ## SYNOPSIS
-Gets a Batch
+Gets Batches that have errored, along with error details.
 
 ## SYNTAX
 
 ### search
 ```
-Get-XdBatch [-BatchGroupId <Guid>] [-Limit <Int32>] [-SortByCreation <String>] [-Status <String>]
- [-Search <String>] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdBatchError [-ErrorText <String>] [-BatchGroupId <Guid>] [-Limit <Int32>] [-TimeOut <Int32>]
+ [<CommonParameters>]
 ```
 
 ### batch
 ```
-Get-XdBatch [-BatchId <Guid>] [-TimeOut <Int32>] [<CommonParameters>]
+Get-XdBatchError [-BatchId] <Guid> [-Limit <Int32>] [-TimeOut <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets a Batch
+Gets Batches that have errored, along with error details.  Searchable by error, returns ExecutionData.
 
 ## EXAMPLES
 
@@ -38,7 +38,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -BatchGroupId
-GUID of the BatchGroup to return batches from
+GUID of the batchgroup to limit results from.
 
 ```yaml
 Type: Guid
@@ -53,11 +53,26 @@ Accept wildcard characters: False
 ```
 
 ### -BatchId
-GUID of the batch to return
+GUID of the batch to limit results from.
 
 ```yaml
 Type: Guid
 Parameter Sets: batch
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ErrorText
+Only return errors that contain this value
+
+```yaml
+Type: String
+Parameter Sets: search
 Aliases:
 
 Required: False
@@ -68,59 +83,12 @@ Accept wildcard characters: False
 ```
 
 ### -Limit
-maximum number of batches to return
+Maximum number of Errored batches to return
 
 ```yaml
 Type: Int32
-Parameter Sets: search
+Parameter Sets: (All)
 Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Search
-Batches containing this will be returned
-
-```yaml
-Type: String
-Parameter Sets: search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SortByCreation
-Sorts the batches by creation data
-
-```yaml
-Type: String
-Parameter Sets: search
-Aliases:
-Accepted values: Ascending, Descending
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Status
-Batches with this status will be returned, if not specified all will be returned.
-
-```yaml
-Type: String
-Parameter Sets: search
-Aliases:
-Accepted values: Completed, Created, Error, Queued, Running, TimedOut
 
 Required: False
 Position: Named
@@ -148,6 +116,8 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
+
+### System.Guid
 
 ### System.Int32
 
