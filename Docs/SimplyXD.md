@@ -38,6 +38,9 @@ Gets a Batch
 ### [Get-XdBatchCount](Get-XdBatchCount.md)
 Gets count of batches (by status)
 
+### [Get-XdBatchError](Get-XdBatchError.md)
+Gets Batches that have errored, along with error details.
+
 ### [Get-XdBatchGroup](Get-XdBatchGroup.md)
 Gets a batchgroup
 
