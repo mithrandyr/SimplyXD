@@ -28,6 +28,15 @@ Module Extensions
         Return obj
     End Function
 
+    <Extension>
+    Public Function AddDefaultPropertySet(obj As PSObject, propertyNames As String()) As PSObject
+        Dim displayPropertySet As New PSPropertySet("DefaultDisplayPropertySet", propertyNames)
+        Dim standardMembers As New PSMemberSet("PSStandardMembers", New PSMemberInfo() {displayPropertySet})
+
+        obj.Members.Add(standardMembers)
+        Return obj
+    End Function
+
     <Extension()>
     Public Sub SaveChangesWithTimeout(this As PortalODataContext, timeoutSeconds As Integer)
         Dim timeoutMS = timeoutSeconds * 1000
