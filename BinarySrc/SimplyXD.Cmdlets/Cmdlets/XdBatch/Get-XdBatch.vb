@@ -1,33 +1,28 @@
 <Cmdlet(VerbsCommon.Get, "XdBatch")>
-<CmdletBinding(DefaultParameterSetName:="batch")>
+<CmdletBinding(DefaultParameterSetName:="search")>
 Public Class GetBatch
     Inherits baseCmdlet
 
-    <Parameter(ParameterSetName:="bg", ValueFromPipelineByPropertyName:=True)>
-    <Parameter(ParameterSetName:="search")>
+    <Parameter(ParameterSetName:="search", ValueFromPipelineByPropertyName:=True)>
     Public Property BatchGroupId As Guid
 
-    <Parameter(ParameterSetName:="bg")>
     <Parameter(ParameterSetName:="search")>
     <ValidateRange(0, 1000)>
     Public Property Limit As Integer = 0
 
-    <Parameter(ParameterSetName:="bg")>
     <Parameter(ParameterSetName:="search")>
     <ValidateSet("Ascending", "Descending")>
     Public Property SortByCreation As String
 
-    <Parameter(ParameterSetName:="bg")>
     <Parameter(ParameterSetName:="search")>
     <ValidateSet("Completed", "Created", "Error", "Queued", "Running", "TimedOut")>
     Public Property Status As String
 
-
-    <Parameter(Mandatory:=True, ParameterSetName:="batch", Position:=0)>
-    Public Property BatchId As Guid
-
-    <Parameter(Mandatory:=True, ParameterSetName:="search", Position:=0)>
+    <Parameter(ParameterSetName:="search", Position:=0)>
     Public Property Search As String
+
+    <Parameter(ParameterSetName:="batch", Position:=0)>
+    Public Property BatchId As Guid
 
     Protected Overrides Sub ProcessRecord()
         Dim query = xdp.Batches.Expand(Function(x) x.BatchGroup).AsQueryable
