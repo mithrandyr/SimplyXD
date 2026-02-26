@@ -20,7 +20,7 @@ Public Class Get_XdBatchError
     Public Property Limit As Integer = 0
 
     Protected Overrides Sub ProcessRecord()
-        Dim query = xdp.DocumentProviders.Expand(Function(x) x.Document.Batch.BatchGroup).Where(Function(x) x.Document.Batch.Status = BatchStatus.Error).AsQueryable
+        Dim query = xdp.DocumentProviders.Expand(Function(x) x.Document.Batch.BatchGroup).Where(Function(x) x.Status = ExecutionStatus.Error).AsQueryable
         If Not BatchId.Equals(Guid.Empty) Then
             query = query.Where(Function(x) x.Document.Batch.BatchId = BatchId)
         Else
@@ -35,7 +35,6 @@ Public Class Get_XdBatchError
         For Each gr In GenerateResults(query, "BatchErrors", Limit)
             Output(gr)
         Next
-
     End Sub
 
     Private Sub Output(dp As DocumentProvider)
