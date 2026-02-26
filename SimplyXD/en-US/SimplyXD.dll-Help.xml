@@ -2526,9 +2526,30 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>PS C:\&gt; Get-XdBatchGroup</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Retrieve all BatchGroups</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-XdBatchGroup -Name "SomeBatchGroupName"</dev:code>
+        <dev:remarks>
+          <maml:para>Retrieve BatchGroup by name, if there are no batchgroups by that name, no results are returned.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 3 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-XdBatchGroup -BatchGroupID 4668847e-112f-ef11-99d1-00505680e49a</dev:code>
+        <dev:remarks>
+          <maml:para>Retrieve BatchGroup by GUID, if no batchgroup exists an error will be returned.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 4 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-XdBatchGroup -Search "some partial value"</dev:code>
+        <dev:remarks>
+          <maml:para>Retrieve BatchGroup by Name search, will return any batchgroup whose name contains this value.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
