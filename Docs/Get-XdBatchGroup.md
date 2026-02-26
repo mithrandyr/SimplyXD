@@ -34,10 +34,31 @@ Gets a batchgroup
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-XdBatchGroup
 ```
 
-{{ Add example description here }}
+Retrieve all BatchGroups
+
+### Example 2
+```powershell
+PS C:\> Get-XdBatchGroup -Name "SomeBatchGroupName"
+```
+
+Retrieve BatchGroup by name, if there are no batchgroups by that name, no results are returned.
+
+### Example 3
+```powershell
+PS C:\> Get-XdBatchGroup -BatchGroupID 4668847e-112f-ef11-99d1-00505680e49a
+```
+
+Retrieve BatchGroup by GUID, if no batchgroup exists an error will be returned.
+
+### Example 4
+```powershell
+PS C:\> Get-XdBatchGroup -Search "some partial value"
+```
+
+Retrieve BatchGroup by Name search, will return any batchgroup whose name contains this value.
 
 ## PARAMETERS
 
