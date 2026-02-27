@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.OData.Client
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
@@ -7,6 +8,8 @@ Friend Class StandardErrors
         Dim nex = WrappedException.GenerateMessageFromInnermost(ex)
         Return New ErrorRecord(nex, "XDPortal-TemplateContentUpdateFailed", ErrorCategory.InvalidResult, t)
     End Function
+
+
 
     Shared Function GetInnermostException(ex As Exception, Optional recurseLimit As Integer = 15) As Exception
         If ex Is Nothing Then Return Nothing
@@ -33,6 +36,48 @@ Friend Class StandardErrors
 End Class
 
 Module ErrorExtensions
+    <Extension()>
+    Function ExtractXDErrorMessage(this As Exception, Optional recursionLimit As Integer = 15) As String
+        Dim depth As Integer = 0
+        Do Until depth >= recursionLimit
+            depth += 1
+            If TypeOf this Is DataServiceClientException Then
+                Exit Do
+            ElseIf this.InnerException Is Nothing Then
+                Exit Do
+            Else
+                this = this.InnerException
+            End If
+        Loop
+        If TypeOf this Is DataServiceClientException Then
+            Try
+                Dim err As JObject = JObject.Parse(this.Message)("error")
+                Return $"[{err("code")}] {err("message")}"
+            Catch
+                Return this.Message
+            End Try
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    <Extension()>
+    Public Function GetAllMessages(this As Exception, Optional recursionLimit As Integer = 15) As String
+        Dim sb As New StringBuilder
+        Dim depth As Integer = 0
+        While depth <= recursionLimit
+            sb.AppendLine($"{New String("-", depth)}{this.Message}")
+            If this.InnerException IsNot Nothing Then
+                this = this.InnerException
+            Else
+                Exit While
+            End If
+            depth += 1
+        End While
+
+        Return sb.ToString()
+    End Function
+
     <Extension()>
     Sub WriteErrorMissing(this As baseCmdlet, itemType As String, itemValue As String, Optional innerEx As Exception = Nothing)
         Dim errorId = $"XDPortal-{itemType}ItemNotFound"

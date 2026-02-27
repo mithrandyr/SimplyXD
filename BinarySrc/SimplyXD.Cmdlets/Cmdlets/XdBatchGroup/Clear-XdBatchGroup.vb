@@ -62,6 +62,7 @@ Public Class ClearBatch
         Dim deleteQueue As New BlockingCollection(Of Guid)
         Dim found As New HashSet(Of Guid)
         Dim errorList As New HashSet(Of String)
+        'Dim errorList As New HashSet(Of Exception)
 
         'Task to query for items to delete
         taskList.Add(Task.Run(
@@ -86,9 +87,9 @@ Public Class ClearBatch
                         remainingItems = ExecuteWithTimeout(query.CountAsync())
                     End While
                 Catch ex As Exception
-                    Dim errString As String = $"Could not retrieve more batches{vbNewLine} -- {ex.Message}"
-                    If ex.InnerException IsNot Nothing Then errString += $"{vbNewLine} -- {ex.InnerException.Message}"
-                    errorList.Add(errString)
+                    Dim errMessage = ex.ExtractXDErrorMessage()
+                    If String.IsNullOrWhiteSpace(errMessage) Then errMessage = ex.GetAllMessages()
+                    errorList.Add($"Error Retrieving Batches -- {errMessage}")
                 Finally
                     deleteQueue.CompleteAdding()
                 End Try
@@ -105,15 +106,10 @@ Public Class ClearBatch
                                           xdp2.AttachTo("Batches", nbatch)
                                           xdp2.DeleteObject(nbatch)
                                           Try
-                                              If xdp2.SaveChangesAsync.Wait(TimeOut * 1000) Then
-                                                  Threading.Interlocked.Increment(stats.Deleted)
-                                              Else
-                                                  errorList.Add($"Delete for '{batchid}' took longer than {TimeOut} seconds to complete!")
-                                              End If
+                                              xdp2.SaveChangesWithTimeout(TimeOut)
+                                              Threading.Interlocked.Increment(stats.Deleted)
                                           Catch ex As Exception
-                                              Dim errString As String = $"Could not remove '{batchid}'{vbNewLine} -- {ex.Message}"
-                                              If ex.InnerException IsNot Nothing Then errString += $"{vbNewLine} -- {ex.InnerException.Message}"
-                                              errorList.Add(errString)
+                                              errorList.Add($"'{batchid.ToString().ToUpper()}' Batch Delete Failed - {ex.ExtractXDErrorMessage()}")
                                               Threading.Interlocked.Increment(stats.Skipped)
                                           End Try
                                       Next
