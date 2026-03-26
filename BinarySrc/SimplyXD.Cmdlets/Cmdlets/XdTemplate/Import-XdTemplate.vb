@@ -124,7 +124,7 @@ Public Class Import_XdTemplate
             Using zEntry = zArchive.Entries.First(Function(x) Path.GetExtension(x.Name) = ".dll").Open
                 Using memStream As New MemoryStream()
                     zEntry.CopyTo(memStream)
-                    AssemblyContent = memStream.GetBuffer
+                    AssemblyContent = memStream.ToArray
                 End Using
 
             End Using
@@ -132,7 +132,7 @@ Public Class Import_XdTemplate
             Using zEntry = zArchive.Entries.First(Function(x) Path.GetExtension(x.Name) = ".docx").Open
                 Using memStream As New MemoryStream()
                     zEntry.CopyTo(memStream)
-                    SourceContent = memStream.GetBuffer
+                    SourceContent = memStream.ToArray
                 End Using
             End Using
         End Using
