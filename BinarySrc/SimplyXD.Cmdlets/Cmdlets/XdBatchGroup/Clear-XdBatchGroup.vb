@@ -52,12 +52,17 @@ Public Class ClearBatch
         Dim query = GenerateQuery(bg.BatchGroupId)
         Dim TotalItems = ExecuteWithTimeout(query.CountAsync())
         If TotalItems = 0 Then Exit Sub
-        If DeleteLimit = 0 Then DeleteLimit = TotalItems
+        Dim iDeleteLimit As Integer = 0 'allows different delete limits if in pipeline
+        If DeleteLimit = 0 Then
+            iDeleteLimit = TotalItems
+        Else
+            iDeleteLimit = DeleteLimit
+        End If
 
         Dim tokenSource = New Threading.CancellationTokenSource
         Dim token = tokenSource.Token
         Dim timer = Stopwatch.StartNew
-        Dim stats As New ClearBatchStats With {.TotalItems = TotalItems, .DeleteLimit = DeleteLimit}
+        Dim stats As New ClearBatchStats With {.TotalItems = TotalItems, .DeleteLimit = iDeleteLimit}
         Dim taskList As New List(Of Task)
         Dim deleteQueue As New BlockingCollection(Of Guid)
         Dim found As New HashSet(Of Guid)
@@ -119,8 +124,8 @@ Public Class ClearBatch
         Try
             Console.TreatControlCAsInput = True
             While taskList.Any(Function(x) x.Status = TaskStatus.Running)
-                Dim pRecord = New ProgressRecord(1, $"Cleaning Batches from {bg.Name}", $"{stats.Deleted} out of {DeleteLimit}")
-                Dim percent As Double = (stats.Deleted + stats.Skipped) / DeleteLimit
+                Dim pRecord = New ProgressRecord(1, $"Cleaning Batches from {bg.Name}", $"{stats.Deleted} out of {iDeleteLimit}")
+                Dim percent As Double = (stats.Deleted + stats.Skipped) / iDeleteLimit
                 pRecord.PercentComplete = percent * 100
                 If percent > 0 Then pRecord.SecondsRemaining = (timer.Elapsed.TotalSeconds / percent) - timer.Elapsed.TotalSeconds
 
