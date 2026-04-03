@@ -40,8 +40,8 @@ Module Extensions
     <Extension()>
     Public Sub SaveChangesWithTimeout(this As PortalODataContext, timeoutSeconds As Integer)
         Dim timeoutMS = timeoutSeconds * 1000
-        Using dsr = this.SaveChangesAsync()
-            If Not dsr.Wait(timeoutMS) Then Throw New TimeoutException($"SaveChanges timeout of {timeoutMS / 1000}s exceeded.")
-        End Using
+        If Not this.SaveChangesAsync().Wait(timeoutMS) Then
+            Throw New TimeoutException($"SaveChanges timeout of {timeoutMS / 1000}s exceeded.")
+        End If
     End Sub
 End Module

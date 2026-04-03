@@ -42,6 +42,9 @@ Public Class Measure_XDPerformance
 
     <Parameter(ValueFromPipelineByPropertyName:=True)>
     Public Overrides Property TimeOut As Integer = 31
+
+    <Parameter()>
+    Public Property PollingIntervalMs As Integer = 0
 #End Region
 
     Private listData As List(Of String)
@@ -124,22 +127,32 @@ Public Class Measure_XDPerformance
                                   End If
 
                                   'Execute batch
-                                  Dim batchExecutionResult = b.ExecuteAndWait(TimeOut * 1000).GetValue
-
-                                  If batchExecutionResult.BatchStatus <> BatchStatus.Completed Then
-                                      If Not (KeepErrors.IsPresent Or NoDelete.IsPresent) Then
-                                          threadXDP.DeleteObject(b)
-                                          threadXDP.SaveChangesWithTimeout(TimeOut)
-                                      End If
-                                  Else
+                                  If PollingIntervalMs = 0 Then
+                                      b.ExecuteAndWait(TimeOut * 1000).GetValue()
                                       b = threadXDP.Batches.First(Function(x) x.BatchId = b.BatchId)
-                                      If Not NoDelete.IsPresent Then
-                                          threadXDP.DeleteObject(b)
-                                          threadXDP.SaveChangesWithTimeout(TimeOut)
-                                      End If
+                                  Else
+                                      b.ExecuteBatch().Execute()
+                                      Dim bStart = DateTime.Now
+                                      While True
+                                          Thread.Sleep(PollingIntervalMs)
+                                          b = threadXDP.Batches.First(Function(x) x.BatchId = b.BatchId)
+                                          If b.Status = BatchStatus.Completed Or b.Status = BatchStatus.Error Or b.Status = BatchStatus.TimedOut Then Exit While
+                                          If DateTime.Now.Subtract(bStart).TotalSeconds > TimeOut Then Exit While
+                                      End While
+                                  End If
+
+                                  If NoDelete.IsPresent Then 'do not delete
+                                  ElseIf b.Status <> BatchStatus.Completed And KeepErrors.IsPresent Then 'do not delete
+                                  Else 'delete batch
+                                      threadXDP.DeleteObject(b)
+                                      threadXDP.SaveChangesWithTimeout(TimeOut)
                                   End If
                                   sw.Stop()
-                                  batchExecutionBag.Add(New ThreadTiming(id, start, sw.ElapsedMilliseconds, b.EndTime.Value.Subtract(b.StartTime.Value).TotalMilliseconds))
+                                  If b.EndTime Is Nothing Then
+                                      errorBag.Add($"[{id}] {taskId:d4}-{item:d6} -- Batch did not finish: {b.Status}")
+                                  Else
+                                      batchExecutionBag.Add(New ThreadTiming(id, start, sw.ElapsedMilliseconds, b.EndTime.Value.Subtract(b.StartTime.Value).TotalMilliseconds))
+                                  End If
                               Catch ex As Exception
                                   errorBag.Add($"[{id}] {taskId:d4}-{item:d6} -- {ex.Message}")
                               Finally
