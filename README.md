@@ -28,6 +28,7 @@ Get-XdTemplateLibrary -Name "Acme" | Get-XdTemplateGroup -Name "HR" | Get-XdTemp
 In order to debug WindowsPowershell in Visual Studio, launch the project, launch a separate powershell instance and run the `prepForDebugging.ps1` file, it will prompt you to select your VS instance.
 
 ### Version History
+- 1.14 > Measure-XdPerformance now supports polling. Minor fix for -DeleteLimit on Clear-XdBatchGroup.
 - 1.13 > Fixed error with Import-XdTemplate where it was improperly reading the content of the Zipfile for upload into XD Portal.
 - 1.12 > Improved Error Output of Clear-XdBatchGroup
 - 1.11 > Fixed bug with Get-XdBatchError
