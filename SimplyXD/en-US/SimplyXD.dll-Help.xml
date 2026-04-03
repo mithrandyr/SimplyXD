@@ -6073,6 +6073,18 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>PollingIntervalMs</maml:name>
+          <maml:description>
+            <maml:para>Poll for batch completion (instead of waiting), determines the polling interval in milliseconds.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>TemplateGroupName</maml:name>
           <maml:description>
@@ -6186,6 +6198,18 @@
           <maml:name>NumThreads</maml:name>
           <maml:description>
             <maml:para>The number of concurrent threads making requests against the Xpertdoc Portal.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>PollingIntervalMs</maml:name>
+          <maml:description>
+            <maml:para>Poll for batch completion (instead of waiting), determines the polling interval in milliseconds.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -6321,6 +6345,18 @@
         <maml:name>NumThreads</maml:name>
         <maml:description>
           <maml:para>The number of concurrent threads making requests against the Xpertdoc Portal.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>PollingIntervalMs</maml:name>
+        <maml:description>
+          <maml:para>Poll for batch completion (instead of waiting), determines the polling interval in milliseconds.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>

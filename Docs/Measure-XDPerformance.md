@@ -16,14 +16,14 @@ Measures the throughput of Xpertdoc Portal Document Services for a given templat
 ```
 Measure-XDPerformance -TemplateLibraryName <String> -TemplateGroupName <String> -TemplateName <String>
  -BatchGroupName <Object> -XmlData <String[]> [-NumThreads <Int32>] [-DocsPerThread <Int32>] [-ConvertToPDF]
- [-KeepErrors] [-TimeOut <Int32>] [<CommonParameters>]
+ [-KeepErrors] [-TimeOut <Int32>] [-PollingIntervalMs <Int32>] [<CommonParameters>]
 ```
 
 ### NoDelete
 ```
 Measure-XDPerformance -TemplateLibraryName <String> -TemplateGroupName <String> -TemplateName <String>
  -BatchGroupName <Object> -XmlData <String[]> [-NumThreads <Int32>] [-DocsPerThread <Int32>] [-ConvertToPDF]
- [-NoDelete] [-TimeOut <Int32>] [<CommonParameters>]
+ [-NoDelete] [-TimeOut <Int32>] [-PollingIntervalMs <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -119,6 +119,21 @@ Accept wildcard characters: False
 
 ### -NumThreads
 The number of concurrent threads making requests against the Xpertdoc Portal.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PollingIntervalMs
+Poll for batch completion (instead of waiting), determines the polling interval in milliseconds.
 
 ```yaml
 Type: Int32
