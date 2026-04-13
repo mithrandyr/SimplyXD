@@ -23,7 +23,7 @@ Public Class Measure_XDPerformance
     <Parameter(Mandatory:=True, ValueFromPipeline:=True)>
     Public Property XmlData As String()
 
-    <ValidateRange(1, 32)>
+    <ValidateRange(1, 128)>
     <Parameter()>
     Public Property NumThreads As Integer = 8
 
