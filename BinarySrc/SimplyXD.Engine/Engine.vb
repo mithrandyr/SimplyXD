@@ -1,7 +1,16 @@
 Public Class Engine
     Private Shared _XDP As PortalODataContext
     Private Shared _TimeoutS As Integer
-    Private Shared PortalConnected As Boolean = False
+    Private Shared _portalConnected As Boolean = False
+    Public Shared Property PortalConnected As Boolean
+        Get
+            Return _portalConnected
+        End Get
+        Private Set(value As Boolean)
+            _portalConnected = value
+        End Set
+    End Property
+
     Friend Shared ReadOnly Property TimeoutS As Integer
         Get
             Return _TimeoutS
@@ -9,7 +18,6 @@ Public Class Engine
     End Property
     Public Shared ReadOnly Property XDP As PortalODataContext
         Get
-            TestPortalConnected()
             Return _XDP
         End Get
     End Property
@@ -31,15 +39,19 @@ Public Class Engine
     End Sub
     Public Shared ReadOnly Property CurrentPortalURI As String
         Get
-            Return XDP.BaseUri.ToString()
+            If PortalConnected Then
+                Return XDP.BaseUri.ToString()
+            Else
+                Return Nothing
+            End If
         End Get
     End Property
 
     Public Shared Function NewXDP() As PortalODataContext
-        TestPortalConnected()
-        Return New PortalODataContext(CurrentPortalURI) With {.Credentials = Net.CredentialCache.DefaultCredentials, .MergeOption = Microsoft.OData.Client.MergeOption.NoTracking}
+        If PortalConnected Then
+            Return New PortalODataContext(CurrentPortalURI) With {.Credentials = Net.CredentialCache.DefaultCredentials, .MergeOption = Microsoft.OData.Client.MergeOption.NoTracking}
+        Else
+            Throw New InvalidOperationException("No Xpertdoc Portal connected, please use 'Connect-XdPortal'.")
+        End If
     End Function
-    Friend Shared Sub TestPortalConnected()
-        If Not PortalConnected Then Throw New InvalidOperationException("No Xpertdoc Portal connected, please use 'Connect-XdPortal'.")
-    End Sub
 End Class

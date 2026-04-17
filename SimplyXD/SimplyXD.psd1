@@ -27,7 +27,7 @@ Author = 'Mithrandyr'
 CompanyName = 'SolarNet'
 
 # Copyright statement for this module
-Copyright = '(c) 2023 Mithrandyr. All rights reserved.'
+Copyright = '(c) 2026 Mithrandyr. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Alpha project for Xpertdoc API'

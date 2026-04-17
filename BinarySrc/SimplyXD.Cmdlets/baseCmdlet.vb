@@ -1,6 +1,14 @@
 ﻿Public MustInherit Class baseCmdlet
     Inherits PSCmdlet
-    Friend ReadOnly Property xdp As PortalODataContext = Engine.XDP
+    Friend ReadOnly Property XDP As PortalODataContext
+        Get
+            If Engine.PortalConnected Then
+                Return Engine.XDP
+            Else
+                Throw New InvalidOperationException("Not connected to XpertDoc Portal!  Use 'Connect-XdPortal'.")
+            End If
+        End Get
+    End Property
 
     <Parameter(ValueFromPipelineByPropertyName:=True)>
     Public Overridable Property TimeOut As Integer = 15
