@@ -37,19 +37,23 @@ End Class
 
 Module ErrorExtensions
     <Extension()>
-    Function ExtractXDErrorMessage(this As Exception, Optional recursionLimit As Integer = 15) As String
+    Function ExtractXdException(this As Exception, Optional recursionLimit As Integer = 15) As DataServiceClientException
         Dim depth As Integer = 0
         Do Until depth >= recursionLimit
             depth += 1
             If TypeOf this Is DataServiceClientException Then
-                Exit Do
+                Return this
             ElseIf this.InnerException Is Nothing Then
                 Exit Do
             Else
                 this = this.InnerException
             End If
         Loop
-        If TypeOf this Is DataServiceClientException Then
+        Return Nothing
+    End Function
+    <Extension()>
+    Function ExtractXDErrorMessage(this As DataServiceClientException, Optional recursionLimit As Integer = 15) As String
+        If this IsNot Nothing Then
             Try
                 Dim err As JObject = JObject.Parse(this.Message)("error")
                 Return $"[{err("code")}] {err("message")}"

@@ -8,6 +8,6 @@
 
     Public Sub New(message As String, inner As Exception)
         MyBase.New(message, inner)
-        ProviderMessage = StandardErrors.GetProviderMessage(inner)
+        ProviderMessage = inner.ExtractXdException?.ExtractXDErrorMessage
     End Sub
 End Class

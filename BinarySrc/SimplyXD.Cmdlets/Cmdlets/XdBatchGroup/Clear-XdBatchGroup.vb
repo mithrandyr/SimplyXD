@@ -92,7 +92,7 @@ Public Class ClearBatch
                         remainingItems = ExecuteWithTimeout(query.CountAsync())
                     End While
                 Catch ex As Exception
-                    Dim errMessage = ex.ExtractXDErrorMessage()
+                    Dim errMessage = ex.ExtractXdException?.ExtractXDErrorMessage
                     If String.IsNullOrWhiteSpace(errMessage) Then errMessage = ex.GetAllMessages()
                     errorList.Add($"Error Retrieving Batches -- {errMessage}")
                 Finally
@@ -114,7 +114,7 @@ Public Class ClearBatch
                                               xdp2.SaveChangesWithTimeout(TimeOut)
                                               Threading.Interlocked.Increment(stats.Deleted)
                                           Catch ex As Exception
-                                              errorList.Add($"'{batchid.ToString().ToUpper()}' Batch Delete Failed - {ex.ExtractXDErrorMessage()}")
+                                              errorList.Add($"'{batchid.ToString().ToUpper()}' Batch Delete Failed - {ex.ExtractXdException?.ExtractXdException}")
                                               Threading.Interlocked.Increment(stats.Skipped)
                                           End Try
                                       Next
