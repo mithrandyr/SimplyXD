@@ -7,6 +7,14 @@
       "workingDirectory": "$(ProjectDir)\\..\\",
       "remoteDebugEnabled": false,
       "nativeDebugging": false
+    },
+    "PS5.1": {
+      "commandName": "Executable",
+      "executablePath": "powershell",
+      "commandLineArgs": "-noexit -nologo -noprofile -file \"ConstructModule.ps1\"",
+      "workingDirectory": "$(ProjectDir)\\..\\",
+      "remoteDebugEnabled": false,
+      "nativeDebugging": true
     }
   }
 }

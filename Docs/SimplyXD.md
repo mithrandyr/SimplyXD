@@ -56,6 +56,9 @@ Gets the Document Operations for this Document
 ### [Get-XdDocumentProvider](Get-XdDocumentProvider.md)
 Gets the Document Provider for this Document
 
+### [Get-XdDOPA](Get-XdDOPA.md)
+Get DOPAs (Document Output Post Actions) from Xpertdoc Portal.
+
 ### [Get-XdGroup](Get-XdGroup.md)
 Returns a Group
 

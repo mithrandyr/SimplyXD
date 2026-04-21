@@ -15,9 +15,9 @@ Public Class WrappedException
     End Sub
 
     Friend Shared Function GenerateMessageFromInnermost(ex As Exception) As WrappedException
-        Dim innerEx = StandardErrors.GetInnermostException(ex)
-        Dim message = StandardErrors.GetProviderMessage(innerEx)
-        If message Is Nothing Then message = innerEx.Message
+        Dim innerEx = ex.ExtractXdException
+        Dim message = innerEx?.ExtractXDErrorMessage
+        If message Is Nothing Then message = ex.Message
         Return New WrappedException(message, innerEx)
     End Function
 End Class
