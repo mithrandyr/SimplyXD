@@ -18,9 +18,6 @@ Public Class Get_XdDOPA
     <Parameter()>
     Public Property Exact As SwitchParameter
 
-    <Parameter()>
-    Public Property ParseOperations As SwitchParameter
-
     Protected Overrides Sub ProcessRecord()
         Dim query = XDP.DocumentOutputPostActions.Expand(Function(x) x.TemplateLibrary).AsQueryable
 
@@ -39,11 +36,7 @@ Public Class Get_XdDOPA
         End If
 
         For Each tl In GenerateResults(query, "DocumentOuputPostAction")
-            If ParseOperations Then
-                ParseAndWriteObject(tl)
-            Else
-                WriteObject(tl)
-            End If
+            ParseAndWriteObject(tl)
         Next
     End Sub
 
