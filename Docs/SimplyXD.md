@@ -74,6 +74,9 @@ Returns the connected portal
 ### [Get-XdTemplate](Get-XdTemplate.md)
 Returns templates
 
+### [Get-XdTemplateEngine](Get-XdTemplateEngine.md)
+Gets Template Engine information.
+
 ### [Get-XdTemplateExecution](Get-XdTemplateExecution.md)
 Returns executions of Templates.
 

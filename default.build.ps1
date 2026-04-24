@@ -10,11 +10,12 @@ if(-not $version) {
 
 task Clean -If (-not $RebuildDocs) {
     remove "$moduleName\bin"
-    remove "$moduleName.dll"
+    remove "$moduleName\$moduleName.dll"
 }
 task Build -If (-not $RebuildDocs) {
     Invoke-Build -File "BinarySrc\source.build.ps1" -Version $Version
     Get-ChildItem "BinarySrc\output" | Copy-Item -Destination "$moduleName" -Recurse
+    remove "$moduleName\$moduleName.pdb"
 }
 
 task GenerateDocs {
