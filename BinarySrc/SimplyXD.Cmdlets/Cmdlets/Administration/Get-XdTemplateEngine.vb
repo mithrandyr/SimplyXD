@@ -45,17 +45,20 @@ Public Class Get_XdTemplateEngine
     End Sub
 
     Private Function GetVersionFromDll(dll As Byte()) As Version
-        Dim dllAssembly = Assembly.Load(dll)
-        ' Try to get the FileVersion attribute first
-        Dim fileVersionAttr = dllAssembly.GetCustomAttribute(Of AssemblyFileVersionAttribute)()
-        If fileVersionAttr IsNot Nothing Then
-            Return Version.Parse(fileVersionAttr.Version)
-        End If
-        ' Fall back to assembly version if FileVersion attribute not found
-        Dim assemblyVersion = dllAssembly.GetName().Version
-        If assemblyVersion IsNot Nothing Then
-            Return assemblyVersion
-        End If
+        Try
+            Dim dllAssembly = Assembly.Load(dll)
+            ' Try to get the FileVersion attribute first
+            Dim fileVersionAttr = dllAssembly.GetCustomAttribute(Of AssemblyFileVersionAttribute)()
+            If fileVersionAttr IsNot Nothing Then
+                Return Version.Parse(fileVersionAttr.Version)
+            End If
+            ' Fall back to assembly version if FileVersion attribute not found
+            Dim assemblyVersion = dllAssembly.GetName().Version
+            If assemblyVersion IsNot Nothing Then
+                Return assemblyVersion
+            End If
+        Catch
+        End Try
         Return Nothing
     End Function
 
@@ -68,7 +71,7 @@ Public Class Get_XdTemplateEngine
         Sub New(isCustom As Boolean, customVersion As Version, customContent As Byte(), deps As XdEngineDependency())
             IsCustomEngine = isCustom
             CustomEngineVersion = customVersion
-            CustomEngineContent = customContent
+            If customVersion IsNot Nothing Then CustomEngineContent = customContent
             If deps IsNot Nothing And deps.Length > 0 Then
                 Dependencies.AddRange(deps)
             End If
@@ -92,7 +95,7 @@ Public Class Get_XdTemplateEngine
         Sub New(n As String, v As Version, c As Byte())
             Name = n
             Version = v
-            Content = c
+            If v IsNot Nothing Then Content = c
         End Sub
 
         Sub SaveToDisk(filePath As String)
